@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../utils/routes/app_pages.dart';
 import '../controllers/online_test_series_controller.dart';
 
 class OnlineTestSeriesView extends GetView<OnlineTestSeriesController> {
@@ -25,6 +26,7 @@ class OnlineTestSeriesView extends GetView<OnlineTestSeriesController> {
                   style: TextStyle(fontSize: 20.0),
                 ),
                 onTap: () {
+                  Get.toNamed(Routes.TEST_LIST);
                   // Do something when the item is clicked
                   // For example, navigate to a new screen
                  // Get.to(ExamTestSeriesDetailView(testSeries: examTestSeriesData[index]));

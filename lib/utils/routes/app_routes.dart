@@ -13,6 +13,10 @@ abstract class Routes {
   static const COURSE_DETAILS = _Paths.COURSE_DETAILS;
   static const DESHBOARD = _Paths.DESHBOARD;
   static const ONLINE_TEST_SERIES = _Paths.ONLINE_TEST_SERIES;
+  static const TEST_LIST = _Paths.TEST_LIST;
+  static const PRE_ONLINETEST_INSTRUCTION = _Paths.PRE_ONLINETEST_INSTRUCTION;
+  static const PRE_ONLINETEST_INSTRUCTION2 = _Paths.PRE_ONLINETEST_INSTRUCTION2;
+  static const TEST = _Paths.TEST;
 }
 
 abstract class _Paths {
@@ -27,4 +31,8 @@ abstract class _Paths {
   static const COURSE_DETAILS = '/course_details';
   static const DESHBOARD = '/deshbord';
   static const ONLINE_TEST_SERIES = '/online-test-series';
+  static const TEST_LIST = '/test-list';
+  static const PRE_ONLINETEST_INSTRUCTION = '/Pre_onlinetest_instruction';
+  static const PRE_ONLINETEST_INSTRUCTION2 = '/Pre_onlinetest_instruction2';
+  static const TEST = '/test';
 }
