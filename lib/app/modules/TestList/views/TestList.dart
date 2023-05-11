@@ -12,33 +12,69 @@ class TestListView extends GetView<TestList_Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TestListView'),
-        centerTitle: true,
+        title: const Text('Test List'),
+        centerTitle: false,
       ),
       body: Obx(() => Column(
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(0.0),
               ),
               elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Test Series 1',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                    Text('Result',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Test Series 1',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                        InkWell(
+                          onTap: (){
 
-                  ],
-                ),
+                          },
+                          child: Container(
+                              color: Colors.lightBlue,
+                              width: 100,
+                              height: 40,
+                              child: Center(child: Text('Result',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white)))),
+                        ),
+
+
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 00.0,right: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        //Text('Test Series 1',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                        InkWell(
+                          onTap: (){
+
+                          },
+                          child: Container(
+                              color: Colors.lightBlue,
+                              width: 160,
+                              height: 40,
+                              child: Center(child: Text('Buy All Course',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white)))),
+                        ),
+
+
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
+
           Expanded(
-            flex: 9,
+            flex: 8,
             child:  ListView.builder(
               itemCount: controller.exams.length,
               itemBuilder: (context, index) {

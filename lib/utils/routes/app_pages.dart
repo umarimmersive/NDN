@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
-import 'package:national_digital_notes_new/app/modules/Pre_onlineTest_instruction/bindings/Pre_onlineTest_instruction_binding.dart';
-import 'package:national_digital_notes_new/app/modules/Test/views/Test_view.dart';
 
+import '../../app/modules/Pre_onlineTest_instruction/bindings/Pre_onlineTest_instruction_binding.dart';
 import '../../app/modules/Pre_onlineTest_instruction/views/Pre_onlineTest_instruction_view.dart';
 import '../../app/modules/Pre_onlineTest_instruction2/bindings/Pre_onlineTest_instruction2_binding.dart';
 import '../../app/modules/Pre_onlineTest_instruction2/views/Pre_onlineTest_instruction_view.dart';
+import '../../app/modules/Question_details/bindings/question_details_binding.dart';
+import '../../app/modules/Question_details/views/question_details_view.dart';
 import '../../app/modules/Test/bindings/Test_binding.dart';
+import '../../app/modules/Test/views/Test_view.dart';
 import '../../app/modules/TestList/bindings/TestList_binding.dart';
 import '../../app/modules/TestList/views/TestList.dart';
 import '../../app/modules/onlineTestSeries/bindings/online_test_series_binding.dart';
@@ -94,10 +96,16 @@ class AppPages {
       name: _Paths.PRE_ONLINETEST_INSTRUCTION2,
       page: () => Pre_onlineTest_instruction2_view(),
       binding: Pre_onlineTest_instruction2_binding(),
-    ),GetPage(
+    ),
+    GetPage(
       name: _Paths.TEST,
       page: () => Test_view(),
       binding: TestBinding(),
+    ),
+    GetPage(
+      name: _Paths.QUESTION_DETAILS,
+      page: () => const QuestionDetailsView(),
+      binding: QuestionDetailsBinding(),
     ),
   ];
 }

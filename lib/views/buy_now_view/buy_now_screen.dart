@@ -130,7 +130,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Image.network('https://ndn.manageprojects.in/'+order_details_list[i]['image']),
+                          child: Image.network(ApiService.IMAGE_URL+order_details_list[i]['image']),
                         ),
                         Expanded(
                           child: Column(

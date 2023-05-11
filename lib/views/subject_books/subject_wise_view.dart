@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:national_digital_notes_new/controllers/detailed_booklist.dart';
 import 'package:national_digital_notes_new/views/subject_books/subject_wise_view_controller.dart';
 
+import '../../utils/constants/api_service.dart';
 import '../../utils/routes/app_pages.dart';
 import '../specific_book_details_screen/specific_books_views.dart';
 import 'package:http/http.dart' as http;
@@ -158,8 +159,8 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                             child: CachedNetworkImage(
                                               imageUrl:
                                               controller.englishPressed == true
-                                                  ? 'https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}'
-                                                  : 'https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}',
+                                                  ? '${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}'
+                                                  : '${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}',
                                               fit: BoxFit.contain,
                                             ),
                                           ),
@@ -408,7 +409,7 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                       "free": "false",
                                       "category":"${controller.subjectName}, ${controller.coachingName} ${controller.examType}",
                                       "bookName": controller.coachingNotes['data'][index]['title'].toString()??"",
-                                      "imageURL":  "https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}"
+                                      "imageURL":  "${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}"
                                     };
 
                                     Get.toNamed(Routes.SPECIFIC_BOOK_VIEW,parameters: data);
@@ -438,8 +439,8 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                                 child: CachedNetworkImage(
                                                   imageUrl:
                                                   controller.englishPressed == true
-                                                      ? 'https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}'
-                                                      : 'https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}',
+                                                      ? '${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}'
+                                                      : '${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}',
                                                   fit: BoxFit.contain,
                                                 ),
                                               ),
@@ -546,7 +547,7 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                       "free": "false",
                                       "category":"${controller.subjectName}, ${controller.coachingName} ${controller.examType}",
                                       "bookName": controller.coachingNotes['data'][index]['title'].toString()??"",
-                                      "imageURL":  "https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}"
+                                      "imageURL":  "${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}"
                                     };
 
                                     Get.toNamed(Routes.SPECIFIC_BOOK_VIEW,parameters: data);
@@ -577,8 +578,8 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                                 child: CachedNetworkImage(
                                                   imageUrl:
                                                   controller.englishPressed == true
-                                                      ? 'https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}'
-                                                      : 'https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}',
+                                                      ? '${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}'
+                                                      : '${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}',
                                                   fit: BoxFit.contain,
                                                 ),
                                               ),
@@ -701,7 +702,7 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                 "free": "false",
                                 "category":"${controller.subjectName}, ${controller.coachingName} ${controller.examType}",
                                 "bookName": controller.coachingNotes['data'][index]['title'].toString()??"",
-                                "imageURL":  "https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}"
+                                "imageURL":  "${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}"
                               };
 
                               Get.toNamed(Routes.SPECIFIC_BOOK_VIEW,parameters: data);
@@ -742,8 +743,8 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                           child: CachedNetworkImage(
                                             imageUrl:
                                             controller.englishPressed == true
-                                                ? "https://ndn.manageprojects.in/${controller.bookList['data'][index]['image']}"
-                                                : "https://ndn.manageprojects.in/${controller.bookList['data'][index]['image']}",
+                                                ? "${ApiService.IMAGE_URL+controller.bookList['data'][index]['image']}"
+                                                : "${ApiService.IMAGE_URL+controller.bookList['data'][index]['image']}",
                                             fit: BoxFit.fitHeight,
                                           ),
                                         ),

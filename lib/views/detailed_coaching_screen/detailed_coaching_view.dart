@@ -82,7 +82,7 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           child:CachedNetworkImage(
                             imageUrl:
-                            'https://ndn.manageprojects.in/'+img['img'],
+                            ApiService.IMAGE_URL+img['img'],
                             fit: BoxFit.fill,
                           ));
                     },
@@ -206,7 +206,7 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                                             width: 35,
                                             height: 35,
                                             child: CachedNetworkImage(
-                                                imageUrl:'https://ndn.manageprojects.in/'+controller.get_subject[index]['icon'])),
+                                                imageUrl:ApiService.IMAGE_URL+controller.get_subject[index]['icon'])),
                                       ),
                                     ],
                                   ),
@@ -246,55 +246,58 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                            Get.toNamed(Routes.ONLINE_TEST_SERIES);
 
                           },
-                          child: Card(
-                            elevation: 3,
-                            color: Colors.white,
-                            child: Container(
-                              padding: const EdgeInsets.only(right: 10),
-                              color: Colors.transparent,
-                              alignment: Alignment.bottomRight,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: 80,
-                                      padding: const EdgeInsets.only(
-                                          left: 10, top: 10, bottom: 0),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        controller.get_subject[index]['subject_name'].toString(),
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      )),
-                                  const Divider(
-                                    thickness: 1.3,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Card(
+                              elevation: 3,
+                              color: Colors.white,
+                              child: Container(
+                                padding: const EdgeInsets.only(right: 10),
+                                color: Colors.transparent,
+                                alignment: Alignment.bottomRight,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        height: 80,
+                                        padding: const EdgeInsets.only(
+                                            left: 10, top: 10, bottom: 0),
+                                        alignment: Alignment.centerLeft,
                                         child: Text(
-                                          controller.get_subject[index]['description'].toString().substring(0,10),
-                                          textAlign: TextAlign.start,
-                                          style: const TextStyle(fontSize: 10),
+                                          controller.get_subject[index]['subject_name'].toString(),
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                    const Divider(
+                                      thickness: 1.3,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            controller.get_subject[index]['description'].toString().substring(0,10),
+                                            textAlign: TextAlign.start,
+                                            style: const TextStyle(fontSize: 10),
+                                          ),
                                         ),
-                                      ),
-                                      Flexible(
-                                        fit: FlexFit.tight,
-                                        child: Container(
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            width: 35,
-                                            height: 35,
-                                            child: CachedNetworkImage(
-                                                imageUrl:'https://ndn.manageprojects.in/'+controller.get_subject[index]['icon'])),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                        Flexible(
+                                          fit: FlexFit.tight,
+                                          child: Container(
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              width: 35,
+                                              height: 35,
+                                              child: CachedNetworkImage(
+                                                  imageUrl:ApiService.IMAGE_URL+controller.get_subject[index]['icon'])),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

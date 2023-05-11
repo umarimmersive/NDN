@@ -20,7 +20,7 @@ class Pre_onlineTest_instruction_view extends GetView<Pre_onlineTest_instruction
         ),
       appBar: AppBar(
         title: const Text('Test Name-Instruction'),
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: Column(
         children: [
@@ -51,8 +51,19 @@ class Pre_onlineTest_instruction_view extends GetView<Pre_onlineTest_instruction
 
           Expanded(
             flex: 9,
-            child:  Text(
-              'data'
+            child:  Padding(
+              padding: const EdgeInsets.only(left: 5.0,right: 5.0),
+              child: Text(
+                "Guidelines and instructions for the Candidates for Online Examination "
+                    "Online examination is being conducted for evaluating the students’ performance for August"
+                "– 2020 Term-End Examination (TEE) for various courses."
+                    "It is an Online Examination system, fully computerized, user friendly having advanced"
+                  "security features making it fair, transparent and standardized."
+                    "The term end examination will be conducted in an online proctored mode. Candidate can"
+                  "take the test from the safe and secure environment of his/her home, with a"
+              "desktop/laptop/smartphone (with a webcam) and an internet connection (un-interrupted"
+              " internet speed is desirable)."
+              ),
             ),
 
 

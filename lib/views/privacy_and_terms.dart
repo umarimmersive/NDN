@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
+
+import '../utils/constants/api_service.dart';
 class TermsScreen extends StatefulWidget {
   const TermsScreen({Key? key}) : super(key: key);
 
@@ -23,7 +25,7 @@ class _TermsScreenState extends State<TermsScreen> {
     setState(() {
 
     });
-    http.Response response = await http.get(Uri.parse('https://ndn.manageprojects.in/api/term_condition'));
+    http.Response response = await http.get(Uri.parse(ApiService.BASE_URL+'term_condition'));
 
     if(response.statusCode==200){
       terms = jsonDecode(response.body);
@@ -114,7 +116,7 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
     setState(() {
 
     });
-    http.Response response = await http.get(Uri.parse('https://ndn.manageprojects.in/api/privacy_policy'));
+    http.Response response = await http.get(Uri.parse(ApiService.BASE_URL+'privacy_policy'));
 
     if(response.statusCode==200){
       policies = jsonDecode(response.body);

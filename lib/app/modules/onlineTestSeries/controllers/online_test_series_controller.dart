@@ -3,11 +3,19 @@ import 'package:get/get.dart';
 class OnlineTestSeriesController extends GetxController {
   //TODO: Implement OnlineTestSeriesController
   final List<String> examTestSeriesData = [
-    'Test Series 1: English',
-    'Test Series 2: Mathematics',
-    'Test Series 3: General Knowledge',
-    'Test Series 4: Reasoning',
-    'Test Series 5: Science',
+    'Test Series 1',
+    'Test Series 2',
+    'Test Series 3',
+    'Test Series 4',
+    'Test Series 5',
+  ];
+
+  final List<String> examTest= [
+    'English',
+    'Mathematics',
+    'General Knowledge',
+    'Reasoning',
+    'Science',
   ];
 
   final count = 0.obs;

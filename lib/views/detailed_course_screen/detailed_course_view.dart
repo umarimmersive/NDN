@@ -9,6 +9,7 @@ import 'package:national_digital_notes_new/controllers/tab_simple_controller.dar
 import 'package:national_digital_notes_new/views/detailed_course_screen/detailed_course_controller.dart';
 import 'package:national_digital_notes_new/views/profile_settings_screen/profile_settings_views.dart';
 import 'package:http/http.dart' as http;
+import '../../utils/constants/api_service.dart';
 import '../../utils/constants/my_colors.dart';
 import '../../utils/constants/toast.dart';
 import '../../utils/routes/app_pages.dart';
@@ -222,7 +223,7 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
     // bookList.clear();
     isLoading(true);
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examCoachingList'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'examCoachingList'),body: {
       "exam_id":widget.id
     });
 
@@ -388,7 +389,7 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
                                                         left: 10, top: 0, bottom: 10),
                                                     child:CachedNetworkImage(
                                                       imageUrl:
-                                                        'https://ndn.manageprojects.in/${Coching_list[index]['logo']}'
+                                                        '${ApiService.IMAGE_URL+Coching_list[index]['logo']}'
                                                     ,fit: BoxFit.cover,)),
                                               ),
                                             ],
@@ -436,7 +437,7 @@ Widget listTile(int index, String title, String desc, String imageURL) {
           flex: 3,
           child: CachedNetworkImage(
             imageUrl:
-            'https://ndn.manageprojects.in/'+imageURL,
+            ApiService.IMAGE_URL+imageURL,
             fit: BoxFit.fitWidth,
           ),
         ),

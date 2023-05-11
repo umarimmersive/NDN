@@ -58,7 +58,7 @@ class SettingProfileRouteState extends State<SettingProfileRoute> {
     // bookList.clear();
     isLoading(true);
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/removeUser'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'removeUser'),body: {
       "user_id":userData!.userId,
     });
 
@@ -95,7 +95,7 @@ class SettingProfileRouteState extends State<SettingProfileRoute> {
 
 
   //print("user_id============================${user_id}");
-  http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/getProfile'),body: {
+  http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'getProfile'),body: {
     "user_id":userData!.userId,
   });
 
@@ -162,7 +162,7 @@ TextEditingController mobileController = TextEditingController();
   print("=======================${nameController.text.toString()}");
   //  context.loaderOverlay.show();
 
-  var postUri = Uri.parse('https://ndn.manageprojects.in/api/profile');
+  var postUri = Uri.parse(ApiService.BASE_URL+'profile');
   var request = new http.MultipartRequest("POST", postUri);
 
   request.headers['Accept'] = 'application/json';
@@ -303,7 +303,7 @@ TextEditingController mobileController = TextEditingController();
                           child:  CircleAvatar(
                             radius: 55,
                             backgroundImage: NetworkImage(
-                                'https://ndn.manageprojects.in/'+userData!.profileImage),
+                                ApiService.IMAGE_URL+userData!.profileImage),
                           ),
                         ),
                       ):

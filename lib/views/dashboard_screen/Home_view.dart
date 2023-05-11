@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:national_digital_notes_new/utils/constants/api_service.dart';
 import 'package:national_digital_notes_new/utils/constants/my_local_service.dart';
 import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart';
 import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
@@ -188,7 +189,7 @@ class Home_view extends GetView<controller_home_view> {
                             backgroundColor: Colors.grey[100],
                             child:  CircleAvatar(
                               radius: 33,
-                              backgroundImage: NetworkImage('https://ndn.manageprojects.in/'+userData!.profileImage),
+                              backgroundImage: NetworkImage(ApiService.IMAGE_URL+userData!.profileImage),
                             ),
                           ),
                         )

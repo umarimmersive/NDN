@@ -263,7 +263,7 @@ class _InShortState extends State<InShort> {
     print("============+${news_list[index]['description']}");
     return NewsCard(
       isLast: '',
-      imgUrl: 'https://ndn.manageprojects.in/' + news_list[index]['image'],
+      imgUrl: ApiService.IMAGE_URL + news_list[index]['image'],
       primaryText: news_list[index]['title'],
       secondaryText: news_list[index]['description'],
       sourceName: '',

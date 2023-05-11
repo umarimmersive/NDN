@@ -9,7 +9,7 @@ class Pre_onlineTest_instruction_controller extends GetxController {
     'Test Series 4: Reasoning',
     'Test Series 5: Science',
   ];
-
+  final int columnCount = 5;
   final count = 0.obs;
   @override
   void onInit() {

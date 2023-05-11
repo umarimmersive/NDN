@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../utils/constants/api_service.dart';
 import '../../utils/global_widgets/snackbar.dart';
 import '../buy_now_view/buy_now_screen.dart';
 import '../order_placed_screen/order_placed_view.dart';
@@ -41,7 +42,7 @@ class _AddToCartViewState extends State<AddToCartView> {
     isLoading(true);
 
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/addToCartList'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'addToCartList'),body: {
       "user_id":userData!.userId,
     });
 
@@ -121,7 +122,7 @@ class _AddToCartViewState extends State<AddToCartView> {
     });
 
     //print("user_id======================================${user_id}");
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/removeToCart'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'removeToCart'),body: {
       "user_id": userData!.userId,
       "item_id": item_id,
       "item_type": item_type,
@@ -222,7 +223,7 @@ class _AddToCartViewState extends State<AddToCartView> {
                                           //height: 100,
                                           width: 60,
                                           child: Image.network(
-                                              'https://ndn.manageprojects.in/'+cart_list[index]['image']),
+                                              ApiService.IMAGE_URL+cart_list[index]['image']),
                                         ),
                                         title: Text(cart_list[index]['title']),
                                         subtitle: Column(

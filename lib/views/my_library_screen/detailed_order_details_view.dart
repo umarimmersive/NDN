@@ -9,6 +9,8 @@ import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart'
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rating/rating.dart';
 import 'package:http/http.dart' as http;
+
+import '../../utils/constants/api_service.dart';
 // ignore: must_be_immutable
 class DetailedBooksOrder extends StatefulWidget {
 
@@ -78,7 +80,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
 
 
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/libraryItemDetails'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'libraryItemDetails'),body: {
       "user_id":userData!.userId,
       "order_id":widget.bookid.toString(),
 
@@ -147,7 +149,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Image.network('https://ndn.manageprojects.in/'+'${book_detail[0]['image'].toString()}',),
+                    child: Image.network(ApiService.IMAGE_URL+'${book_detail[0]['image'].toString()}',),
                   ),
                   Expanded(
                     child: Column(

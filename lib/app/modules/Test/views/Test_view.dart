@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
-import '../../../../utils/routes/app_pages.dart';
+import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
 import '../controllers/TestController.dart';
 import 'MyBottomSheet.dart';
 import 'MyBottomSheet2.dart';
@@ -43,15 +42,17 @@ class Test_view extends GetView<TestController> {
           ),
 
           PopupMenuButton(
-
             // add icon, by default "3 dot" icon
-              icon: InkWell(onTap: (){
-                Get.bottomSheet(
+              icon: InkWell(
+                  onTap: (){
+                    Get.toNamed(Routes.QUESTION_DETAILS);
+
+                /*Get.bottomSheet(
                   MyBottomSheet(),
                   backgroundColor: Colors.transparent,
                   isDismissible: false,
-                );
-              },child: Icon(Icons.more_vert_outlined)),
+                );*/
+              },child: Icon(Icons.menu)),
               itemBuilder: (context){
                 return [
 
@@ -179,14 +180,23 @@ class Test_view extends GetView<TestController> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10.0,right: 00.0),
-                                    child: Container(
-                                      height: 20,
-                                      child: Center(child: Icon(
-                                        Icons.more_vert_outlined,
-                                        color: Colors.black,
-                                        size: 16.0,
-                                        semanticLabel: 'Text to announce in accessibility modes',
-                                      ),),
+                                    child: InkWell(
+                                      onTap: (){
+                                        Get.bottomSheet(
+                                          MyBottomSheet(),
+                                          backgroundColor: Colors.transparent,
+                                          isDismissible: false,
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 20,
+                                        child: Center(child: Icon(
+                                          Icons.more_vert_outlined,
+                                          color: Colors.black,
+                                          size: 20.0,
+                                          semanticLabel: 'Text to announce in accessibility modes',
+                                        ),),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -205,7 +215,7 @@ class Test_view extends GetView<TestController> {
               Expanded(
                 flex: 8,
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.all(10),
                   child: Card(
                     child: Padding(
                       padding: EdgeInsets.all(10.0),
@@ -306,4 +316,5 @@ class Test_view extends GetView<TestController> {
       ),
     );
   }
+
 }

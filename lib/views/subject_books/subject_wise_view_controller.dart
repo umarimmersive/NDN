@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../controllers/detailed_booklist.dart';
+import '../../utils/constants/api_service.dart';
 import '../../utils/global_widgets/snackbar.dart';
 
 class subject_wise_view_controller extends GetxController with GetSingleTickerProviderStateMixin {
@@ -73,13 +74,13 @@ class subject_wise_view_controller extends GetxController with GetSingleTickerPr
     print("=========================+++++++++++++$englishPressed");
     http.Response response;
     if(englishPressed.isTrue){
-      response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/coachingNotes'),body: {
+      response = await http.post(Uri.parse(ApiService.BASE_URL+'coachingNotes'),body: {
         "coaching_id":id.value.toString(),
         "subject_id": subjectId.value.toString(),
         "language":"English"
       });
     }else{
-      response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/coachingNotes'),body: {
+      response = await http.post(Uri.parse(ApiService.BASE_URL+'coachingNotes'),body: {
         "coaching_id":id.value.toString(),
         "subject_id":subjectId.value.toString(),
         "language":"Hindi"
@@ -117,13 +118,13 @@ class subject_wise_view_controller extends GetxController with GetSingleTickerPr
     http.Response response;
 
     if(englishPressed.isTrue){
-      response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examBookList'),
+      response = await http.post(Uri.parse(ApiService.BASE_URL+'examBookList'),
           body: {
             "exam_id":id.value.toString(),
             "language":"English"
           });
     }else{
-      response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examBookList'),body: {
+      response = await http.post(Uri.parse(ApiService.BASE_URL+'examBookList'),body: {
         "exam_id":id.value.toString(),
         "language":"Hindi"
       });

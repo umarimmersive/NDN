@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
 
+import '../../utils/constants/api_service.dart';
 import '../../utils/global_widgets/globle_var.dart';
 import '../../utils/routes/app_pages.dart';
 import '../specific_book_details_screen/specific_books_views.dart';
@@ -69,7 +70,7 @@ class _WishlistsState extends State<Wishlists> {
     setState(() {
 
     });
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/wishList'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'wishList'),body: {
       "user_id": userData!.userId,
     });
     ConvertDataToJson = jsonDecode(response.body);
@@ -105,7 +106,7 @@ class _WishlistsState extends State<Wishlists> {
 
 
   //  print("user_id============================${user_id}");
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/removeFavorite'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'removeFavorite'),body: {
       //"book_id":widget.bookid
       "user_id": userData!.userId,
       "item_id":itemid,
@@ -217,7 +218,7 @@ class _WishlistsState extends State<Wishlists> {
                       'category':
                       "${wishlist[index]['title'].toString()}, ${''} ${wishlist[index]['exam_type_book'].toString()}",
                       'bookName':  wishlist[index]['title'].toString(),
-                      'imageURL':  "https://ndn.manageprojects.in/${ wishlist[index]['image'].toString()}",
+                      'imageURL':  "${ApiService.IMAGE_URL+wishlist[index]['image'].toString()}",
                       'bookid': wishlist[index]['item_id'].toString().toString(),
                     };
 
@@ -230,7 +231,7 @@ class _WishlistsState extends State<Wishlists> {
                     width: 80,
                     height: 100,
                     child: CachedNetworkImage(
-                     imageUrl:'https://ndn.manageprojects.in/'+wishlist[index]['image'],fit: BoxFit.fill,),
+                     imageUrl: ApiService.IMAGE_URL+wishlist[index]['image'],fit: BoxFit.fill,),
                   ),
                   subtitle: Container(
                       height: 50,width: 100,

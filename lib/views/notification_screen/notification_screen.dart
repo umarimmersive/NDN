@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
+
+import '../../utils/constants/api_service.dart';
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     // bookList.clear();
     isLoading(true);
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/notificationList'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'notificationList'),body: {
       "user_id":userData!.userId
     });
 

@@ -37,22 +37,11 @@ class _AnimatedTimerState extends State<AnimatedTimer> {
     try {
       sample_data.clear();
       isLoading(true);
-      print({'response==================================$Today_date'});
-      print({'response==================================$Select_language'});
-
-
       var response = await ApiService().Get_quiz(Today_date, Select_language);
-      print({'response==================================$response'});
 
       if (response['success'] == true) {
 
         sample_data.addAll(response['data']);
-
-        print("sample_data=========================$sample_data");
-        //snackbar(response['message']);
-
-
-
         isLoading(false);
        // update();
       } else if (response['success'] == false) {

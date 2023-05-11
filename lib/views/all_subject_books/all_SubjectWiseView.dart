@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:national_digital_notes_new/views/detailed_course_screen/detailed_course_controller.dart';
+import '../../utils/constants/api_service.dart';
 import '../../utils/routes/app_pages.dart';
 
 
@@ -115,7 +116,7 @@ class all_SubjectWiseView extends GetView<detailed_course_controller> /*with Sin
                           "category":"${controller.bookList['data'][index]['book_name'].toString()}, ${controller.bookList['data'][index]['book_name'].toString()} ${controller.bookList['data'][index]['heading'].toString()}",
 
                           "bookName": controller.bookList['data'][index]['heading'].toString()??"",
-                          "imageURL":  "https://ndn.manageprojects.in/${controller.bookList['data'][index]['image']}"
+                          "imageURL":  ApiService.IMAGE_URL+"${controller.bookList['data'][index]['image']}"
                         };
 
                         Get.toNamed(Routes.SPECIFIC_BOOK_VIEW,parameters: data);
@@ -149,8 +150,8 @@ class all_SubjectWiseView extends GetView<detailed_course_controller> /*with Sin
                                     child: CachedNetworkImage(
                                       imageUrl:
                                       controller.englishPressed == true
-                                          ? "https://ndn.manageprojects.in/${controller.bookList['data'][index]['image']}"
-                                          : "https://ndn.manageprojects.in/${controller.bookList['data'][index]['image']}",
+                                          ? ApiService.IMAGE_URL+"${controller.bookList['data'][index]['image']}"
+                                          : ApiService.IMAGE_URL+"${controller.bookList['data'][index]['image']}",
                                       fit: BoxFit.fitHeight,
                                     ),
                                   ),

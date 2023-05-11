@@ -12,25 +12,34 @@ class OnlineTestSeriesView extends GetView<OnlineTestSeriesController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Online Test Series'),
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: ListView.builder(
         itemCount: controller.examTestSeriesData.length,
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            child: Card(
-              child: ListTile(
-                title: Text(
-                  controller.examTestSeriesData[index],
-                  style: TextStyle(fontSize: 20.0),
+          return InkWell(
+            onTap: (){
+              Get.toNamed(Routes.TEST_LIST);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 00.0),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0,horizontal: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.examTestSeriesData[index],
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        controller.examTest[index],
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ],
+                  ),
                 ),
-                onTap: () {
-                  Get.toNamed(Routes.TEST_LIST);
-                  // Do something when the item is clicked
-                  // For example, navigate to a new screen
-                 // Get.to(ExamTestSeriesDetailView(testSeries: examTestSeriesData[index]));
-                },
               ),
             ),
           );

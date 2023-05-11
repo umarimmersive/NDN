@@ -13,6 +13,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../utils/constants/api_service.dart';
 import '../../utils/global_widgets/snackbar.dart';
 
 class specific_book_details_controller extends GetxController{
@@ -115,7 +116,6 @@ class specific_book_details_controller extends GetxController{
 
   startDownload(book_path) async {
     print("==================dawnload");
-    print("dawnload==================${"https://ndn.manageprojects.in/"+book_path}");
     Directory? appDocDir = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
 
 
@@ -125,7 +125,7 @@ class specific_book_details_controller extends GetxController{
     if (!File(path).existsSync()) {
       await file.create();
       await dio.download(
-        "https://ndn.manageprojects.in/"+book_path,
+        ApiService.IMAGE_URL+book_path,
         path,
         deleteOnError: true,
         onReceiveProgress: (receivedBytes, totalBytes) {
@@ -170,7 +170,7 @@ class specific_book_details_controller extends GetxController{
 
 
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/bookDetails'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'bookDetails'),body: {
       "book_id":bookid.value.toString(),
       "user_id": userData!.userId,
     });
@@ -218,7 +218,7 @@ class specific_book_details_controller extends GetxController{
 
 
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/noteDetails'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'noteDetails'),body: {
       "note_id": bookid.value.toString(),
       "user_id": userData!.userId,
     });
@@ -262,7 +262,7 @@ class specific_book_details_controller extends GetxController{
    // print("user_id============================${user_id}");
     print("user_id============================${bookid.value.toString()}");
     print("book_detils[0]['book_type']============================${book_detils[0]['book_type']}");
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/addFavorite'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'addFavorite'),body: {
       //"book_id":widget.bookid
       "user_id": userData!.userId,
       "item_id": bookid.value.toString(),
@@ -298,7 +298,7 @@ class specific_book_details_controller extends GetxController{
 
 
     //print("user_id============================${user_id}");
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/removeFavorite'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'removeFavorite'),body: {
       //"book_id":widget.bookid
       "user_id": userData!.userId,
       "item_id": bookid.value.toString(),
@@ -339,7 +339,7 @@ class specific_book_details_controller extends GetxController{
     print("=======================${bookid.value.toString()}");
     print("=======================${notedetails.toString()}");
     print("=======================${Price}");
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/addToCart'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'addToCart'),body: {
       //"book_id":widget.bookid
       "user_id":userData!.userId,
       "item_id": bookid.value.toString(),
@@ -377,7 +377,7 @@ class specific_book_details_controller extends GetxController{
 
 
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/removeToCart'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'removeToCart'),body: {
       "user_id": userData!.userId,
       "item_id": bookid.value.toString(),
       "item_type":notedetails.value=='true'?"2":"1",

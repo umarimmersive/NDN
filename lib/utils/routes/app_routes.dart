@@ -17,6 +17,7 @@ abstract class Routes {
   static const PRE_ONLINETEST_INSTRUCTION = _Paths.PRE_ONLINETEST_INSTRUCTION;
   static const PRE_ONLINETEST_INSTRUCTION2 = _Paths.PRE_ONLINETEST_INSTRUCTION2;
   static const TEST = _Paths.TEST;
+  static const QUESTION_DETAILS = _Paths.QUESTION_DETAILS;
 }
 
 abstract class _Paths {
@@ -35,4 +36,6 @@ abstract class _Paths {
   static const PRE_ONLINETEST_INSTRUCTION = '/Pre_onlinetest_instruction';
   static const PRE_ONLINETEST_INSTRUCTION2 = '/Pre_onlinetest_instruction2';
   static const TEST = '/test';
+ //static const QUESTION_DETAILS = '/question-details';
+  static const QUESTION_DETAILS = '/question-details';
 }

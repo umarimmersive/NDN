@@ -6,7 +6,9 @@ import 'package:http/http.dart' as http;
 class ApiService {
  static late final BuildContext context;
 
-  static final String BASE_URL = "https://ndn.manageprojects.in/api/";
+  //static final String BASE_URL = "https://ndn.manageprojects.in/api/";
+  static final String BASE_URL = "https://ndn.nationaldigitalnotes.com/api/";
+  static final String IMAGE_URL = "https://ndn.nationaldigitalnotes.com/";
 
   static final String FAQ = "faq";
   static final String LOGIN = "login";

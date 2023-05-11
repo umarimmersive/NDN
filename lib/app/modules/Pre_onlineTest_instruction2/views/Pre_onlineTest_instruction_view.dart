@@ -20,7 +20,7 @@ class Pre_onlineTest_instruction2_view extends GetView<Pre_onlineTest_instructio
         ),
       appBar: AppBar(
         title: const Text('Test Name-Instruction2'),
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: Column(
         children: [
@@ -183,7 +183,10 @@ class Pre_onlineTest_instruction2_view extends GetView<Pre_onlineTest_instructio
                             }
                         ),
                       ),
-                      Expanded(child: Text('By accessing the content of Mock Test Master (hereafter referred to as website) you have to agree to the terms and conditions set out herein and also accept our Privacy Policy.',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold))),
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Text('By accessing the content of Mock Test Master (hereafter referred to as website) you have to agree to the terms and conditions set out herein and also accept our Privacy Policy.',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                      )),
 
                     ],
                   ),

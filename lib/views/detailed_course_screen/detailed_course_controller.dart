@@ -6,6 +6,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
 import 'package:national_digital_notes_new/utils/constants/toast.dart';
 
+import '../../utils/constants/api_service.dart';
+
 class detailed_course_controller extends GetxController with GetSingleTickerProviderStateMixin{
 
   @override
@@ -46,7 +48,7 @@ class detailed_course_controller extends GetxController with GetSingleTickerProv
   callOverview() async{
     isLoder(true);
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examOverview'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'examOverview'),body: {
       "exam_id":id.value.toString()
     });
     var ConvertDataToJson = jsonDecode(response.body);
@@ -72,7 +74,7 @@ class detailed_course_controller extends GetxController with GetSingleTickerProv
     isLoder(true);
 
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examSyllabus'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'examSyllabus'),body: {
       "exam_id": id.value.toString()
     });
     var ConvertDataToJson = jsonDecode(response.body);
@@ -97,7 +99,7 @@ class detailed_course_controller extends GetxController with GetSingleTickerProv
     isLoder(true);
 
 
-    http.Response response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examDates'),body: {
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'examDates'),body: {
       "exam_id": id.value.toString()
     });
     ConvertDataToJson = jsonDecode(response.body);
@@ -127,13 +129,13 @@ class detailed_course_controller extends GetxController with GetSingleTickerProv
     http.Response response;
 
     if(englishPressed.isTrue){
-      response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examBookList'),
+      response = await http.post(Uri.parse(ApiService.BASE_URL+'examBookList'),
           body: {
             "exam_id": id.value.toString(),
             "language":"English"
           });
     }else{
-      response = await http.post(Uri.parse('https://ndn.manageprojects.in/api/examBookList'),body: {
+      response = await http.post(Uri.parse(ApiService.BASE_URL+'examBookList'),body: {
         "exam_id":id.value.toString(),
         "language":"Hindi"
       });

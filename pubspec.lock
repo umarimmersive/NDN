@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.12"
+  animated_box_decoration:
+    dependency: transitive
+    description:
+      name: animated_box_decoration
+      sha256: "543f6f1c55c26b1ffb763181b6cfe567552c6c3a3e3c6fb921917df315bf24c8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   args:
     dependency: transitive
     description:
@@ -201,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  dimension:
+    dependency: transitive
+    description:
+      name: dimension
+      sha256: fe4523302f9f9dd1e02693661e325901481c6756ea9ada0d762dc08cc28af55d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   dio:
     dependency: "direct main"
     description:
@@ -350,6 +366,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1+4"
+  flutter_class_parser:
+    dependency: transitive
+    description:
+      name: flutter_class_parser
+      sha256: c5826e597e3c9b948cb338254812461249857d2c26b328930ef21d41b11554c5
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   flutter_html:
     dependency: "direct main"
     description:
@@ -624,6 +648,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  morphable_shape:
+    dependency: "direct main"
+    description:
+      name: morphable_shape
+      sha256: "962421dd9ab29053d9d90c6109dc32856e74be62489e960ed4471162616cb16f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.5"
   multi_select_flutter:
     dependency: "direct main"
     description:

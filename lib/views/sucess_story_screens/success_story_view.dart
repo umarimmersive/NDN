@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../../utils/constants/api_service.dart';
 class SuccessStory extends StatefulWidget {
   const SuccessStory({Key? key}) : super(key: key);
 
@@ -33,7 +35,7 @@ class _SuccessStoryState extends State<SuccessStory> {
 
   callApi() async{
     is_loder=true;
-    http.Response response =await http.get(Uri.parse('https://ndn.manageprojects.in/api/successStories'));
+    http.Response response =await http.get(Uri.parse(ApiService.BASE_URL+'successStories'));
     print(response);
     print(response.body);
 
@@ -139,7 +141,7 @@ class _SuccessStoryState extends State<SuccessStory> {
                                 semanticContainer: true,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 child: Image.network(
-                                  'https://ndn.manageprojects.in/'+i['image'],
+                                  ApiService.IMAGE_URL+i['image'],
                                   fit: BoxFit.fill,
                                 ),
                                 shape: RoundedRectangleBorder(

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:national_digital_notes_new/utils/constants/api_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../utils/constants/Globle_data.dart';
@@ -26,7 +27,7 @@ class controller_home_view extends GetxController {
   }
 
   mainSliderApi() async{
-    http.Response response =await http.post(Uri.parse('https://ndn.manageprojects.in/api/slider'),body: {
+    http.Response response =await http.post(Uri.parse(ApiService.BASE_URL+'slider'),body: {
       "slider_type": "Main Slider"
     });
 
@@ -47,7 +48,7 @@ class controller_home_view extends GetxController {
 
 
   Contect() async{
-    http.Response response =await http.get(Uri.parse('https://ndn.manageprojects.in/api/contactNumber'));
+    http.Response response =await http.get(Uri.parse(ApiService.BASE_URL+'contactNumber'));
 
     print('response');
     print(response.body);
@@ -64,7 +65,7 @@ class controller_home_view extends GetxController {
 
 
   callApi() async{
-    http.Response response =await http.get(Uri.parse('https://ndn.manageprojects.in/api/examList'));
+    http.Response response =await http.get(Uri.parse(ApiService.BASE_URL+'examList'));
     print(response);
     print(response.body);
     var data=jsonDecode(response.body);
