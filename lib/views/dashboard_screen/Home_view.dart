@@ -486,7 +486,7 @@ class Home_view extends GetView<controller_home_view> {
                                 width: MediaQuery.of(context).size.width * 0.99,
                                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
                                 child: CachedNetworkImage(
-                                  imageUrl:'https://ndn.manageprojects.in/$img',fit: BoxFit.fill,));
+                                  imageUrl:'${ApiService.IMAGE_URL+img}',fit: BoxFit.fill,));
                           },
                         );
                       }).toList(),

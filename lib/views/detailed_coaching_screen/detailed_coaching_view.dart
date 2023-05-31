@@ -80,11 +80,12 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                       return Container(
                           width: MediaQuery.of(context).size.width * 0.99,
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child:CachedNetworkImage(
+                          child: CachedNetworkImage(
                             imageUrl:
                             ApiService.IMAGE_URL+img['img'],
                             fit: BoxFit.fill,
-                          ));
+                          )
+                      );
                     },
                   );
                 }).toList(),
@@ -117,7 +118,7 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                     text: 'Subjects',
                     ),
                     Tab(
-                      text: 'Test Series',
+                      text: 'Online Test Series',
                     ),
                   ],
                 ),
@@ -131,123 +132,40 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                   // first tab bar view widget
                   controller.isLoading==false?
                   controller.get_subject.length>0?
-                  GridView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      primary: true,
-                      scrollDirection: Axis.vertical,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 2,
-                          crossAxisCount: 2,
-                          childAspectRatio: 1.2),
-                      itemCount: controller.get_subject.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          onTap: () {
 
-                            var data={
-                              "isHome": "true",
-                              "id": controller.coursesId.value,
-                              "coachingName": controller.cochingName.value,
-                              "examType":controller.get_subject[index]['exam_type'].toString(),
-                              "subjectName": controller.get_subject[index]['subject_name'].toString(),
-                              "subjectId":  controller.get_subject[index]['id'].toString(),
-                            };
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: GridView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        primary: true,
+                        scrollDirection: Axis.vertical,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisSpacing: 2,
+                            crossAxisCount: 2,
+                            childAspectRatio: 1.2),
+                        itemCount: controller.get_subject.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            onTap: () {
 
-                            Get.toNamed(Routes.SUBJECT_WISE_VIEW,parameters: data);
+                              var data = {
+                                "isHome": "true",
+                                "id": controller.cochingId.value,
+                                "coachingName": controller.cochingName.value,
+                                "examType":controller.get_subject[index]['exam_type'].toString(),
+                                "subjectName": controller.get_subject[index]['subject_name'].toString(),
+                                "subjectId":  controller.get_subject[index]['id'].toString(),
+                              };
+
+                              Get.toNamed(Routes.SUBJECT_WISE_VIEW,parameters: data);
 
 
-                            // Get.to(SubjectWiseView(isHome:true, id: controller.coursesId.value, coachingName:
-                            // /*get_subject[index]['subject_name'].toString()*/controller.cochingName.value,
-                            // examType: controller.get_subject[index]['exam_type'],
-                            // subjectName: '${controller.get_subject[index]['subject_name']}',
-                            // subjectId: controller.get_subject[index]['id'].toString()));
-                          },
-                          child: Card(
-                            elevation: 3,
-                            color: Colors.white,
-                            child: Container(
-                              padding: const EdgeInsets.only(right: 10),
-                              color: Colors.transparent,
-                              alignment: Alignment.bottomRight,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: 80,
-                                      padding: const EdgeInsets.only(
-                                          left: 10, top: 10, bottom: 0),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        controller.get_subject[index]['subject_name'].toString(),
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      )),
-                                  const Divider(
-                                    thickness: 1.3,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          controller.get_subject[index]['description'].toString().substring(0,10),
-                                          textAlign: TextAlign.start,
-                                          style: const TextStyle(fontSize: 10),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        fit: FlexFit.tight,
-                                        child: Container(
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            width: 35,
-                                            height: 35,
-                                            child: CachedNetworkImage(
-                                                imageUrl:ApiService.IMAGE_URL+controller.get_subject[index]['icon'])),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }):
-                  Center(
-                    child: Text(
-                      'No subject found',
-                    ),
-                  )
-
-                      :
-                  Center(child: CircularProgressIndicator()),
-
-                  // second tab bar viiew widget
-                  // first tab bar view widget
-                  controller.isLoading==false?
-                  controller.get_subject.length>0?
-                  GridView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      primary: true,
-                      scrollDirection: Axis.vertical,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 2,
-                          crossAxisCount: 2,
-                          childAspectRatio: 1.2),
-                      itemCount: controller.get_subject.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          onTap: () {
-
-                            //simple ui
-                           Get.toNamed(Routes.ONLINE_TEST_SERIES);
-
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
+                              // Get.to(SubjectWiseView(isHome:true, id: controller.coursesId.value, coachingName:
+                              // /*get_subject[index]['subject_name'].toString()*/controller.cochingName.value,
+                              // examType: controller.get_subject[index]['exam_type'],
+                              // subjectName: '${controller.get_subject[index]['subject_name']}',
+                              // subjectId: controller.get_subject[index]['id'].toString()));
+                            },
                             child: Card(
                               elevation: 3,
                               color: Colors.white,
@@ -278,7 +196,8 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                                       children: [
                                         Flexible(
                                           child: Text(
-                                            controller.get_subject[index]['description'].toString().substring(0,10),
+                                            'Subject',
+                                            //controller.get_subject[index]['description'].toString().substring(0,10),
                                             textAlign: TextAlign.start,
                                             style: const TextStyle(fontSize: 10),
                                           ),
@@ -300,12 +219,67 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      }):
+                          );
+                        }),
+                  ) :
+
                   Center(
                     child: Text(
                       'No subject found',
+                    ),
+                  )
+
+                      :
+                  Center(child: CircularProgressIndicator()),
+
+                  // second tab bar viiew widget
+                  // first tab bar view widget
+                  controller.isLoading1==false?
+                  controller.exam_type_list.length>0?
+                     Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                       child: ListView.builder(
+                             itemCount: controller.exam_type_list.length,
+                              itemBuilder: (BuildContext context, int index) {
+                         return InkWell(
+                               onTap: (){
+                                 var data={
+                                   "cochingId":controller.cochingId.toString(),
+                                   "examId":controller.exam_id.toString(),
+                                   "testId":controller.exam_type_list[index].id.toString(),
+                                   "title":controller.exam_type_list[index].title.toString(),
+                                   };
+                                  Get.toNamed(Routes.TEST_LIST,parameters: data);
+                                     },
+                       child: Padding(
+                                 padding: const EdgeInsets.only(top: 00.0,left: 5,right: 5,),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 20.0,horizontal: 10.0),
+                                  child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
+                                     Text(
+                                       controller.exam_type_list[index].title,
+                                        style: TextStyle(fontSize: 16.0),
+    ),
+
+    ],
+    ),
+    ),
+    ),
+    ),
+    );
+    },
+    ),
+                  )
+                      :
+                     Center(
+                    child: Text(
+                      'No Test series found',
                     ),
                   )
 

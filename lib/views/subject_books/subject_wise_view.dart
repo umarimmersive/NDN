@@ -134,7 +134,7 @@ class SubjectWiseView extends GetView<subject_wise_view_controller> /*with Singl
                                   "free": "false",
                                   "category":"${controller.subjectName}, ${controller.coachingName} ${controller.examType}",
                                   "bookName": controller.coachingNotes['data'][index]['title'].toString()??"",
-                                  "imageURL":  "https://ndn.manageprojects.in/${controller.coachingNotes['data'][index]['image']}"
+                                  "imageURL":  "${ApiService.IMAGE_URL+controller.coachingNotes['data'][index]['image']}"
                                 };
 
                                 Get.toNamed(Routes.SPECIFIC_BOOK_VIEW,parameters: data);

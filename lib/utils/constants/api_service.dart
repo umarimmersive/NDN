@@ -23,29 +23,46 @@ class ApiService {
   static final String quiz = "quiz";
   static final String orderDetails = BASE_URL+"orderDetails";
   static final String get_profile = BASE_URL+"getProfile";
+  static final String testList = "testList";
+  static final String testSeriesList = "testSeriesList";
+  static final String questionList = "questionList";
   static final String test_payment = "https://sandbox.cashfree.com/pg/orders";
-
+  static final String TestSubmit = "testSubmit";
+  static final String REPORT_OPTION = "coachingReportOptions";
+  static final String REPORT = "testQuestionReport";
+  static final String TEST_RESULT_LIST = "testResultList";
 
 
   static final String x_client_id = "2871162505f719d22dbc83aa6a611782";
   static final String x_client_secret = "TESTe579d9f7413748834968c1fa4e7defe50b82d316";
 
 
+ Future Test_Submit({questions_one, Token,total_time,right_marks,negative_marks,series_id}) async {
 
- // 'x-client-id':'2871162505f719d22dbc83aa6a611782',
- // 'x-client-secret':'89541fcf462c9df0d0d97e147beaa3270db3720b',
+   print('data---------------------------$questions_one');
+   print('data---------------------------${jsonEncode(questions_one)}');
+   print('Token---------------------------$Token');
+   print('total_time---------------------------$total_time');
+   print('right_marks---------------------------$right_marks');
+   print('negative_marks---------------------------$negative_marks');
 
+   var data1= {
+     "token": Token.toString(),
+     "series_id": series_id.toString(),
+     "questions": jsonEncode(questions_one),
+     "total_time": total_time,
+     "right_marks": right_marks.toString(),
+     "negative_marks": negative_marks.toString().isEmpty?'0':negative_marks.toString(),
+   };
 
-
-
-  // Future Faq() async {
-  //   final response = await http.get(
-  //     Uri.parse(BASE_URL + FAQ),
-  //     headers: {HttpHeaders.acceptHeader: "application/json"},
-  //   );
-  //   var ConvertDataToJson = jsonDecode(response.body);
-  //   return ConvertDataToJson;
-  // }
+   final response = await http.post(
+       Uri.parse(BASE_URL + TestSubmit),
+       headers: {HttpHeaders.acceptHeader: "application/json"},
+       body: data1
+   );
+   var ConvertDataToJson = jsonDecode(response.body);
+   return ConvertDataToJson;
+ }
 
   Future Login(email,password,id) async {
     final response = await http.post(
@@ -76,6 +93,19 @@ class ApiService {
       print('getprofile------------------------------------$ConvertDataToJson');
       return ConvertDataToJson;
   }
+  Future Test_Result_List(id) async {
+    final response = await http.post(
+          Uri.parse(BASE_URL + TEST_RESULT_LIST),
+          headers: {HttpHeaders.acceptHeader: "application/json"},
+          body: ({
+              'token': id.toString(),
+          })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+
+      print('getprofile------------------------------------$ConvertDataToJson');
+      return ConvertDataToJson;
+  }
 
   Future SignUp(name,email,mobile,password,cpass,loginType,id) async {
     final response = await http.post(
@@ -97,10 +127,6 @@ class ApiService {
   }
 
 
-//  ""user_id"":"""",
-//         ""password"":"""",
-//  ""re_password"":""""
-// }"
  Future Set_new_pass(userid,new_pass,confirmpass) async {
 
     print("===============$new_pass");
@@ -135,6 +161,46 @@ class ApiService {
       return ConvertDataToJson;
   }
 
+
+  Future Report_option(coaching_id) async {
+
+   print('coaching_id------------------$coaching_id');
+
+    final response = await http.post(
+          Uri.parse(BASE_URL + REPORT_OPTION),
+          headers: {HttpHeaders.acceptHeader: "application/json"},
+          body: ({
+            "coaching_id":coaching_id,
+          })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+  }
+
+
+  Future Report_send({coaching_id,user_id,question_id,report_option_id,explanation}) async {
+
+   print('coaching_id------------------$coaching_id');
+   print('user_id------------------$user_id');
+   print('question_id------------------$question_id');
+   print('report_option_id------------------$report_option_id');
+   print('explanation------------------$explanation');
+
+    final response = await http.post(
+          Uri.parse(BASE_URL + REPORT),
+          headers: {HttpHeaders.acceptHeader: "application/json"},
+          body: ({
+            "coaching_id":coaching_id.toString(),
+            "user_id":user_id.toString(),
+            "question_id":question_id.toString(),
+            "report_option_id":report_option_id.toString(),
+            "explanation":explanation.toString(),
+          })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+  }
+
   Future About_us() async {
     final response = await http.get(
           Uri.parse(BASE_URL + about_us),
@@ -155,6 +221,58 @@ class ApiService {
       var ConvertDataToJson = jsonDecode(response.body);
       return ConvertDataToJson;
   }
+  Future get_Questions_list({user_Id,series_id}) async {
+    print("=============${user_Id}");
+    print("series_id----------${series_id}");
+    final response = await http.post(
+          Uri.parse(BASE_URL + questionList),
+        headers: {HttpHeaders.acceptHeader: "application/json"},
+        body: ({
+          "token":user_Id.toString(),
+          "series_id":series_id.toString(),
+        })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+  }
+
+
+  Future get_test_list({id, exam_id,coaching_id}) async {
+    final response = await http.post(
+          Uri.parse(BASE_URL + testList),
+        headers: {HttpHeaders.acceptHeader: "application/json"},
+        body: ({
+          "token":id.toString(),
+          "exam_id":exam_id.toString(),
+          "coaching_id":coaching_id.toString(),
+        })
+      );
+
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+  }
+
+
+  Future gettestSeriesList({id, test_id,coaching_id}) async {
+
+    print("id------------------${id}");
+    print("exam_id------------------${test_id}");
+    print("coaching_id------------------${coaching_id}");
+
+
+    final response = await http.post(
+          Uri.parse(BASE_URL + testSeriesList),
+        headers: {HttpHeaders.acceptHeader: "application/json"},
+        body: ({
+          "token":id.toString(),
+          "test_id":test_id.toString(),
+          "coaching_id":coaching_id.toString(),
+        })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+  }
+
   Future get_coching_benner(id) async {
     print("=============${id}");
     final response = await http.post(
@@ -194,6 +312,7 @@ class ApiService {
    var ConvertDataToJson = jsonDecode(response.body);
    return ConvertDataToJson;
  }
+
  Future Payment_getway(
      {orderId,
       orderAmount,
@@ -204,18 +323,6 @@ class ApiService {
       customer_phone,
       order_note,
       today_date}) async {
-
-
-    print("orderId===========================$orderId");
-    print("===========================$orderAmount");
-    print("===========================$orderCurrency");
-    print("===========================$customer_id");
-    print("===========================$customer_name");
-    print("===========================$customer_email");
-    print("===========================$customer_phone");
-    print("===========================$order_note");
-    print("today_date===========================$today_date");
-
 
    // print('postdata=----------------------$postdata');
 

@@ -18,6 +18,10 @@ abstract class Routes {
   static const PRE_ONLINETEST_INSTRUCTION2 = _Paths.PRE_ONLINETEST_INSTRUCTION2;
   static const TEST = _Paths.TEST;
   static const QUESTION_DETAILS = _Paths.QUESTION_DETAILS;
+  static const TEST_RESULT = _Paths.TEST_RESULT;
+  static const TEST_RESULT_LIST = _Paths.TEST_RESULT_LIST;
+  static const PDF_VIEW = _Paths.PDF_VIEW;
+  static const PDF_VIEWER = _Paths.PDF_VIEWER;
 }
 
 abstract class _Paths {
@@ -36,6 +40,10 @@ abstract class _Paths {
   static const PRE_ONLINETEST_INSTRUCTION = '/Pre_onlinetest_instruction';
   static const PRE_ONLINETEST_INSTRUCTION2 = '/Pre_onlinetest_instruction2';
   static const TEST = '/test';
- //static const QUESTION_DETAILS = '/question-details';
+  //static const QUESTION_DETAILS = '/question-details';
   static const QUESTION_DETAILS = '/question-details';
+  static const TEST_RESULT = '/test-result';
+  static const TEST_RESULT_LIST = '/test-result-list';
+  static const PDF_VIEW = '/pdf-view';
+  static const PDF_VIEWER = '/pdf-viewer';
 }

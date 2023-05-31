@@ -74,4 +74,19 @@ class ColorValues {
   static const int LIGHT_TEXT_COLOR=0xff767676;
   static const int CELL_COLOR=0xff1D2A4D;
   static const int HINT_COL = 0xffBDBDBD;
+
+
+
+  static const kSecondaryColor = Color(0xFF8B94BC);
+  static  const kGreenColor = Color(0xFF6AC259);
+  static const kRedColor = Color(0xFFE92E30);
+  static const kGrayColor = Color(0xFFC1C1C1);
+  static const kBlackColor = Color(0xFF101010);
+  static const kPrimaryGradient = LinearGradient(
+    colors: [Color(0xFF46A0AE), Color(0xFF00FFCB)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
+  static const double kDefaultPadding = 20.0;
 }

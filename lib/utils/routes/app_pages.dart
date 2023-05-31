@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../../app/modules/PdfViewer/bindings/pdf_viewer_binding.dart';
+import '../../app/modules/PdfViewer/views/pdf_viewer_view.dart';
+
 import '../../app/modules/Pre_onlineTest_instruction/bindings/Pre_onlineTest_instruction_binding.dart';
 import '../../app/modules/Pre_onlineTest_instruction/views/Pre_onlineTest_instruction_view.dart';
 import '../../app/modules/Pre_onlineTest_instruction2/bindings/Pre_onlineTest_instruction2_binding.dart';
@@ -10,6 +13,10 @@ import '../../app/modules/Test/bindings/Test_binding.dart';
 import '../../app/modules/Test/views/Test_view.dart';
 import '../../app/modules/TestList/bindings/TestList_binding.dart';
 import '../../app/modules/TestList/views/TestList.dart';
+import '../../app/modules/Test_result/bindings/test_result_binding.dart';
+import '../../app/modules/Test_result/views/test_result_view.dart';
+import '../../app/modules/Test_result_list/bindings/test_result_list_binding.dart';
+import '../../app/modules/Test_result_list/views/test_result_list_view.dart';
 import '../../app/modules/onlineTestSeries/bindings/online_test_series_binding.dart';
 import '../../app/modules/onlineTestSeries/views/online_test_series_view.dart';
 import '../../views/about_screen/about_us_binding.dart';
@@ -106,6 +113,22 @@ class AppPages {
       name: _Paths.QUESTION_DETAILS,
       page: () => const QuestionDetailsView(),
       binding: QuestionDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.TEST_RESULT,
+      page: () => const TestResultView(),
+      binding: TestResultBinding(),
+    ),
+    GetPage(
+      name: _Paths.TEST_RESULT_LIST,
+      page: () => const TestResultListView(),
+      binding: TestResultListBinding(),
+    ),
+
+    GetPage(
+      name: _Paths.PDF_VIEWER,
+      page: () =>  PdfViewerView(),
+      binding: PdfViewerBinding(),
     ),
   ];
 }

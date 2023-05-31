@@ -62,7 +62,8 @@ class specific_books_views extends GetView<specific_book_details_controller>{
          body:
          controller.isLoading==false ?
          controller.data['success']!=true?Center(child: Text('No data found')):
-         ListView(children: [
+         ListView(
+             children: [
            Column(
              children: [
                const SizedBox(
@@ -397,7 +398,8 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                   title: const Text('Open with PDF'),
                   onTap: () => {
                     if(controller.notedetails.value=='true'){
-                      Get.to( TestingPDF(pdf_url:controller.book_detils[0]['sample_note']))
+                      Get.toNamed(Routes.)
+                      //Get.to( TestingPDF(pdf_url:controller.book_detils[0]['sample_note']))
                     }else{
                       Get.to( TestingPDF(pdf_url:controller.book_detils[0]['sample_book']))
                     }

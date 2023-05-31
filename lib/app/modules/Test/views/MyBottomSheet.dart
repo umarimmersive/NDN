@@ -1,20 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:national_digital_notes_new/models/Report_option_model.dart';
 
 import '../../../../utils/constants/ColorValues.dart';
 import '../../../../utils/global_widgets/textfield_ui.dart';
+import '../controllers/TestController.dart';
 
 class MyBottomSheet extends StatefulWidget {
+  late String Questionid;
+  var id;
+  MyBottomSheet({Key? key,required this.id}) : super(key: key);
   @override
   _MyBottomSheetState createState() => _MyBottomSheetState();
 }
 
 class _MyBottomSheetState extends State<MyBottomSheet> {
-  final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
+  final TestController Controller = Get.find();
+  //TestController Controller=TestController();
+  final List<String> options = ['Answer Does not adress the question that was asked ', 'Not English or has very bad formatting', 'Missing date and our information'];
   final List<bool> checkedOptions = [false, false, false];
 
   @override
   Widget build(BuildContext context) {
+
+    print('widget.id-------------------------${widget.id}');
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -30,94 +40,130 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
           ),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Report Question',
-                  style: TextStyle(fontSize: 20),
-                ),
-                IconButton(
-                  icon: Icon(Icons.cancel),
-                  onPressed: () {
-                    Get.back();
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Report Question',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0,right: 10),
+              child: Divider(
+                height: 1,
+                color: Colors.black,
+              ),
+            ),
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Controller.Report_option_list.length,
+              itemBuilder: (context, index) {
+                return CheckboxListTile(
+                  title: Text(Controller.Report_option_list[index].name),
+                  value: Controller.value[index],
+                  onChanged: (value) {
+
+                     for(int i=0;i<Controller.value.length;i++){
+                       Controller.value[i]=false;
+                       }
+
+                      Controller.value[index] = value!;
+
+                       print('----------------true');
+                       print('----------------$checkedOptions');
+                       Controller.value[index] = true;
+                       Controller.selectValue.value=Controller.Report_option_list[index].id.toString();
+                       print('selectValue----------${Controller.selectValue.value}');
+
+
+
+
+setState(() {
+
+});
+
+
+
                   },
+                );
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0,left: 16,right: 10),
+              child: Text(
+                'Explanation',
+                style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: MediaQuery.of(context).size.height * 0.02),
+              child: TextFieldDesigned(
+                enableInteractiveSelection: false,
+                maxLines: 1,
+                cursorColor: ColorValues.BLACK,
+                controller: Controller.text,
+                //validator: (p0)=> Validators.emailValidator(p0),
+                fontSize: 14,
+                maxLength: 50,
+                minLines: 1,
+                hintText: "Give Feedback (Optional)",
+                hintStyle: ColorValues.HINT_TEXT_COLOR,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                readOnly: false,
+                keyboardType: TextInputType.text,
+               /* prefixIcon: Icon(
+                  Icons.mail,
+                  color:  ColorValues.HINT_TEXT_COLOR,
+                  size: 16.0,
+                ),*/
+              ),
+            ),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                   Controller.post_Report(report_option_id: Controller.selectValue.value,question_id:widget.id );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40.0,right: 40.0),
+                        child: Text('Submit'),
+                      ),
+                      Controller.isLoading2.isTrue?
+                          CupertinoActivityIndicator():
+                          Container()
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.black,
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: options.length,
-            itemBuilder: (context, index) {
-              return CheckboxListTile(
-                title: Text(options[index]),
-                value: checkedOptions[index],
-                onChanged: (value) {
-                  setState(() {
-                    checkedOptions[index] = value!;
-                  });
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'Explanation',
-              style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: MediaQuery.of(context).size.height * 0.02),
-            child: TextFieldDesigned(
-              enableInteractiveSelection: false,
-              maxLines: 1,
-              cursorColor: ColorValues.BLACK,
-              //controller: controller.emailController,
-              //validator: (p0)=> Validators.emailValidator(p0),
-              fontSize: 14,
-              maxLength: 50,
-              minLines: 1,
-              hintText: "Give Feedback (Optional)",
-              hintStyle: ColorValues.HINT_TEXT_COLOR,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              readOnly: false,
-              keyboardType: TextInputType.text,
-              prefixIcon: Icon(
-                Icons.mail,
-                color:  ColorValues.HINT_TEXT_COLOR,
-                size: 16.0,
-              ),
-            ),
-          ),
-
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Get.back(result: checkedOptions);
-                },
-                child: Text('Submit'),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

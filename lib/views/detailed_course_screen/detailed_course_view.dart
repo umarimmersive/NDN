@@ -342,7 +342,8 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
                            //Get.to(DetailedCoachingView(coursesId: Coching_list[index]['id'].toString(),cochingName:Coching_list[index]['coaching_name']));
 
                             var data= {
-                              "coursesId":"${Coching_list[index]['id'].toString()}",
+                              "exam_id": widget.id.toString(),
+                              "cochingId":"${Coching_list[index]['id'].toString()}",
                               "cochingName":"${Coching_list[index]['coaching_name'].toString()}",
                             };
 
@@ -350,7 +351,7 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
 
                           },
                           child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(0.0),
                               child: isGridView == true
                                   ? Card(
                                       elevation: 5,

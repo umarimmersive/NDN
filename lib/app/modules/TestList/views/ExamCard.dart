@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:national_digital_notes_new/models/Test_list_model.dart';
 
 import 'Exam_model.dart';
 
 class ExamCard extends StatelessWidget {
-  final Exam exam;
+  final Test_list_model exam;
 
   const ExamCard({Key? key, required this.exam}) : super(key: key);
 
@@ -22,32 +23,40 @@ class ExamCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(exam.number,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                      SizedBox(height: 2),
-                      Text(exam.name),
-                      SizedBox(height: 20),
-                      //Text("Date: ${DateFormat.yMMMd().format(exam.date)}"),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(exam.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                        SizedBox(height: 2),
+                        Text(exam.subject_name),
+                        SizedBox(height: 20),
+                        //Text("Date: ${DateFormat.yMMMd().format(exam.date)}"),
 
-                    ],
+                      ],
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("Time: ${exam.time}"),
-                      SizedBox(height: 2),
-                      Text("Date: ${exam.date}"),
-                      SizedBox(height: 2),
-                      exam.Status?
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                     mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text("Time: ${exam.duration2} hr"),
+                        SizedBox(height: 2),
+                        Text("Date: ${exam.date}"),
+                        SizedBox(height: 2),
 
-                      Text(exam.isPaid ? "Paid ₹100" : "Unpaid", style: TextStyle(color: exam.isPaid ? Colors.green : Colors.red)):
-                      Text("Upcomimg", style: TextStyle(color: Colors.red))
+                        Text(exam.payment_type=='unpaid' ? "${exam.payment_amount}" : exam.payment_type, style: TextStyle(color: exam.payment_type=='unpaid' ? Colors.red : Colors.green)),
+                       // Text("Upcomimg", style: TextStyle(color: Colors.red))
 
-                    ],
+                      ],
+                    ),
                   )
                 ],
               ),

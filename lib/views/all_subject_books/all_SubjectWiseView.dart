@@ -88,7 +88,7 @@ class all_SubjectWiseView extends GetView<detailed_course_controller> /*with Sin
             ),
             controller.isLoading==false?
             controller.bookList['success']!=false?
-            Expanded(
+           /* Expanded(
               child: GridView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                   primary: true,
@@ -97,7 +97,7 @@ class all_SubjectWiseView extends GetView<detailed_course_controller> /*with Sin
                   const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisSpacing: 2,
                       crossAxisCount: 2,
-                      childAspectRatio: 0.45
+                      childAspectRatio: 0.66
                   ),
                   itemCount: controller.bookList['data'].length,
                   itemBuilder: (BuildContext context, int index) {
@@ -130,18 +130,41 @@ class all_SubjectWiseView extends GetView<detailed_course_controller> /*with Sin
                           elevation: 7,
                           color: Colors.white,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(0.0),
                             child: Container(
                               //padding: const EdgeInsets.only(right: 10),
                               color: Colors.transparent,
                               alignment: Alignment.bottomRight,
                               child: Column(
-                                mainAxisAlignment:
-                                MainAxisAlignment.center,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
+                                  Column(
+                                    children: [
+                                      Expanded(
+                                        flex: 8,
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                          controller.englishPressed == true
+                                              ? '${ApiService.IMAGE_URL+controller.bookList['data'][index]['image']}'
+                                              : '${ApiService.IMAGE_URL+controller.bookList['data'][index]['image']}',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '${controller.bookList['data'][index]['book_name']}',
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600),
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                               *//*   SizedBox(
                                     height: MediaQuery
                                         .of(context)
                                         .size
@@ -166,7 +189,7 @@ class all_SubjectWiseView extends GetView<detailed_course_controller> /*with Sin
                                         style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600),
-                                      )),
+                                      )),*//*
                                 ],
                               ),
                             ),
@@ -175,7 +198,93 @@ class all_SubjectWiseView extends GetView<detailed_course_controller> /*with Sin
                       ),
                     );
                   }),
-            ):
+            )*/
+            Expanded(
+              child: GridView(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const AlwaysScrollableScrollPhysics(),
+                primary: true,
+                scrollDirection: Axis.vertical,
+                gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 2,
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.6),
+                children: [
+                  for(int index=0;index< controller.bookList['data'].length;index++)
+                    InkWell(
+                          onTap: () {
+                            print("===============bookkkk=====ontap");
+
+
+                            var data={
+                              "notedetails": "false",
+                              "bookid": controller.bookList['data'][index]['id'].toString(),
+                              "free": "false",
+                              //"category":"${controller.subjectName}, ${controller.coachingName} ${controller.examType}",
+                              "category":"${controller.bookList['data'][index]['book_name'].toString()}, ${controller.bookList['data'][index]['book_name'].toString()} ${controller.bookList['data'][index]['heading'].toString()}",
+
+                              "bookName": controller.bookList['data'][index]['heading'].toString()??"",
+                              "imageURL":  ApiService.IMAGE_URL+"${controller.bookList['data'][index]['image']}"
+                            };
+
+                            Get.toNamed(Routes.SPECIFIC_BOOK_VIEW,parameters: data);
+
+                            print("===============bookkkk=====ontap");
+
+                          },
+                          child: Obx(
+                                ()=>controller.bookList['data'] == null?
+                            const Center(child: CupertinoActivityIndicator()):
+                            Padding(
+                              padding: const EdgeInsets.all(0.0),
+                              child: Card(
+                                elevation: 3,
+                                color: Colors.white,
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  color: Colors.transparent,
+                                  alignment: Alignment.bottomRight,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        flex: 8,
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                          controller.englishPressed == true
+                                              ? '${ApiService.IMAGE_URL+controller.bookList['data'][index]['image']}'
+                                              : '${ApiService.IMAGE_URL+controller.bookList['data'][index]['image']}',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '${controller.bookList['data'][index]['book_name']}',
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600),
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+
+
+                ],
+              ),
+            )
+
+                :
             Expanded(child: Center(child: Text("No data found"))):
             Expanded(
               child: Center(
