@@ -1,40 +1,21 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
-import 'package:flutter_cashfree_pg_sdk/api/cfpayment/cfdropcheckoutpayment.dart';
-import 'package:flutter_cashfree_pg_sdk/api/cfpaymentcomponents/cfpaymentcomponent.dart';
-import 'package:flutter_cashfree_pg_sdk/api/cfpaymentgateway/cfpaymentgatewayservice.dart';
-import 'package:flutter_cashfree_pg_sdk/api/cfsession/cfsession.dart';
-import 'package:flutter_cashfree_pg_sdk/api/cftheme/cftheme.dart';
-import 'package:flutter_cashfree_pg_sdk/utils/cfenums.dart';
-import 'package:flutter_cashfree_pg_sdk/utils/cfexceptions.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:internet_file/internet_file.dart';
-import 'package:internet_file/storage_io.dart';
-import 'package:intl/intl.dart';
+import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart';
 import 'package:national_digital_notes_new/views/specific_book_details_screen/specific_book_details_controller.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:vocsy_epub_viewer/epub_viewer.dart';
-import '../../utils/constants/api_service.dart';
-import '../../utils/global_widgets/snackbar.dart';
-import '../../utils/payment_getway/case_free_payment.dart';
+import '../../utils/routes/app_pages.dart';
 import '../add_to_cart_screen/add_to_cart_view.dart';
-import '../order_placed_screen/order_placed_view.dart';
-import '../pdf_viewer.dart';
 import 'about_this_ebook_view.dart';
 import 'package:http/http.dart' as http;
 
 class specific_books_views extends GetView<specific_book_details_controller>{
-
+  static const platform = MethodChannel('samples.flutter.dev/battery');
   @override
   Widget build(BuildContext context) {
    /* if (kDebugMode) {
@@ -61,7 +42,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
 
          body:
          controller.isLoading==false ?
-         controller.data['success']!=true?Center(child: Text('No data found')):
+         controller.data['success'] !=true?  Center(child: Text('No data found')):
          ListView(
              children: [
            Column(
@@ -87,20 +68,28 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                          mainAxisAlignment: MainAxisAlignment.start,
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
-                           Padding(
-                             padding: const EdgeInsets.only(top: 10.0),
-                             child: Text(
-                               controller.book_detils[0]['book_name']!=null?controller.book_detils[0]['book_name']:controller.book_detils[0]['title'].toString(),
-                               style: const TextStyle(fontSize: 16),
+                           Expanded(
+                             flex: 8,
+                             child: Padding(
+                               padding: const EdgeInsets.only(top: 05.0),
+                               child: Text(
+                                 controller.book_detils[0]['book_name']!=null?controller.book_detils[0]['book_name']:controller.book_detils[0]['title'].toString(),
+                                 overflow: TextOverflow.ellipsis,
+                                 maxLines: 2,
+                                 style: const TextStyle(fontSize: 16),
+                               ),
                              ),
                            ),
-                           Flexible(
-                             flex: 1,
-                             child: Text(
-                               controller.category.toString().replaceAll(',', ''),
-                               maxLines: 1,
-                               style: TextStyle(
-                                   fontSize: 12, color: Colors.grey.shade700),
+                           Expanded(
+                             flex: 2,
+                             child: Container(
+                               child: Text(
+                                 overflow: TextOverflow.ellipsis,
+                                 controller.category.toString().replaceAll(',', ''),
+                                 maxLines: 1,
+                                 style: TextStyle(
+                                     fontSize: 12, color: Colors.grey.shade700),
+                               ),
                              ),
                            ),
                            const SizedBox(
@@ -172,12 +161,8 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                              width: MediaQuery.of(context).size.width * 0.4,
                              child: ElevatedButton(
                                onPressed: () async{
-                                 print("orderid======-----------------------------${controller.book_detils[0]['id']}");
-                                 /* Future.delayed(const Duration(seconds: 3))
-                                  .then((value) {
-                                Get.to(const OrderPlaced());
-                              });*/
 
+                                 incrementCounter(price: controller.book_detils[0]['selling_price'].toString());
                                },
                                child: Row(
                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -216,7 +201,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                          //<-- SEE HERE
                          side: const BorderSide(width: 1.0, color: Colors.grey),
                        ),
-                       child: const Text(
+                       child:  Text(
                          'Read Sample',
                          style: TextStyle(fontSize: 11),
                        )
@@ -232,13 +217,9 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                              await controller.Remove_wishlist();
                              controller.book_detils[0]['is_fav']=0;
 
-
                            }else{
-
-
                              await controller.Add_fev();
                              controller.book_detils[0]['is_fav']=1;
-
                            }
 
                            // Get.to(PDFSYNC(
@@ -396,12 +377,28 @@ class specific_books_views extends GetView<specific_book_details_controller>{
               ListTile(
                   leading: const Icon(Icons.picture_as_pdf),
                   title: const Text('Open with PDF'),
-                  onTap: () => {
+                  onTap: (){
+
                     if(controller.notedetails.value=='true'){
-                      Get.toNamed(Routes.)
+                      print('pdf sned-----------${controller.book_detils[0]['sample_note'].toString()}');
+                         var data={
+                             'pdf_url':controller.book_detils[0]['sample_note'].toString(),
+                             'bookId': controller.book_detils[0]['id'].toString(),
+                             'title': controller.book_detils[0]['title'].toString(),
+                             'notedetails': controller.notedetails.toString(),
+                            };
+                      Get.toNamed(Routes.PDF_VIEWER,parameters: data);
                       //Get.to( TestingPDF(pdf_url:controller.book_detils[0]['sample_note']))
                     }else{
-                      Get.to( TestingPDF(pdf_url:controller.book_detils[0]['sample_book']))
+                      print('pdf sned-----------${controller.book_detils[0]['sample_book'].toString()}');
+
+                      var data={
+                        'pdf_url':controller.book_detils[0]['sample_book'].toString(),
+                        'bookId': controller.book_detils[0]['id'].toString(),
+                        'title': controller.book_detils[0]['book_name'].toString(),
+                        'notedetails': controller.notedetails.toString(),
+                      };
+                      Get.toNamed(Routes.PDF_VIEWER,parameters: data);
                     }
                    // print("simplebook--------------------${book_detils[0]['sample_book']}"),
 
@@ -451,5 +448,29 @@ class specific_books_views extends GetView<specific_book_details_controller>{
           );
         }
     );
+  }
+
+  void incrementCounter({price}) async{
+
+    print('price------------------$price');
+    final List<Object?> result = await platform.invokeMethod('callSabPaisaSdk',[userData!.name,"",userData!.emailId,userData!.phoneNumber,price]);
+
+    String txnStatus = result[0].toString();
+    String txnId = result[1].toString();
+    if(txnStatus.toString()=="SUCCESS"){
+      controller.PlaceOrder(transaction_id: txnId,item_price: price,item_type: controller.Type.value,payment_status: txnStatus.toString());
+    }else{
+      Fluttertoast.showToast(
+          msg: txnStatus,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
+
   }
 }

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../global_widgets/globle_var.dart';
+
 class ApiService {
  static late final BuildContext context;
 
@@ -22,6 +24,7 @@ class ApiService {
   static final String newsCategoryList = "newsCategoryList";
   static final String quiz = "quiz";
   static final String orderDetails = BASE_URL+"orderDetails";
+  static final String checkOutAllOrder = BASE_URL+"checkOutAllOrder";
   static final String get_profile = BASE_URL+"getProfile";
   static final String testList = "testList";
   static final String testSeriesList = "testSeriesList";
@@ -31,6 +34,7 @@ class ApiService {
   static final String REPORT_OPTION = "coachingReportOptions";
   static final String REPORT = "testQuestionReport";
   static final String TEST_RESULT_LIST = "testResultList";
+  static final String checkOutAllOnlineTest = "checkOutAllOnlineTest";
 
 
   static final String x_client_id = "2871162505f719d22dbc83aa6a611782";
@@ -39,8 +43,11 @@ class ApiService {
 
  Future Test_Submit({questions_one, Token,total_time,right_marks,negative_marks,series_id}) async {
 
-   print('data---------------------------$questions_one');
-   print('data---------------------------${jsonEncode(questions_one)}');
+
+   String jsonUser = jsonEncode(questions_one);
+   print('---------------------------${jsonUser}');
+
+   print('Data---------------------------${questions_one}');
    print('Token---------------------------$Token');
    print('total_time---------------------------$total_time');
    print('right_marks---------------------------$right_marks');
@@ -255,18 +262,31 @@ class ApiService {
 
   Future gettestSeriesList({id, test_id,coaching_id}) async {
 
-    print("id------------------${id}");
-    print("exam_id------------------${test_id}");
-    print("coaching_id------------------${coaching_id}");
-
-
     final response = await http.post(
           Uri.parse(BASE_URL + testSeriesList),
         headers: {HttpHeaders.acceptHeader: "application/json"},
         body: ({
           "token":id.toString(),
+          "user_id":userData!.userId.toString(),
           "test_id":test_id.toString(),
           "coaching_id":coaching_id.toString(),
+        })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+  }
+
+  Future Buy_course({transaction_id, payment_status,series_id}) async {
+
+    final response = await http.post(
+          Uri.parse(BASE_URL + checkOutAllOnlineTest),
+        headers: {HttpHeaders.acceptHeader: "application/json"},
+        body: ({
+          "user_id":userData!.userId.toString(),
+          "transaction_id":transaction_id.toString(),
+          "payment_status":payment_status.toString(),
+          "payment_method":'online'.toString(),
+          "series_id":series_id.toString(),
         })
       );
       var ConvertDataToJson = jsonDecode(response.body);

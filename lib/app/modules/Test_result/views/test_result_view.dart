@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:national_digital_notes_new/utils/constants/ColorValues.dart';
 import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../Pre_onlineTest_instruction/views/BottomBarWithButton.dart';
 import '../controllers/test_result_controller.dart';
 
@@ -11,7 +13,7 @@ class TestResultView extends GetView<TestResultController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()async{
-        Get.offAndToNamed(Routes.TEST_LIST);
+        Get.offAndToNamed(Routes.DESHBOARD);
          return true;
       },
       child: Obx(()=>
@@ -25,7 +27,13 @@ class TestResultView extends GetView<TestResultController> {
               },
             ),
           appBar: AppBar(
-            title:  Text('${controller.tital.value}'),
+            title:  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${controller.tital.value}'),
+                Text('${controller.subject_name.value}',style: TextStyle(fontSize: 14)),
+              ],
+            ),
             centerTitle: false,
           ),
           body:  Column(
@@ -77,7 +85,7 @@ class TestResultView extends GetView<TestResultController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CircleAvatar(
-                                      backgroundColor: Colors.green,
+                                      backgroundColor: Colors.lightBlue,
                                       radius: 10,
                                       child: Icon(
                                         Icons.access_time,
@@ -99,7 +107,7 @@ class TestResultView extends GetView<TestResultController> {
                                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                                   child: Center(
                                     child: Text(
-                                      '${controller.accuracy.value}% ACCURACY',
+                                      '${controller.accuracy2.value}% ACCURACY',
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ),
@@ -363,7 +371,14 @@ class TestResultView extends GetView<TestResultController> {
                                   child: InkWell(
                                     onTap: (){
                                       print('-------');
-
+                                      var whatsappUrl = "https://wa.me/?text=Hey buddy, try this super cool new app!";
+                                      // "whatsapp:";
+                                      // "whatsapp://send?phone=8575785855";
+                                      try {
+                                        launch(whatsappUrl);
+                                      } catch (e) {
+                                        //To handle error and display error message
+                                      }
                                       //shareFile();
                                     },
                                     child: Container(
@@ -401,7 +416,6 @@ class TestResultView extends GetView<TestResultController> {
                   ),
                 ),
               ),
-
 
 
             ],

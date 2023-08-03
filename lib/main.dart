@@ -3,28 +3,28 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:national_digital_notes_new/utils/constants/Globle_data.dart';
 import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
-import 'package:national_digital_notes_new/views/main/screens/AppSplashScreen.dart';
 
-// AppStore appStore = AppStore();
+import 'Push.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-
-  print("==========${message.data.toString()}");
-  print("==========${message.notification!.body.toString()}");
+  await Firebase.initializeApp();
+  print("Handling a background message: ${message.messageId}");
 }
-
-
-  Get_token(){
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+Get_token(){
     messaging = FirebaseMessaging.instance;
     messaging.getToken().then((value) {
       print('device_token =  $value');
       device_token = value;
       print('token----------------------------------$device_token');
-    }
+      }
     );
   }
 
@@ -36,11 +36,28 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
-void main() async{
 
+
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await  Get_token();
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+
+
+  await Get_token();
+
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings =
+  InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+
+
+
+
+  Push().push_noti();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   HttpOverrides.global = MyHttpOverrides();
   //Firebase.initializeApp();

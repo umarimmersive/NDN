@@ -32,9 +32,15 @@ class ExamCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(exam.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                        Text(
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            exam.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                         SizedBox(height: 2),
-                        Text(exam.subject_name),
+                        Text(
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            exam.subject_name),
                         SizedBox(height: 20),
                         //Text("Date: ${DateFormat.yMMMd().format(exam.date)}"),
 
@@ -42,17 +48,24 @@ class ExamCard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: Column(
                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text("Time: ${exam.duration2} hr"),
+                        Text(
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            "Time: ${exam.duration2} Hr"),
                         SizedBox(height: 2),
-                        Text("Date: ${exam.date}"),
+                        Text(  overflow: TextOverflow.ellipsis,
+                            maxLines: 1,"Date: ${exam.date}"),
                         SizedBox(height: 2),
 
-                        Text(exam.payment_type=='unpaid' ? "${exam.payment_amount}" : exam.payment_type, style: TextStyle(color: exam.payment_type=='unpaid' ? Colors.red : Colors.green)),
+                        Text(
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            exam.payment_type.toString().toLowerCase()=='unpaid'? "Rs.${exam.payment_amount}" : exam.payment_type, style: TextStyle(color: exam.payment_type.toLowerCase()=='unpaid' ? Colors.red : Colors.green)),
                        // Text("Upcomimg", style: TextStyle(color: Colors.red))
 
                       ],

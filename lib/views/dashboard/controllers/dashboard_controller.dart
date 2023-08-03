@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -55,9 +56,6 @@ class DashboardController extends GetxController {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
 
 
-
-
-
       print('User granted permission');
 
 
@@ -75,17 +73,30 @@ class DashboardController extends GetxController {
 
 
 
-
-
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 
   @override
   void onInit() {
     super.onInit();
 
+    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('app_icon');
+    final DarwinInitializationSettings initializationSettingsDarwin =
+    DarwinInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    final LinuxInitializationSettings initializationSettingsLinux =
+    LinuxInitializationSettings(
+        defaultActionName: 'Open notification');
 
 
 
+    final InitializationSettings initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: initializationSettingsDarwin,
+        linux: initializationSettingsLinux);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
 
 
     registerNotification();
@@ -118,6 +129,22 @@ class DashboardController extends GetxController {
     home_controller.onInit();
 
 
+  }
+
+  void onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async {
+    final String? payload = notificationResponse.payload;
+    if (notificationResponse.payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+   /* await Navigator.push(
+      context,
+      MaterialPageRoute<void>(builder: (context) => SecondScreen(payload)),
+    );*/
+  }
+
+  void onDidReceiveLocalNotification(
+      int? id, String? title, String? body, String? payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
   }
 
   @override

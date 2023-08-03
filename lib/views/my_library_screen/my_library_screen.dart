@@ -84,33 +84,41 @@ class _MyLibraryViewState extends State<MyLibraryView> {
         title: const Text("My Library"),
       ),
       body:
-      isLoading==true?Center(child: CupertinoActivityIndicator()):
-      status.value?
-      ListView.builder(
-          itemCount: library_list.length,
-          itemBuilder: (BuildContext context, int i) {
-            return ListTile(
-              onTap: () {
-               /* Get.to(DetailedBooksOrder(
-                  bookName: library_list[i]['title'],
-                  imageURL:  'https://ndn.manageprojects.in/'+library_list[i]['image'],
-                  orderedDate: "Delivered on"+library_list[i]['purchase_on'],
-                ));*/
-                Get.to(DetailedBooksOrder(
-                  bookid: library_list[i]['id'].toString(),
-                  /*imageURL:  'https://ndn.manageprojects.in/'+library_list[i]['image'],
-                  orderedDate: "Delivered on"+library_list[i]['purchase_on'], bookName: '',*/
-                ));
-              },
-              leading: Image.network(
-                'https://ndn.manageprojects.in/'+library_list[i]['image'],
-              ),
-              title:  Text(library_list[i]['title']),
-              subtitle:  Text("Delivered on "+library_list[i]['purchase_on']),
-              trailing: const Icon(Icons.chevron_right),
-            );
-          })
-          :Center(child: Text("Record Not Found.")),
-    );
+
+        Obx((){
+    if(isLoading==true){
+    return Center(child: CupertinoActivityIndicator());
+    }else{
+    if(status.value==true){
+    return  ListView.builder(
+      itemCount: library_list.length,
+      itemBuilder: (BuildContext context, int i) {
+      return Card(
+        child: ListTile(
+        onTap: () {
+
+          Get.to(
+         DetailedBooksOrder(
+          bookid: library_list[i]['id'].toString(),
+          ));
+    },
+          leading: CachedNetworkImage(
+          imageUrl:
+        ApiService.IMAGE_URL+library_list[i]['image'].toString(),
+    ),
+        title:  Text(library_list[i]['title']),
+        subtitle:  Text("Delivered on "+library_list[i]['purchase_on']),
+        trailing: const Icon(Icons.chevron_right),
+        ),
+      );
+      });
+    } else{
+    return Center(child: Text("Record Not Found."));
+    }
+    }
+       }
+
+
+    ));
   }
 }

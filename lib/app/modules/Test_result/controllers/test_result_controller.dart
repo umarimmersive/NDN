@@ -21,19 +21,9 @@ class TestResultController extends GetxController {
   final total_score = ''.obs;
   final test_total_score = ''.obs;
   final accuracy = ''.obs;
+  final accuracy2 = ''.obs;
+  final subject_name = ''.obs;
 
-  /*var data={
-    'tital': title.toString(),
-    'test_id':seriesId.toString(),
-    'skip_answer':skip_answer.toString(),
-    'wrong_answer':wrong_answer.toString(),
-    'right_answer':right_answer.toString(),
-    'total_question':total_question.toString(),
-    'total_time':total_time.toString(),
-    'total_score':total_score.toString(),
-    'test_total_score':test_total_score.toString(),
-    'accuracy':accuracy.toString(),
-  };*/
 
   @override
   void onInit() {
@@ -48,6 +38,8 @@ class TestResultController extends GetxController {
     total_score.value=Get.parameters['total_score'].toString();
     test_total_score.value=Get.parameters['test_total_score'].toString();
     accuracy.value=Get.parameters['accuracy'].toString();
+    accuracy2.value=Get.parameters['accuracy2'].toString();
+    subject_name.value=Get.parameters['subject_name'].toString();
 
     super.onInit();
   }

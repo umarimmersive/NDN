@@ -29,7 +29,7 @@ class SignupController extends GetxController {
   var obscureNewPass = true.obs;
   var obscureConfPass = true.obs;
 
-  bool agree = false;
+  RxBool agree = false.obs;
 
 
   var isLoading = false.obs;
@@ -48,15 +48,18 @@ class SignupController extends GetxController {
     }else if(mobileController.text.isEmpty){
       snackbar("Please enter your mobile number.");
     }else if(passController.text.isEmpty){
-      snackbar("Please enter your password.");
+      snackbar("Please Enter At Least 6 Digit Password.");
     }else if(confPassController.text.isEmpty){
-      snackbar("Please enter your confirm password.");
+      snackbar("Please Enter At Least 6 Digit Password.");
     }else if(passController.text!=confPassController.text) {
       snackbar("Both Password Does Not Match");
     }else{
-      Signup(type,id);
+      if(agree.value){
+        Signup(type,id);
+      }else{
+        snackbar("Please read and accept terms and conditions");
+      }
     }
-
   }
 
 
@@ -64,7 +67,7 @@ class SignupController extends GetxController {
     try {
       isLoading(true);
       var response = await ApiService()
-          .SignUp(nameController.text,emailController.text,mobileController.text,passController.text,confPassController.text,"app",id.toString());
+          .SignUp(nameController.text,emailController.text,mobileController.text,passController.text,confPassController.text,type.toString(),id.toString());
       print({'========================$response'});
 
       if (response['success'] == true) {

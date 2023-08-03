@@ -3,7 +3,7 @@
 class Questions {
   static final List<String> values = [
     /// Add all fields
-    id, question, question_hindi, options_hindi, answerIndex ,answer_index_hindi ,options ,user_answer,type ,markforreview
+    id, question, question_hindi, options_hindi, answerIndex ,answer_index_hindi ,options ,user_answer,type ,markforreview , is_question_image, question_image, option_image,is_option_image,
   ];
   static const String id = 'id';
   static const String question = 'question';
@@ -15,6 +15,10 @@ class Questions {
   static const String user_answer ='user_answer';
   static const String type ='type';
   static const String markforreview ='markforreview';
+  static const String is_question_image ='is_question_image';
+  static const String question_image ='question_image';
+  static const String option_image ='option_image';
+  static const String is_option_image ='is_option_image';
 
 
   //static final List<String> options = [];
@@ -31,6 +35,10 @@ class Questions_model{
   String? user_answer;
   String? type;
   String? markforreview;
+  String? is_question_image;
+  String? question_image;
+  String? option_image;
+  String? is_option_image;
 
   Questions_model({
     this.id,
@@ -43,6 +51,10 @@ class Questions_model{
     this.type,
     this.answerIndex,
     this.markforreview,
+    this.is_question_image,
+    this.question_image,
+    this.option_image,
+    this.is_option_image,
   });
 
   Questions_model.fromMap(Map<String, dynamic> item):
@@ -55,7 +67,11 @@ class Questions_model{
         answerIndex = item[Questions.answerIndex].toString(),
         answer_index_hindi = item[Questions.answer_index_hindi].toString(),
         type = item[Questions.type].toString(),
-        markforreview = item[Questions.markforreview].toString();
+        markforreview = item[Questions.markforreview].toString(),
+        is_question_image = item[Questions.is_question_image].toString(),
+        question_image = item[Questions.question_image].toString(),
+        option_image = item[Questions.option_image],
+        is_option_image = item[Questions.is_option_image].toString();
 
   Map<String, Object> toMap(){
     return {
@@ -69,6 +85,10 @@ class Questions_model{
       Questions.answer_index_hindi: answer_index_hindi.toString()??'',
       Questions.options: options??'',
       Questions.markforreview: markforreview??'',
+      Questions.is_question_image: is_question_image.toString()??'',
+      Questions.question_image: question_image??'',
+      Questions.option_image: option_image??'',
+      Questions.is_option_image: is_option_image??'',
     };
   }
 }

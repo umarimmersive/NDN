@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:national_digital_notes_new/controllers/address_controller.dart';
@@ -11,26 +13,26 @@ import 'package:national_digital_notes_new/views/deliver_to_screen/deliver_to_sc
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
 
+import '../../app/modules/Pre_onlineTest_instruction/views/BottomBarWithButton.dart';
 import '../../utils/constants/api_service.dart';
+import '../specific_book_details_screen/specific_book_details_controller.dart';
 // ignore: must_be_immutable
 class BuyNowScreen extends StatefulWidget {
-  /*String bookName;
-  String imageURL;
-  String category;*/
 
-  BuyNowScreen(
-      {super.key,
-      /*required this.category,
-      required this.bookName,
-      required this.imageURL*/});
+
+  BuyNowScreen({super.key,});
 
   @override
   State<BuyNowScreen> createState() => _BuyNowScreenState();
 }
 
 class _BuyNowScreenState extends State<BuyNowScreen> {
+
+  static const platform = MethodChannel('samples.flutter.dev/battery');
   int qn = 0;
   AddressController addressController = Get.put(AddressController());
+  specific_book_details_controller cont = Get.put(specific_book_details_controller());
+
   String? payment;
 
   @override
@@ -46,19 +48,11 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   var order_details_list=[].obs;
 
   Order_details() async{
-    //print('bookid====================${widget.bookid}');
     order_details_list.clear();
     isLoading(true);
-
-    //print("===user id------------------$user_id");
-
-
     http.Response response = await http.post(Uri.parse(ApiService.orderDetails),body: {
       "user_id":userData!.userId,
     });
-
-
-
     data=jsonDecode(response.body);
 
     status.value=data['success'];
@@ -66,15 +60,12 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
     print("dataaaa=======================$data");
 
     if (data['success'] == true) {
-
       print(response);
       print(response.body);
       order_details_list.addAll(data['data']);
       //book_detils.value = data['data'];
       print("88888*******");
       print("cart_list========================$order_details_list");
-
-
 
       setState(() {
 
@@ -94,20 +85,50 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   }
 
 
+  Buy_card_product({transaction_id,payment_status}) async{
+    isLoading(true);
+    http.Response response = await http.post(Uri.parse(ApiService.checkOutAllOrder),body: {
+      "user_id":userData!.userId,
+      "transaction_id":transaction_id,
+      "payment_status":payment_status,
+      "payment_method":"online",
+      "payment_address":" ",
+    });
+   var data=jsonDecode(response.body);
+    status.value=data['success'];
+
+    log("=========$data");
+
+    if (data['success'] == true) {
+      print('---------------------payment success');
+      isLoading(false);
+    } else if (data['success'] == false) {
+      isLoading(false);
+    }
+
+  }
+
+
 
 
 
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+        bottomNavigationBar: BottomBarWithButton(
+          buttonText: "Checkout",
+          onPressed: () {
+            incrementCounter(price:data['total_amount'].toString());
+          },
+        ),
       // backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
         title: const Text("Order Details"),
       ),
       body: isLoading==true?
       Center(child: CupertinoActivityIndicator()):
-
       data['success']==true?
       SingleChildScrollView(
           child: Padding(
@@ -130,9 +151,15 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Image.network(ApiService.IMAGE_URL+order_details_list[i]['image']),
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: CachedNetworkImage(
+                                imageUrl:ApiService.IMAGE_URL+order_details_list[i]['image']),
+                          ),
                         ),
                         Expanded(
+                          flex: 2,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +304,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                Padding(
+              /*  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: InkWell(
                     onTap: () {
@@ -312,7 +339,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                       ],
                     ),
                   ),
-                ),
+                ),*/
                 const SizedBox(
                   height: 15,
                 ),
@@ -351,7 +378,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                      /*  Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children:  [
                             Text('Shipping cost'),
@@ -363,10 +390,10 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                                   fontSize: 14),
                             ),
                           ],
-                        ),
-                        const SizedBox(
+                        ),*/
+                      /*  const SizedBox(
                           height: 10,
-                        ),
+                        ),*/
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children:  [
@@ -375,7 +402,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '₹ ${data['shipping_cost'].toString()}',
+                              '₹ ${data['total_amount'].toString()}',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -390,19 +417,17 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                SizedBox(
+              /*  SizedBox(
                     width: double.maxFinite,
                     height: 50,
                     child: ElevatedButton(
                         onPressed: () {
-                          // Get.snackbar(
-                          //     '', 'Order Placed Successfully');
-                          // Get.offAll(const DeliverToScreen());
+                          incrementCounter(price:data['total_amount'].toString());
                         },
                         child: const Text("Checkout"))),
                 const SizedBox(
                   height: 15,
-                ),
+                ),*/
               ],
             ),
           ),
@@ -410,5 +435,42 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
           Center(child: Text('No data found'),)
 
     );
+  }
+  void incrementCounter({price}) async{
+
+    print('price------------------$price');
+    final List<Object?> result = await platform.invokeMethod('callSabPaisaSdk',[userData!.name,"",userData!.emailId,userData!.phoneNumber,price]);
+
+    String txnStatus = result[0].toString();
+    String txnId = result[1].toString();
+    if(txnStatus.toString()=="SUCCESS"){
+
+
+   await Buy_card_product(payment_status: txnStatus.toString(),transaction_id: txnId.toString());
+    //  cont.PlaceOrder(transaction_id: txnId,item_price: price,item_type: cont.Type.value,payment_status: txnStatus.toString());
+    }else{
+      Fluttertoast.showToast(
+          msg: txnStatus,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
+
+    /* print('result-------------------------------$result');
+    Fluttertoast.showToast(
+        msg: txnStatus,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );*/
+
   }
 }

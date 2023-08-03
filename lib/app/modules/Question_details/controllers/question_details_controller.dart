@@ -35,12 +35,18 @@ class QuestionDetailsController extends GetxController {
 
 
 
-
+  List<dynamic> questions_one = [].obs;
   @override
   void onInit() async{
+
+
+    print('------------------question details init');
+
+
     cochingId.value=Get.parameters['cochingId'].toString();
     print('cochingId------instruction2--------${cochingId.value}');
     seriesId.value=Get.parameters['seriesId'].toString();
+    print('seriesId----------------------------$seriesId');
     instruction.value=Get.parameters['instruction'].toString();
     time.value=Get.parameters['time'].toString();
     passing_value.value=Get.parameters['passing_value'].toString();
@@ -59,15 +65,16 @@ class QuestionDetailsController extends GetxController {
     total_mark.value=Get.parameters['total_mark'].toString();
     isLoading.value=true;
     print('total_number_of_question---------------${total_number_of_question}');
-
+    questions_one.clear();
     Database? db = await SqliteService.instance.database;
     // raw query
     List<Map> result = await db!.rawQuery('SELECT * FROM Questions WHERE type=${seriesId.value.toString()}');
     // print the results
     result.forEach((row) => print("row------------------------$row"));
-
+    questions_one.addAll(result);
 
     if(result.isEmpty){
+      isLoading.value=false;
       //await Get_Qustion1();
     }else{
       await  refreshNotes();
@@ -76,35 +83,47 @@ class QuestionDetailsController extends GetxController {
     super.onInit();
   }
 
-  List<dynamic> questions_one = [].obs;
+
 
   final isLoading=false.obs;
   refreshNotes() async {
+
+   /* print('----------------refressssssssss}');
     final data = await SqliteService.getItems();
     questions_one = data;
+*/
+    markReview.value=0;
+    Notanswer.value=0;
+    answer.value=0;
+    MarkAndAnswer.value=0;
 
     for(int i =0;i<questions_one.length;i++){
-      if(questions_one[i].markforreview=='1'){
-        markReview.value=i+1;
+      if(questions_one[i]['markforreview'].toString()=="1"){
+        markReview.value=markReview.value+1;
+        print('markReview----------------------${markReview.value}');
+      }
+    }
+
+    for(int j =0;j<questions_one.length;j++){
+      print('-------xcmnzxcnxdn');
+      print('user_answer-------${questions_one[j]['user_answer']}');
+      if(questions_one[j]['user_answer'].toString()=="null"){
+        Notanswer.value=Notanswer.value+1;
+        print('Notanswer----------------------${Notanswer.value}');
       }
     }
 
     for(int i =0;i<questions_one.length;i++){
-      if(questions_one[i].user_answer.toString().isEmpty){
-        Notanswer.value=i+1;
-        print('not answer -----${Notanswer.value}');
+      if(questions_one[i]['user_answer'].toString()!="null"){
+        answer.value=answer.value+1;
+        print('answer----------------------${answer.value}');
       }
     }
 
     for(int i =0;i<questions_one.length;i++){
-      if(questions_one[i].user_answer.toString().isNotEmpty){
-        answer.value=i+1;
-      }
-    }
-
-    for(int i =0;i<questions_one.length;i++){
-      if(questions_one[i].user_answer.toString().isNotEmpty && questions_one[i].markforreview.toString()!='0'){
-        MarkAndAnswer.value=i+1;
+      if(questions_one[i]['user_answer'].toString()!="null" && questions_one[i]['markforreview'].toString()=="1"){
+        MarkAndAnswer.value=MarkAndAnswer.value+1;
+        print('MarkAndAnswer----------------------${MarkAndAnswer.value}');
       }
     }
 

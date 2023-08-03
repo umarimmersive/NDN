@@ -16,6 +16,7 @@ class Test_list_model {
   String payment_amount;
   String subject_name;
   String duration2;
+  String test_type;
 
 
 
@@ -37,6 +38,7 @@ class Test_list_model {
     required this.payment_amount,
     required this.subject_name,
     required this.duration2,
+    required this.test_type,
 
   });
 
@@ -59,6 +61,7 @@ class Test_list_model {
       payment_amount: userMap['payment_amount'].toString()??'0',
       subject_name: userMap['subject_name'].toString()??'0',
       duration2: userMap['duration2'].toString()??'0',
+      test_type: userMap['test_type'].toString()??'0',
     );
   }
 

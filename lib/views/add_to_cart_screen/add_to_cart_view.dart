@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -222,7 +223,8 @@ class _AddToCartViewState extends State<AddToCartView> {
                                         leading: Container(
                                           //height: 100,
                                           width: 60,
-                                          child: Image.network(
+                                          child: CachedNetworkImage(
+                                              imageUrl:
                                               ApiService.IMAGE_URL+cart_list[index]['image']),
                                         ),
                                         title: Text(cart_list[index]['title']),

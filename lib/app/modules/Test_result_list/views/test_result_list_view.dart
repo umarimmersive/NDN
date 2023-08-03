@@ -14,7 +14,7 @@ class TestResultListView extends GetView<TestResultListController> {
     return
       WillPopScope(
         onWillPop: ()async{
-          Get.offAndToNamed(Routes.TEST_LIST);
+          Get.back();
           return true;
         },
         child: Scaffold(
@@ -22,7 +22,7 @@ class TestResultListView extends GetView<TestResultListController> {
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                Get.toNamed(Routes.TEST_LIST);
+                Get.back();
               },
             ),
             title: Text('Results'),

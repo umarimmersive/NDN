@@ -26,7 +26,7 @@ class _SignupViewState extends State<SignupView> {
   TextEditingController passwordController = TextEditingController();
 
   // By defaut, the checkbox is unchecked and "agree" is "false"
-  bool agree = false;
+
 
   final _formKey = GlobalKey<FormState>();
 
@@ -314,10 +314,10 @@ class _SignupViewState extends State<SignupView> {
                                 children: [
                                   Material(
                                     child: Checkbox(
-                                      value: agree,
+                                      value: signupController.agree.value,
                                       onChanged: (value) {
                                         setState(() {
-                                          agree = value ?? false;
+                                          signupController.agree.value = value ?? false;
                                           setState(() {
 
                                           });
@@ -365,11 +365,9 @@ class _SignupViewState extends State<SignupView> {
                                   child: ElevatedButton(
                                       onPressed:() async {
                                         String? deviceId = await _getId();
-                                        if(agree){
+
                                           signupController.Validation('app',device_token.toString());
-                                        }else{
-                                          snackbar("Please read and accept terms and conditions");
-                                        }
+
                                        /* print('=--------------------------------------on');
                                         if (_formKey.currentState!.validate()) {
                                           print('=--------------------------------------fromm');

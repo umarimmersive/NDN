@@ -472,8 +472,8 @@ class Home_view extends GetView<controller_home_view> {
                         enableInfiniteScroll: true,
                         reverse: false,
                         autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 3),
-                        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                        autoPlayInterval: const Duration(seconds: 2),
+                        autoPlayAnimationDuration: const Duration(milliseconds: 2000),
                         autoPlayCurve: Curves.fastOutSlowIn,
                         enlargeCenterPage: true,
                         scrollDirection: Axis.horizontal,
@@ -651,7 +651,7 @@ class CustomEventDialogState extends State<CustomEventDialog> {
               Container(
                 padding: const EdgeInsets.all(20),
                 width: double.infinity,
-                color: Colors.lightGreen[400],
+                color: Colors.blue,
                 child: Column(
                   children: <Widget>[
                     Container(height: 10),
@@ -676,7 +676,7 @@ class CustomEventDialogState extends State<CustomEventDialog> {
                     Container(height: 10),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lightGreen[500],
+                        backgroundColor: Colors.blue,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 40),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get/get.dart';
 
@@ -47,51 +48,71 @@ class Pre_onlineTest_instruction_view extends GetView<Pre_onlineTest_instruction
       ),
       body: Column(
         children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6.0,vertical: 5),
-              child: Column(
-                children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
-                    elevation: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('General Instructions',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                          //Text('Result',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6.0,vertical: 5),
+            child: Column(
+              children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  elevation: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('General Instructions',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                        //Text('Result',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
 
-                        ],
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
           Expanded(
-            flex: 10,
-            child:  SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0,right: 16.0),
-                    child: Text(
+                    child:
+                    Html(
+                      data: '${controller.instruction.value}',
+                      extensions: [
+                        TagExtension(
+                          tagsToExtend: {"flutter"},
+                          child: const FlutterLogo(),
+                        ),
+                      ],
+                      style: {
+                        "p.fancy": Style(
+                          textAlign: TextAlign.start,
+                          padding: HtmlPaddings.all(0),
+                          //padding:  EdgeInsets.all(16),
+                          backgroundColor: Colors.grey,
+                          //margin: Margins(left: Margin(50, Unit.px), right: Margin.auto()),
+                          width: Width(300, Unit.px),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      },
+                    )
+
+                    /*Html(
+                      data: '${controller.instruction.value.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}',
+                    )*/
+                    /*Text(
                       '${controller.instruction.value.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}'
-                    ),
+                    ),*/
                   ),
 
                 ],
               ),
             ),
-
-
           )
 
         ],

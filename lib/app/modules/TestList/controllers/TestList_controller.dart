@@ -1,4 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:national_digital_notes_new/utils/constants/ColorValues.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../models/Test_list_model.dart';
 import '../../../../models/getExamList.dart';
@@ -8,26 +12,17 @@ import '../views/Exam_model.dart';
 
 class TestList_Controller extends GetxController {
   //TODO: Implement OnlineTestSeriesController
-  final exams = <Exam>[
-    Exam(number: 'Test 1',name: "Math exam", date: '01/01/2023', time: "10:00 AM", isPaid: true, Status: true),
-    Exam(number: 'Test 2',name: "Science exam", date: '01/01/2023', time: "2:00 PM", isPaid: false, Status: true),
-    Exam(number: 'Test 3',name: "History exam", date: '01/01/2023', time: "9:00 AM", isPaid: true, Status: true),
-    Exam(number: 'Test 4',name: "English exam", date: '01/01/2023', time: "11:00 AM", isPaid: false, Status: false),
-    Exam(number: 'Test 5',name: "Foreign language exam", date: '01/01/2023', time: "3:00 PM", isPaid: true, Status: true),
-    Exam(number: 'Test 6',name: "Math exam", date: '01/01/2023', time: "10:00 AM", isPaid: true, Status: true),
-    Exam(number: 'Test 7',name: "Science exam", date: '01/01/2023', time: "2:00 PM", isPaid: false, Status: false),
-    Exam(number: 'Test 8',name: "History exam", date: '01/01/2023', time: "9:00 AM", isPaid: true, Status: true),
-    Exam(number: 'Test 9',name: "English exam", date: '01/01/2023', time: "11:00 AM", isPaid: false, Status: true),
-    Exam(number: 'Test 10',name: "Foreign language exam", date: '01/01/2023', time: "3:00 PM", isPaid: true, Status: false),
-  ].obs;
+  static const platform = MethodChannel('samples.flutter.dev/battery');
 
   final count = 0.obs;
   final cochingId = ''.obs;
   final examId = ''.obs;
   final testId = ''.obs;
   final title = ''.obs;
+  final total_amount = ''.obs;
   @override
   void onInit() {
+
     cochingId.value=Get.parameters['cochingId'].toString();
     examId.value=Get.parameters['examId'].toString();
     testId.value=Get.parameters['testId'].toString();
@@ -50,6 +45,7 @@ class TestList_Controller extends GetxController {
       if (response['success'] == true) {
 
         List dataList = response['data'].toList();
+        total_amount.value=response['total_amount'].toString();
         Test_list.value = dataList.map((json) => Test_list_model.fromJson(json)).toList();
 
 
@@ -62,9 +58,56 @@ class TestList_Controller extends GetxController {
     }
   }
 
+  Future Purchase_course({transaction_id,payment_status,series_id}) async {
+    try {
+      isLoading1(true);
+      var response = await ApiService().Buy_course(transaction_id: transaction_id,payment_status: payment_status,series_id: series_id);
+      print({'get exam list----------------------------$response'});
+      if (response['success'] == true) {
+        Fluttertoast.showToast(
+            msg: 'Test Series Purchase Successfully',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.lightBlue,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
 
 
+      } else if (response['success'] == false) {
+        isLoading1(false);
+      }
+    } finally {
+      isLoading1(false);
 
+    }
+  }
+
+  void incrementCounter({price}) async{
+
+    final List<Object?> result = await platform.invokeMethod('callSabPaisaSdk',[userData!.name,"",userData!.emailId,userData!.phoneNumber,price]);
+
+    String txnStatus = result[0].toString();
+    String txnId = result[1].toString();
+    if(txnStatus.toString()=="SUCCESS"){
+
+    await  Purchase_course(series_id: testId.value,payment_status: txnStatus.toString(),transaction_id: txnId.toString());
+     // controller.PlaceOrder(transaction_id: txnId,item_price: price,item_type: controller.Type.value,payment_status: txnStatus.toString());
+    }else{
+      Fluttertoast.showToast(
+          msg: txnStatus,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
+
+  }
 
 
 

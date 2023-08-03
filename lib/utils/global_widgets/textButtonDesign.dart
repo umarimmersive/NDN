@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextButtonDesign extends StatelessWidget {
@@ -26,10 +27,7 @@ class TextButtonDesign extends StatelessWidget {
         child: SizedBox(
           height: 20,
           width: 20,
-          child: const CircularProgressIndicator(
-            strokeWidth: 2,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white), //done
-          ),
+          child:  CupertinoActivityIndicator(),
         ),
       );
 

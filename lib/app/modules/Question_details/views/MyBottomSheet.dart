@@ -71,7 +71,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             ),
 
 
-            Padding(
+           /* Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
               child: Row(
                 //mainAxisAlignment: MainAxisAlignment.,
@@ -108,7 +108,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                 ],
               ),
             ),
-
+*/
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
               child: Row(
@@ -168,7 +168,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text('Question Answer',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300, color: Colors.black,)),
+                        Text('Right Answer',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300, color: Colors.black,)),
                       ],),
                   ),
                   Expanded(
@@ -176,7 +176,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('3',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300, color: Colors.black,)),
+                        Text('${controller.answer.value}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300, color: Colors.black,)),
                       ],),
                   )
 

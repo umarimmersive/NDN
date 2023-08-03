@@ -20,11 +20,7 @@ buildLoading(BuildContext context) {
                           width: 30.0,
                           child: Transform.scale(
                             scale: 2,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.amber),
-                            ),
+                            child: CupertinoActivityIndicator(),
                           ),
                         ),
                       ),

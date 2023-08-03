@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "405785171232",
-    "project_id": "national-digital-app",
-    "storage_bucket": "national-digital-app.appspot.com"
+    "project_number": "280642104431",
+    "project_id": "national-digitalapp",
+    "storage_bucket": "national-digitalapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:405785171232:android:03d7d72c006731718e3345",
+        "mobilesdk_app_id": "1:280642104431:android:2793388a803cba78fbf19a",
         "android_client_info": {
-          "package_name": "com.example.national_digital_notes_new"
+          "package_name": "com.immersive.national_digital_notes_new"
         }
       },
       "oauth_client": [
         {
-          "client_id": "405785171232-2s3ten9gkhldrgtk5j88ueusnp579m8p.apps.googleusercontent.com",
+          "client_id": "280642104431-9a4b0p7gr4cf63c0evh5vjl9ouelumr1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.national_digital_notes_new",
-            "certificate_hash": "d0ca71828bab72e031b3dbe9b14e051ba6ca2ab7"
+            "package_name": "com.immersive.national_digital_notes_new",
+            "certificate_hash": "6c80d0ed47fae3d19dbae6f8a9f7128e44a1e725"
           }
         },
         {
-          "client_id": "405785171232-q04f8sh0aci3mh9qnaigrh56rkf95268.apps.googleusercontent.com",
+          "client_id": "280642104431-mg4brc1739ksitki9ho3a0pldra999jc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAJHF1GPGQekqfxSLmBvMojwHp7q_5eBBQ"
+          "current_key": "AIzaSyBuisvSc0IApRjuDz8oq8d5WvUlM3iSJhM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "405785171232-q04f8sh0aci3mh9qnaigrh56rkf95268.apps.googleusercontent.com",
+              "client_id": "280642104431-mg4brc1739ksitki9ho3a0pldra999jc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

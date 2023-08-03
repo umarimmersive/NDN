@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:national_digital_notes_new/utils/global_widgets/snackbar.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../../../utils/routes/app_pages.dart';
 import '../controllers/Pre_onlineTest_instruction2_controller.dart';
@@ -38,7 +39,7 @@ class Pre_onlineTest_instruction2_view extends GetView<Pre_onlineTest_instructio
                 'total_mark':controller.total_mark.toString(),
                 'duration2':controller.duration2.toString(),
               };
-
+              Vibration.vibrate(duration: 1000);
               Get.offAndToNamed(Routes.TEST,parameters: data);
             }else{
               snackbar('Please Select Term And Condition');
@@ -212,12 +213,13 @@ class Pre_onlineTest_instruction2_view extends GetView<Pre_onlineTest_instructio
 
                                       });*/
                                 controller.check1.value = value!;
+
                               }
                           ),
                         ),
                         Expanded(child: Padding(
                           padding: const EdgeInsets.only(top: 10.0),
-                          child: Text('By accessing the content of Mock Test Master (hereafter referred to as website) you have to agree to the terms and conditions set out herein and also accept our Privacy Policy.',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w300)),
+                          child: Text('By accessing the content of Mock Test Master (here after referred to as website) you have to agree to the terms and conditions set out here in and also accept our Privacy Policy.',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w300)),
                         )),
 
                       ],

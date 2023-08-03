@@ -8,8 +8,10 @@ import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart'
 import 'package:national_digital_notes_new/utils/global_widgets/snackbar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../../../db.dart';
+import '../../../../models/Question_db_nodel.dart';
 import '../../../../models/Report_option_model.dart';
 import '../../../../utils/constants/api_service.dart';
 import '../../../../utils/routes/app_pages.dart';
@@ -17,11 +19,14 @@ import '../views/Question.dart';
 
 
 class TestController extends GetxController {
+
   //TODO: Implement OnlineTestSeriesController
   var countdown = 10.obs; // initial value of countdown is 10 seconds
   Timer? _timer;
   DateTime? currentBackPressTime;
   TextEditingController text=TextEditingController();
+
+  final QuestionNumber=''.obs;
 
 
 
@@ -57,6 +62,8 @@ class TestController extends GetxController {
 
 
   final seriesId = ''.obs;
+  final isLastIndex = false.obs;
+  final show = false.obs;
   final instruction = ''.obs;
   final time = ''.obs;
   final subject_name = ''.obs;
@@ -78,6 +85,7 @@ class TestController extends GetxController {
   final backValue = ''.obs;
   final duration2 = ''.obs;
   final static_mark_of_review = '0'.obs;
+  final is_index = 0.obs;
 
   void toggleCheckbox(String value) {
     selectValue.value = value;
@@ -117,126 +125,70 @@ class TestController extends GetxController {
 
 
 
-
-
-     print('time----------------------------------------$time');
-     print('duration----------------------------------------$duration');
-     print('total_number_of_question----------------------------------------$total_number_of_question');
-     print('marking_number----------------------------------------$marking_number');
-     print('seriesId.value----------------------------------------${seriesId.value}');
-
-/*
-    Database? db = await SqliteService.instance.database;
-    // raw query
-    List<Map> result = await db!.rawQuery('SELECT * FROM Questions WHERE type=${seriesId.value.toString()}');
-    // print the results
-    result.forEach((row) => print("row------------------------$row"));
-
-
-    if(result.isEmpty){
-      //await Get_Qustion1();
-    }else{
-      await refreshNotes();
-      print('------------------------------------- old sart');
-    }*/
-
-   // Future.delayed(Duration(seconds: 1)).then((value) => countDownController.start());
     if(count.value==0){
-      refreshNotes();
+      fetchQuizzes();
+      //refreshNotes();
     }else{
       print('---------------------exammmmm');
     }
     super.onInit();
   }
 
-  List questions_one=[];
-  final marklist=[].obs;
+  //final questions_one=[];
+  final Mark=[].obs;
+  final questions_one = <Questions_model>[].obs;
 
-  refreshNotes() async {
-    questions_one.clear();
-    count.value=1;
+  final currentQuestionIndex = 0.obs;
+  var  currentQuestion;
 
-    Database? db = await SqliteService.instance.database;
-    List<Map> result = await db!.rawQuery('SELECT * FROM Questions WHERE type=${seriesId.value.toString()}');
 
-    questions_one.addAll(result);
-    marklist.clear();
+
+
+
+
+   fetchQuizzes() async {
+    questions_one.value = await SqliteService.instance.getAllQuizzes(seriesId.value);
+    Mark.clear();
     for(int i=0;i<questions_one.length;i++){
-      marklist.add(false);
+      Mark.add(false);
     }
+    currentQuestion = questions_one[currentQuestionIndex.value];
 
-
-    result.forEach((row) => print("row------------------------${row['User_answer']}"));
-
-
-    isLoading(false);
     update();
-
-
+    print('--------------${questions_one.value}');
   }
 
 
 
 
-  final CurruntQ = 0.obs;
-  final Question_Id = ''.obs;
-  // All items
-  late int selectedAnswer;
-  int get selectedAns => selectedAnswer;
-
-  // for more about obs please check documentation
-  final RxInt _questionNumber = 1.obs;
-  RxInt get questionNumber => _questionNumber;
-
-  int numOfCorrect_Ans = 0;
-  int get numOfCorrectAns => numOfCorrect_Ans;
-
-  final PageController pageController = PageController();
-
-  Future<void> checkAns({questions,selectedIndex,userAnwer,markforreview}) async {
-
-    var UpdateQustion= Questions_model(
-      question: questions['question'].toString(),
-      options:  questions['options'],
-      answerIndex: questions['answerIndex'].toString(),
-      id: questions['id'],
-      user_answer: userAnwer.isEmpty? selectedIndex.toString() : userAnwer.toString(),
-      type: seriesId.toString(),
-      question_hindi: questions['question_hindi'].toString(),
-      options_hindi: questions['options_hindi'].toString(),
-      markforreview: markforreview.toString(),
-    );
-
-
-    await  SqliteService.updatedata(UpdateQustion);
-    await  refreshNotes();
-
-    update();
-  }
 
   final MarkLoading=false.obs;
+  final isLastQuestion1=false.obs;
 
 
-  void nextQuestion() {
-    if (_questionNumber.value != questions_one.length) {
-      pageController.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.ease);
-      update();
-    }else {
 
-    }
+
+
+
+  final final_questions_one = [];
+
+  refreshNotes() async {
+    Database? db = await SqliteService.instance.database;
+    List<Map> result = await db!.rawQuery('SELECT * FROM Questions WHERE type=${seriesId.value.toString()}');
+    final_questions_one.addAll(result);
+    isLoading(false);
   }
-
 
   Future Submit_exam({questions_one,remenning_time}) async {
     try {
       isLoading(true);
-      var response = await ApiService().Test_Submit(questions_one: questions_one,Token: userData!.userId.toString(),total_time:duration.toString(),negative_marks: negative_marking_number,right_marks: marking_number ,series_id: seriesId);
+      var response = await ApiService().Test_Submit(questions_one: final_questions_one,Token: userData!.userId.toString(),total_time:duration.toString(),negative_marks: negative_marking_number,right_marks: marking_number ,series_id: seriesId);
        print('response---------${response['data']}');
 
       if (response['success'] == true) {
 
 
-        print('----------------------------${jsonEncode(questions_one)}');
+
 
 
         SqliteService.deleteItem(seriesId.toString());
@@ -249,6 +201,7 @@ class TestController extends GetxController {
         var total_score=response['data']['total_score'].toString();
         var test_total_score=response['data']['test_total_score'].toString();
         var accuracy=response['data']['accuracy'].toString();
+        var accuracy2=response['data']['accuracy2'].toString();
 
         print('skip_answer----------------+$skip_answer');
         print('wrong_answer----------------+$wrong_answer');
@@ -270,6 +223,8 @@ class TestController extends GetxController {
           'total_score':total_score.toString(),
           'test_total_score':test_total_score.toString(),
           'accuracy':accuracy.toString(),
+          'accuracy2':accuracy2.toString(),
+          'subject_name':subject_name.toString()
         };
 
         Get.offAndToNamed(Routes.TEST_RESULT,parameters: data);
@@ -284,9 +239,6 @@ class TestController extends GetxController {
     }
   }
 
-
- // final isLoading=false.obs;
-  //Report_option_model
   final Report_option_list  = <Report_option_model>[].obs;
   final value=[].obs;
 
@@ -331,14 +283,7 @@ class TestController extends GetxController {
       print({'----------------$response'});
 
       if (response['success'] == true) {
-        //List dataList = response['data'].toList();
-       /* Report_option_list.value = dataList.map((json) => Report_option_model.fromJson(json)).toList();
 
-        for(int i=0;i<Report_option_list.length;i++){
-          value.add(false);
-        }*/
-
-       // snackbar('Report Sucessfully');
         snackbar('${response['message']}');
         text.clear();
 
@@ -364,14 +309,13 @@ class TestController extends GetxController {
   }
   @override
   void dispose() {
-    pageController.dispose();
+
     // TODO: implement dispose
     super.dispose();
   }
 
   @override
   void onClose() {
-
     super.onClose();
   }
 

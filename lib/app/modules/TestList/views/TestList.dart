@@ -28,7 +28,7 @@ class TestListView extends GetView<TestList_Controller> {
                return  Column(
                  children: [
                    Expanded(
-                     flex: 3,
+                     flex: 2,
                      child: Padding(
                        padding: const EdgeInsets.all(6.0),
                        child: Card(
@@ -43,7 +43,7 @@ class TestListView extends GetView<TestList_Controller> {
                                child: Row(
                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                  children: [
-                                   Text('Test Series 1',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                                   Text('${controller.title.value}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                                    InkWell(
                                      onTap: (){
                                        Get.toNamed(Routes.TEST_RESULT_LIST);
@@ -70,6 +70,7 @@ class TestListView extends GetView<TestList_Controller> {
                                    //Text('Test Series 1',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                                    InkWell(
                                      onTap: (){
+                                       controller.incrementCounter(price: controller.total_amount.value.toString());
 
                                      },
                                      child: Container(
@@ -100,28 +101,54 @@ class TestListView extends GetView<TestList_Controller> {
                          return InkWell(
                              onTap: (){
 
-                               var data={
-                                 'cochingId':controller.cochingId.value.toString(),
-                                 'seriesId':controller.Test_list[index].id.toString(),
-                                 'instruction':controller.Test_list[index].instruction.toString(),
-                                 'time':controller.Test_list[index].time.toString(),
-                                 'duration2':controller.Test_list[index].duration2.toString(),
-                                 'passing_value':controller.Test_list[index].passing_value.toString(),
-                                 'total_number_of_question':controller.Test_list[index].total_number_of_question.toString(),
-                                 'negative_marking_number':controller.Test_list[index].negative_marking_number.toString(),
-                                 'negative_marking':controller.Test_list[index].negative_marking.toString(),
-                                 'payment_type':controller.Test_list[index].payment_type.toString(),
-                                 'subject_name':controller.Test_list[index].subject_name.toString(),
-                                 'title':controller.Test_list[index].title.toString(),
-                                 'show_result':controller.Test_list[index].show_result.toString(),
-                                 'duration':controller.Test_list[index].duration.toString(),
-                                 'date':controller.Test_list[index].date.toString(),
-                                 'marking_number':controller.Test_list[index].marking_number.toString(),
-                                 'payment_amount':controller.Test_list[index].payment_amount.toString(),
-                                 'total_mark':controller.Test_list[index].total_mark.toString(),
-                               };
+                               if(controller.Test_list[index].payment_amount!='0') {
 
-                               Get.toNamed(Routes.PRE_ONLINETEST_INSTRUCTION,parameters: data);
+                                 print('total amount--------------${controller
+                                     .Test_list[index].payment_amount}');
+
+                                 String popupText = "Now all the Online Test Exams is unpaid, if you want to purchase this so click on Buy All Course button.";
+                                 showTextPopup(context, popupText);
+                                 //ceate popup
+                               }
+
+                               else{
+
+                                 if(controller.Test_list[index].test_type.toString().toLowerCase()=='one' || controller.Test_list[index].test_type.toString().toLowerCase()=='multiple'){
+                                   var data={
+                                     'cochingId':controller.cochingId.value.toString(),
+                                     'seriesId':controller.Test_list[index].id.toString(),
+                                     'instruction':controller.Test_list[index].instruction.toString(),
+                                     'time':controller.Test_list[index].time.toString(),
+                                     'duration2':controller.Test_list[index].duration2.toString(),
+                                     'passing_value':controller.Test_list[index].passing_value.toString(),
+                                     'total_number_of_question':controller.Test_list[index].total_number_of_question.toString(),
+                                     'negative_marking_number':controller.Test_list[index].negative_marking_number.toString(),
+                                     'negative_marking':controller.Test_list[index].negative_marking.toString(),
+                                     'payment_type':controller.Test_list[index].payment_type.toString(),
+                                     'subject_name':controller.Test_list[index].subject_name.toString(),
+                                     'title':controller.Test_list[index].title.toString(),
+                                     'show_result':controller.Test_list[index].show_result.toString(),
+                                     'duration':controller.Test_list[index].duration.toString(),
+                                     'date':controller.Test_list[index].date.toString(),
+                                     'marking_number':controller.Test_list[index].marking_number.toString(),
+                                     'payment_amount':controller.Test_list[index].payment_amount.toString(),
+                                     'total_mark':controller.Test_list[index].total_mark.toString(),
+                                   };
+
+                                   Get.toNamed(Routes.PRE_ONLINETEST_INSTRUCTION,parameters: data);
+                                 }else{
+
+                                   String popupText = "This Online Test Exam was only for one time attempt and you are already submitted this.";
+                                   showTextPopup(context, popupText);
+
+                                 }
+
+
+
+
+
+                               }
+
                              },
                              child: ExamCard(exam: controller.Test_list[index]));
                        },
@@ -135,6 +162,28 @@ class TestListView extends GetView<TestList_Controller> {
              }
            }
       )
+    );
+  }
+
+  void showTextPopup(BuildContext context, String text) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Alert",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold)),
+          content: Text(text),
+          alignment: Alignment.center,
+          actionsAlignment: MainAxisAlignment.center,
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+               Get.back();
+              },
+              child: Text("Close"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
+import 'package:national_digital_notes_new/views/dashboard_screen/controller_home_view.dart';
 import 'package:national_digital_notes_new/views/detailed_course_screen/detailed_course_view.dart';
 
 import '../../controllers/tab_simple_controller.dart';
@@ -168,9 +169,13 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
                           "coursesId":"${Coching_list[index]['id'].toString()}",
                           "cochingName":"${Coching_list[index]['coaching_name'].toString()}",
                         };
+                        print('-----------------api');
 
                         Get.toNamed(Routes.COCHING_DETAILS,parameters: data);
 
+                        setState(() {
+                          callApi();
+                        });
                       },
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),

@@ -108,14 +108,26 @@ class Pre_onlineTest_instruction_controller extends GetxController {
 
           print('answer_index_hindi-----------${Test_question[i]['answer_index_hindi']}');
 
-          data = Questions_model(id: Test_question[i]['id'],answerIndex: Test_question[i]['answer_index'].toString(),markforreview: '0',
-              options: jsonEncode(Test_question[i]['options']), question: Test_question[i]['question'],user_answer: '',type: seriesId.value.toString(),
+          data = Questions_model(
+              id: Test_question[i]['id'],answerIndex: Test_question[i]['answer_index'].toString(),
+              markforreview: '0',
+              options: jsonEncode(Test_question[i]['options']),
+              question: Test_question[i]['question'],user_answer: 'null',type: seriesId.value.toString(),
               question_hindi: Test_question[i]['question_hindi'].toString(),
-              options_hindi: jsonEncode(Test_question[i]['options_hindi']??''),answer_index_hindi: jsonEncode(Test_question[i]['answer_index_hindi']??'')
+              options_hindi: jsonEncode(Test_question[i]['options_hindi']??''),
+              answer_index_hindi: jsonEncode(Test_question[i]['answer_index_hindi']??''),
+              option_image: jsonEncode(Test_question[i]['option_image']??''),
+              is_question_image: Test_question[i]['is_question_image'].toString()??'',
+              question_image: Test_question[i]['question_image'].toString() ?? '',
+              is_option_image: Test_question[i]['is_option_image'].toString() ?? '',
           );
 
-          print('data-----------$data');
+          print('option_image------${jsonEncode(Test_question[i]['option_image']??'')}');
+          print('options------${jsonEncode(Test_question[i]['options']??'')}');
+          print('data------------------------${data}');
           await SqliteService.createItem(data);
+
+
         }
 
 

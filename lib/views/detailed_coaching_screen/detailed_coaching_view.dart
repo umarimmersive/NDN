@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:national_digital_notes_new/utils/constants/api_service.dart';
@@ -115,7 +116,7 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                 bottom: TabBar(
                   tabs: [
                     Tab(
-                    text: 'Subjects',
+                    text: ' Subjects',
                     ),
                     Tab(
                       text: 'Online Test Series',
@@ -230,7 +231,7 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                   )
 
                       :
-                  Center(child: CircularProgressIndicator()),
+                  Center(child: CupertinoActivityIndicator()),
 
                   // second tab bar viiew widget
                   // first tab bar view widget

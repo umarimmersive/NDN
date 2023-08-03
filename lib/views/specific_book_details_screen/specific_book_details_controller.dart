@@ -25,6 +25,7 @@ class specific_book_details_controller extends GetxController{
   final category=''.obs;
   final free=''.obs;
   final notedetails=''.obs;
+  final Type=''.obs;
 
 
 /*
@@ -64,14 +65,11 @@ class specific_book_details_controller extends GetxController{
 
 
     if(notedetails.value=='true'){
-      print("notedetails========+============");
+      Type.value="2";
       noteDetails();
     }else{
+      Type.value="1";
       callApi();
-
-      print('------------------------------book details');
-
-      //print("simple================${book_detils[0]['simple_epub']}");
     }
     // TODO: implement onInit
     super.onInit();
@@ -240,6 +238,47 @@ class specific_book_details_controller extends GetxController{
       print("88888*******");
       print("is_cart====================xasxcascas=======${book_detils[0]['is_cart']}");
       print("====================xasxcascas=======${book_detils[0]['sample_note']}");
+
+
+      isLoading(false);
+
+      //update();
+    } else if (data['success'] == false) {
+      //book_detils.value = data;
+      isLoading(false);
+
+    }
+
+  }
+
+
+  PlaceOrder({transaction_id,item_type,item_price,payment_status}) async{
+    // bookList.clear();
+    isLoading(true);
+
+
+
+
+    http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'buyNow'),body: {
+      "item_id": bookid.value.toString(),
+      "user_id": userData!.userId,
+      "transaction_id": transaction_id,
+      "item_type": item_type,
+      "item_price": item_price,
+      "payment_status": payment_status,
+      "payment_status": payment_status,
+    });
+
+    data=jsonDecode(response.body);
+    status.value=data['success'];
+
+    log("=========$data");
+
+    if (data['success'] == true) {
+
+
+
+
 
 
       isLoading(false);

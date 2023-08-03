@@ -1,6 +1,5 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:national_digital_notes_new/app/modules/Test/views/Question.dart';
 import 'package:national_digital_notes_new/models/Questions_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -39,10 +38,12 @@ class SqliteService{
       databaseFactory.deleteDatabase(path);
 
   static Future<void> createTables(Database database) async{
-
+   /* String? is_question_image;
+    String? question_image;
+    String? option_image;*/
 
     await database.execute(
-      'CREATE TABLE Questions(id INTEGER PRIMARY KEY, question TEXT, answerIndex STRING, options STRING, user_answer STRING, type STRING, question_hindi STRING, options_hindi STRING, answer_index_hindi STRING, markforreview STRING)',
+      'CREATE TABLE Questions(id INTEGER PRIMARY KEY, question TEXT, answerIndex STRING, options STRING, user_answer STRING, type STRING, question_hindi STRING, options_hindi STRING, answer_index_hindi STRING, markforreview STRING, is_question_image STRING, question_image STRING,option_image STRING,is_option_image STRING)',
     );
     //
 
@@ -85,8 +86,6 @@ class SqliteService{
     // Get a reference to the database.
     final db = await SqliteService.initizateDb();
 
-    print('note.map-----------------${note.toMap()}');
-    // Update the given Dog.
     await db.update(
       'Questions',
       note.toMap(),
@@ -96,5 +95,66 @@ class SqliteService{
       whereArgs: [note.id],
     );
   }
+
+
+/*  Future<List<QuizModel>> getAllQuizzes() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('quiz');
+    return List.generate(maps.length, (index) {
+      return QuizModel(
+        id: maps[index]['id'],
+        question: maps[index]['question'],
+        options: [
+          maps[index]['option1'],
+          maps[index]['option2'],
+          maps[index]['option3'],
+          maps[index]['option4'],
+        ],
+        correctOption: maps[index]['correctOption'],
+      );
+    });
+  }*/
+
+  Future<List<Questions_model>> getAllQuizzes(seriesId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db!.rawQuery('SELECT * FROM Questions WHERE type=${seriesId.toString()}');
+    //final List<Map<String, dynamic>> maps = await db!.query('Questions');
+    return List.generate(maps.length, (index) {
+      return Questions_model(
+        id: maps[index]['id'],
+        question: maps[index]['question'].toString(),
+        markforreview: maps[index]['markforreview'].toString(),
+        question_image: maps[index]['question_image'].toString(),
+        answer_index_hindi : maps[index]['answer_index_hindi'].toString(),
+        answerIndex : maps[index]['answerIndex'].toString(),
+        is_option_image :maps[index]['is_option_image'].toString(),
+        is_question_image : maps[index]['is_question_image'].toString(),
+        option_image : maps[index]['option_image'].toString(),
+        options : maps[index]['options'].toString(),
+        options_hindi : maps[index]['options_hindi'].toString(),
+        question_hindi : maps[index]['question_hindi'].toString(),
+        type : maps[index]['type'].toString(),
+        user_answer:  maps[index]['user_answer'].toString(),
+      );
+    });
+  }
+
+
+ // 'CREATE TABLE Questions(id INTEGER PRIMARY KEY, question TEXT, answerIndex STRING, options STRING, user_answer STRING, type STRING, question_hindi STRING, options_hindi STRING, answer_index_hindi STRING, markforreview STRING, is_question_image STRING, question_image STRING,option_image STRING,is_option_image STRING)',
+
+ /* this.id,
+  this.question,
+  this.question_hindi,
+  this.options_hindi,
+  this.options,
+  this.answer_index_hindi,
+  this.user_answer,
+  this.type,
+  this.answerIndex,
+  this.markforreview,
+  this.is_question_image,
+  this.question_image,
+  this.option_image,
+  this.is_option_image,*/
 
 }

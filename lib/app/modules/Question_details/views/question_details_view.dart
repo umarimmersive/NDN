@@ -24,11 +24,12 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
               backgroundColor: Colors.transparent,
               isDismissible: false,
             );
+
             // Do something when button is pressed
           },
         ),
       appBar: AppBar(
-        title: const Text('Back to Questions'),
+        title: const Text('Questions Summary'),
         centerTitle: false,
       ),
       body: Obx(()=>
@@ -125,7 +126,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
                                   Text('Marked for Review',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300, color: Colors.black,)),
                                 ],),
                               ),
-                              Expanded(
+                             /* Expanded(
                                 flex: 1,
                                 child: Row(children: [
                                   Padding(
@@ -137,7 +138,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
                                   ),
                                   Text('Not Visited',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300, color: Colors.black,)),
                                 ],),
-                              )
+                              )*/
 
                             ],
                           ),
@@ -200,19 +201,22 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
                           ),
                         ),
                         controller.isLoading.isFalse?
+                            controller.questions_one.isEmpty?
+                                Center(child: Text('No Data Found')):
                         SizedBox(
                           height: MediaQuery.of(context).size.height/3,
                           child: GridView.builder(
                             itemCount: controller.questions_one.length,
                             gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: (orientation == Orientation.portrait) ? 5 : 3,),
                             itemBuilder: (BuildContext context, int index) {
-                              print('qqqqq----------${controller.questions_one[index].markforreview=='1' && controller.questions_one[index].user_answer.toString().isNotEmpty}');
-                              if(controller.questions_one[index].user_answer.toString().isNotEmpty && controller.questions_one[index].markforreview.toString()!='0'){
+                              print('qqqqq----------${controller.questions_one[index]['markforreview']=='1' && controller.questions_one[index]['user_answer'].toString()!="null"}');
+                              if(controller.questions_one[index]['user_answer'].toString()!="null" && controller.questions_one[index]['markforreview'].toString()=="1"){
 
                                 return GestureDetector(
                                   onTap: (){
-                                    Get.back(result: [
-                                      {"backValue": index.toString()}]);
+                                    print('indexxxxxx------------------------${index}');
+                                    int Current_Question_number=index+1;
+                                    Get.back(result: [{"backValue": index.toString()}]);
                                   },
                                   child: Padding(
                                       padding: const EdgeInsets.all(16.0),
@@ -222,7 +226,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
 
                               }else
 
-                                if(controller.questions_one[index].user_answer.toString().isEmpty && controller.questions_one[index].markforreview.toString()!='0'){
+                                if(controller.questions_one[index]['user_answer'].toString()=="null" && controller.questions_one[index]['markforreview'].toString()!='0'){
 
                                 return
                                   GestureDetector(
@@ -239,7 +243,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
 
                               }else
 
-                              if(controller.questions_one[index].user_answer.toString().isEmpty){
+                              if(controller.questions_one[index]['user_answer'].toString()=="null"){
                                 return
                                   GestureDetector(
                                       onTap: (){
@@ -254,7 +258,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
 
 
 
-                              }else if(controller.questions_one[index].user_answer.toString().isNotEmpty){
+                              }else if(controller.questions_one[index]['user_answer'].toString()!="null"){
                                return
                                  GestureDetector(
                                      onTap: (){
@@ -283,7 +287,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
                                     padding: const EdgeInsets.all(16.0),
                                     child: Button_red(index+1)
                                 );*/
-    return Padding(
+                                 return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Button_box(index+1)
     );

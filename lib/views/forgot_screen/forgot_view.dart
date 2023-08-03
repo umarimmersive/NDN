@@ -53,7 +53,7 @@ class ForgotScreen extends StatelessWidget {
                       ),
                       Container(height: 15),
                       Center(
-                        child: Text("Forgot Password,",
+                        child: Text("Forgot Password",
                             style: MyText.title(context)!.copyWith(
                                 color: MyColors.grey_80, fontWeight: FontWeight.bold)),
                       ),

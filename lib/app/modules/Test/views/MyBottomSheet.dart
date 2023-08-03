@@ -17,9 +17,7 @@ class MyBottomSheet extends StatefulWidget {
 
 class _MyBottomSheetState extends State<MyBottomSheet> {
   final TestController Controller = Get.find();
-  //TestController Controller=TestController();
-  final List<String> options = ['Answer Does not adress the question that was asked ', 'Not English or has very bad formatting', 'Missing date and our information'];
-  final List<bool> checkedOptions = [false, false, false];
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +85,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                       Controller.value[index] = value!;
 
                        print('----------------true');
-                       print('----------------$checkedOptions');
+
                        Controller.value[index] = true;
                        Controller.selectValue.value=Controller.Report_option_list[index].id.toString();
                        print('selectValue----------${Controller.selectValue.value}');
@@ -146,6 +144,8 @@ setState(() {
                 ElevatedButton(
                   onPressed: () {
                    Controller.post_Report(report_option_id: Controller.selectValue.value,question_id:widget.id );
+                   Get.back();
+
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

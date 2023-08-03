@@ -220,6 +220,7 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
   final status=false.obs;
 
   callApi() async{
+    Coching_list.clear();
     // bookList.clear();
     isLoading(true);
 
@@ -349,6 +350,9 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
 
                             Get.toNamed(Routes.COCHING_DETAILS,parameters: data);
 
+                            setState(() {
+                              callApi();
+                            });
                           },
                           child: Padding(
                               padding: const EdgeInsets.all(0.0),
@@ -408,7 +412,7 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
                       }),
 
               ):
-                      Center(child: Text('No coching found.'))
+                      Expanded(child: Center(child: Text('No coching found.')))
             ]),
       );
   }

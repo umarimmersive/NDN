@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,26 +10,20 @@ import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart'
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rating/rating.dart';
 import 'package:http/http.dart' as http;
+import 'package:vocsy_epub_viewer/epub_viewer.dart';
 
 import '../../utils/constants/api_service.dart';
+import '../../utils/routes/app_pages.dart';
 // ignore: must_be_immutable
 class DetailedBooksOrder extends StatefulWidget {
 
   String bookid;
-  /*
 
-
-  String bookName;
-  String imageURL;
-  String orderedDate;*/
 
   DetailedBooksOrder(
       {super.key,
         required this.bookid,
-     /* required this.bookName,
-
-      required this.imageURL,
-      required this.orderedDate*/});
+      });
 
   @override
   State<DetailedBooksOrder> createState() => _DetailedBooksOrderState();
@@ -59,11 +54,9 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
 
 
 
-
-
   @override
   void initState() {
-    print("pi=========================");
+
     book_details();
     // TODO: implement initState
     super.initState();
@@ -83,7 +76,6 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
     http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'libraryItemDetails'),body: {
       "user_id":userData!.userId,
       "order_id":widget.bookid.toString(),
-
     });
 
     var data=jsonDecode(response.body);
@@ -149,7 +141,11 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Image.network(ApiService.IMAGE_URL+'${book_detail[0]['image'].toString()}',),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: CachedNetworkImage(
+                        imageUrl:ApiService.IMAGE_URL+'${book_detail[0]['image'].toString()}',),
+                    ),
                   ),
                   Expanded(
                     child: Column(
@@ -219,7 +215,57 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                                 fontSize: 14.5, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
-                           // Get.to(EPUBTEST());
+
+                            var data={
+                              'pdf_url':book_detail[0]['read_now_file'].toString(),
+                              'bookId': book_detail[0]['id'].toString(),
+                              'title': book_detail[0]['title'].toString(),
+                              'notedetails': book_detail.toString(),
+                            };
+                            Get.toNamed(Routes.PDF_VIEWER,parameters: data);
+
+
+
+                        /*    if(book_detail[0].item_type==1){
+
+                              var data={
+                                'pdf_url':book_detail[0]['read_now_file'].toString(),
+                                'bookId': book_detail[0]['id'].toString(),
+                                'title': book_detail[0]['title'].toString(),
+                                'notedetails': book_detail.toString(),
+                              };
+                              Get.toNamed(Routes.PDF_VIEWER,parameters: data);
+
+
+                            }else{
+
+
+                              VocsyEpub.setConfig(
+                                themeColor: Theme.of(context).primaryColor,
+                                identifier: "iosBook",
+                                scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+                                allowSharing: false,
+                                enableTts: true,
+                                nightMode: false,
+                              );
+
+                              // get current locator
+                              VocsyEpub.locatorStream.listen((locator) {
+                                print('LOCATOR: $locator');
+                              });
+
+                              VocsyEpub.open(
+                                filePath.value,
+                                lastLocation: EpubLocator.fromJson({
+                                  "bookId": "2239",
+                                  "href": "/OEBPS/ch06.xhtml",
+                                  "created": 1539934158390,
+                                  "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
+                                }),
+                              );
+                            }*/
+
+                            //Get.to(EPUBTEST());
                           },
                         )),
                       ],
@@ -369,7 +415,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                           children:  [
                             Text("Order Total"),
                             Text(
-                              "₹ '${book_detail[0]['order_total'].toString()}'.00 (1 Item)",
+                              "₹ ${book_detail[0]['order_total'].toString()}.00 (1 Item)",
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                           ],

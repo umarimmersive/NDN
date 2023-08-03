@@ -199,13 +199,15 @@ class _QuizScreenState extends State<QuizScreen> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                "${i + 1}. ${questionController.questions[index].options[i].toString()}",
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color: Colors.black
-                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "${i + 1}. ${questionController.questions[index].options[i].toString()}",
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    color: Colors.black
+                                                ),
+                                                ),
                                               ),
                                               Container(
                                                 height: 26,
