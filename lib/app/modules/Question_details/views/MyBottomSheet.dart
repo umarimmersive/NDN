@@ -15,6 +15,8 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
   final List<bool> checkedOptions = [false, false, false];
   final QuestionDetailsController controller = Get.find();
   final TestController controller1 = Get.find();
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -236,10 +238,17 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    controller1.Submit_exam(remenning_time: '',questions_one: controller1.questions_one);
-                    /*Get.offAndToNamed(Routes.TEST_RESULT);*/
-                   // Get.back(result: checkedOptions);
+                  onPressed: () async{
+
+                   await controller1.Submit_exam(remenning_time: '',questions_one: controller1.questions_one);
+
+                   controller.markReview.value=0;
+                   controller.answer.value=0;
+                   controller.Notanswer.value=0;
+                   controller.MarkAndAnswer.value=0;
+                   controller.questions_one.clear();
+                   print('--------------------------clear done all');
+
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 40.0,right:40 ),

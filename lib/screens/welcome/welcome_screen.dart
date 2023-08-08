@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
 
 import '../../constants.dart';
 import '../quiz/quiz_screen.dart';
@@ -40,7 +41,9 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   const Spacer(), // 1/6
                   InkWell(
-                    onTap: () => Get.to(const QuizScreen()),
+                    onTap: () {
+                      Get.offAndToNamed(Routes.QUIZ_SCREEN);
+                    },
                     child: Container(
                       width: double.infinity,
                       alignment: Alignment.center,

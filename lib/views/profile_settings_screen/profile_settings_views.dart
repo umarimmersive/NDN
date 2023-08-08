@@ -94,7 +94,6 @@ class SettingProfileRouteState extends State<SettingProfileRoute> {
   isLoading(true);
 
 
-  //print("user_id============================${user_id}");
   http.Response response = await http.post(Uri.parse(ApiService.BASE_URL+'getProfile'),body: {
     "user_id":userData!.userId,
   });
@@ -104,9 +103,7 @@ class SettingProfileRouteState extends State<SettingProfileRoute> {
   log("data=========$data");
 
   if (data['success'] == true) {
-
     await my_local_service.updateSharedPreferences(data['data']);
-
 
     setState(() {
 
@@ -218,6 +215,9 @@ TextEditingController mobileController = TextEditingController();
       } else {
         isLoading(false);
 
+        setState(() {
+
+        });
 
         Get.snackbar( "Failed",
           jsonString['message'].toString(),

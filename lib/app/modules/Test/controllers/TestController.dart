@@ -173,6 +173,7 @@ class TestController extends GetxController {
   final final_questions_one = [];
 
   refreshNotes() async {
+    final_questions_one.clear();
     Database? db = await SqliteService.instance.database;
     List<Map> result = await db!.rawQuery('SELECT * FROM Questions WHERE type=${seriesId.value.toString()}');
     final_questions_one.addAll(result);
@@ -181,15 +182,12 @@ class TestController extends GetxController {
 
   Future Submit_exam({questions_one,remenning_time}) async {
     try {
-      isLoading(true);
+       await refreshNotes();
+       isLoading(true);
       var response = await ApiService().Test_Submit(questions_one: final_questions_one,Token: userData!.userId.toString(),total_time:duration.toString(),negative_marks: negative_marking_number,right_marks: marking_number ,series_id: seriesId);
        print('response---------${response['data']}');
 
       if (response['success'] == true) {
-
-
-
-
 
         SqliteService.deleteItem(seriesId.toString());
 
@@ -227,7 +225,7 @@ class TestController extends GetxController {
           'subject_name':subject_name.toString()
         };
 
-        Get.offAndToNamed(Routes.TEST_RESULT,parameters: data);
+        Get.toNamed(Routes.TEST_RESULT,parameters: data);
        // Get.offAndToNamed(Routes.SUBMIT_TEST_SCREEN,parameters: data);
 
       } else if (response['success'] == false) {

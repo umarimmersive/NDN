@@ -19,6 +19,7 @@ class PdfViewer1Controller extends Get.GetxController with WidgetsBindingObserve
   final pdf_url = ''.obs;
   final bookid = ''.obs;
   final title = ''.obs;
+  final is_main_audio = ''.obs;
   final musictitle = 'Select Music'.obs;
   final notedetails = ''.obs;
   final player = AudioPlayer();
@@ -33,6 +34,7 @@ class PdfViewer1Controller extends Get.GetxController with WidgetsBindingObserve
     pdf_url.value=Get.Get.parameters['pdf_url'].toString();
     bookid.value=Get.Get.parameters['bookId'].toString();
     title.value=Get.Get.parameters['title'].toString();
+    is_main_audio.value=Get.Get.parameters['is_main_audio'].toString();
 
     print('pdf_url-----------$pdf_url');
 
@@ -124,8 +126,6 @@ class PdfViewer1Controller extends Get.GetxController with WidgetsBindingObserve
     // bookList.clear();
     isLoading(true);
 
-
-
     print('user---------${userData!.userId}');
     print('bbok id---------${bookid.value.toString()}');
 
@@ -135,9 +135,9 @@ class PdfViewer1Controller extends Get.GetxController with WidgetsBindingObserve
       "user_id": userData!.userId,
     });
 
-    data=jsonDecode(response.body);
-    status.value=data['success'];
-  count.value=1;
+     data=jsonDecode(response.body);
+     status.value=data['success'];
+     count.value=1;
 
     if (data['success'] == true) {
 

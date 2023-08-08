@@ -414,6 +414,8 @@ class _SignupViewState extends State<SignupView> {
 
     );
   }
+
+
   Future<String?> _getId() async {
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) { // import 'dart:io'

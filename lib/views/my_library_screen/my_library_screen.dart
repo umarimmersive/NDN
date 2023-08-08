@@ -96,18 +96,20 @@ class _MyLibraryViewState extends State<MyLibraryView> {
       return Card(
         child: ListTile(
         onTap: () {
-
           Get.to(
          DetailedBooksOrder(
           bookid: library_list[i]['id'].toString(),
           ));
     },
-          leading: CachedNetworkImage(
-          imageUrl:
-        ApiService.IMAGE_URL+library_list[i]['image'].toString(),
+          leading: Container(
+            height: 60,
+            width: 60,
+            child: CachedNetworkImage(
+            imageUrl: ApiService.IMAGE_URL+library_list[i]['image'].toString(),
     ),
+          ),
         title:  Text(library_list[i]['title']),
-        subtitle:  Text("Delivered on "+library_list[i]['purchase_on']),
+        subtitle:  Text("Purchased "+library_list[i]['purchase_on'],style: TextStyle(fontSize: 11.0)),
         trailing: const Icon(Icons.chevron_right),
         ),
       );

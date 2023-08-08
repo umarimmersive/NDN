@@ -6,6 +6,7 @@ import 'package:national_digital_notes_new/screens/quiz/quiz_screen.dart';
 import 'package:national_digital_notes_new/utils/constants/api_service.dart';
 import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart';
 import 'package:national_digital_notes_new/utils/global_widgets/snackbar.dart';
+import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
 
 import 'models/Questions.dart';
 
@@ -33,7 +34,7 @@ class _AnimatedTimerState extends State<AnimatedTimer> {
 
 
 
-  Get_quiz_api( Today_date,Select_language) async {
+  Get_quiz_api(Today_date,Select_language) async {
     try {
       sample_data.clear();
       isLoading(true);
@@ -57,7 +58,6 @@ class _AnimatedTimerState extends State<AnimatedTimer> {
 
     }
   }
-
 
 
 
@@ -105,7 +105,9 @@ class _AnimatedTimerState extends State<AnimatedTimer> {
               },
               onComplete: () {
                 debugPrint('Countdown Ended');
-                Get.to(QuizScreen());
+                print('----------------call quiz screen');
+                Get.offAndToNamed(Routes.QUIZ_SCREEN);
+               // Get.to(QuizScreen());
                 },
               onChange: (String timeStamp) {
                 debugPrint('Countdown Changed $timeStamp');

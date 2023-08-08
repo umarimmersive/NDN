@@ -82,7 +82,8 @@ class _QuizScreenState extends State<QuizScreen> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.offAll(InShort());
+              Get.back();
+              /*Get.offAll(InShort());*/
             }),
         title: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,children: [
                 Spacer(),
@@ -102,7 +103,7 @@ class _QuizScreenState extends State<QuizScreen> {
           Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 100,),
+             SizedBox(height: MediaQuery.of(context).size.height/10,),
              Container(
                child: Padding(
                 padding:
@@ -121,7 +122,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     "Question ${questionController.questionNumber.value}/${questionController.questions.length}",
                     style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 18
+                        fontSize: 14
                     ),
 
                   ),
@@ -137,103 +138,100 @@ class _QuizScreenState extends State<QuizScreen> {
                 controller: questionController.pageController,
                 onPageChanged: questionController.updateTheQnNum,
                 itemCount: questionController.questions.length,
-                itemBuilder: (context, index) => Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                  elevation: 8,
-                  margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Text(
-                            questionController.questions[index].question,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16
+                itemBuilder: (context, index) =>
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              questionController.questions[index].question,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: kDefaultPadding / 2),
-                          ...List.generate(
-                            questionController.questions[index].options.length,
-                                (i) => GetBuilder<QuestionController>(
-                                    init: QuestionController(),
-                                    builder: (qnController) {
-                                      Color getTheRightColor() {
-                                        if (qnController.isAnswered) {
-                                          if (i == qnController.correctAns) {
-                                            return kGreenColor;
-                                          } else if (i == qnController.selectedAns &&
-                                              qnController.selectedAns != qnController.correctAns) {
-                                            return kRedColor;
+                            const SizedBox(height: kDefaultPadding / 2),
+                            ...List.generate(
+                              questionController.questions[index].options.length,
+                                  (i) => GetBuilder<QuestionController>(
+                                      init: QuestionController(),
+                                      builder: (qnController) {
+                                        Color getTheRightColor() {
+                                          if (qnController.isAnswered) {
+                                            if (i == qnController.correctAns) {
+                                              return kGreenColor;
+                                            } else if (i == qnController.selectedAns &&
+                                                qnController.selectedAns != qnController.correctAns) {
+                                              return kRedColor;
+                                            }
                                           }
+                                          return kGrayColor;
                                         }
-                                        return kGrayColor;
-                                      }
 
-                                      IconData getTheRightIcon() {
-                                        return getTheRightColor() == kRedColor ? Icons.close : Icons.done;
-                                      }
+                                        IconData getTheRightIcon() {
+                                          return getTheRightColor() == kRedColor ? Icons.close : Icons.done;
+                                        }
 
-                                      return InkWell(
-                                        onTap: ()  {
-                                          controller.checkAns(questionController.questions[index], i);
+                                        return InkWell(
+                                          onTap: ()  {
+                                            controller.checkAns(questionController.questions[index], i);
 
-                                          print('cureect ans=============${questionController.questions[index].answer}');
-                                          print('${questionController.selectedAns}');
+                                            print('cureect ans=============${questionController.questions[index].answer}');
+                                            print('${questionController.selectedAns}');
 
-                                          if(questionController.questions[index].answer == questionController.selectedAns){
-                                            _controllerCenter.play();
-                                            Future.delayed(Duration(seconds: 1)).then((value) {
-                                              _controllerCenter.stop();
-                                            });
-                                          }
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.only(top: kDefaultPadding),
-                                          padding: const EdgeInsets.all(kDefaultPadding),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: getTheRightColor()),
-                                            borderRadius: BorderRadius.circular(15),
+                                            if(questionController.questions[index].answer == questionController.selectedAns){
+                                              _controllerCenter.play();
+                                              Future.delayed(Duration(seconds: 1)).then((value) {
+                                                _controllerCenter.stop();
+                                              });
+                                            }
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(top: kDefaultPadding),
+                                            padding: const EdgeInsets.all(kDefaultPadding),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: getTheRightColor()),
+                                              borderRadius: BorderRadius.circular(15),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    "${i + 1}. ${questionController.questions[index].options[i].toString()}",
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color: Colors.black
+                                                  ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 26,
+                                                  width: 26,
+                                                  decoration: BoxDecoration(
+                                                    color: getTheRightColor() == kGrayColor
+                                                        ? Colors.transparent
+                                                        : getTheRightColor(),
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    border: Border.all(color: getTheRightColor()),
+                                                  ),
+                                                  child: getTheRightColor() == kGrayColor
+                                                      ? null
+                                                      : Icon(getTheRightIcon(), size: 16),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  "${i + 1}. ${questionController.questions[index].options[i].toString()}",
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    color: Colors.black
-                                                ),
-                                                ),
-                                              ),
-                                              Container(
-                                                height: 26,
-                                                width: 26,
-                                                decoration: BoxDecoration(
-                                                  color: getTheRightColor() == kGrayColor
-                                                      ? Colors.transparent
-                                                      : getTheRightColor(),
-                                                  borderRadius: BorderRadius.circular(50),
-                                                  border: Border.all(color: getTheRightColor()),
-                                                ),
-                                                child: getTheRightColor() == kGrayColor
-                                                    ? null
-                                                    : Icon(getTheRightIcon(), size: 16),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    })
-                          ),
-                        ],
+                                        );
+                                      })
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                )
+                    )
                 //questionController.questions[index]
               //index: index,
                 //                             text: ,

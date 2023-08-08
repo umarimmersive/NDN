@@ -34,7 +34,6 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                    if(result != null){
                      controller.onInit();
                    }
-
                  },
                  icon: const Icon(Icons.shopping_cart))
            ],
@@ -69,7 +68,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
                            Expanded(
-                             flex: 8,
+                             flex: 3,
                              child: Padding(
                                padding: const EdgeInsets.only(top: 05.0),
                                child: Text(
@@ -80,12 +79,25 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                                ),
                              ),
                            ),
-                           Expanded(
+                           /*Expanded(
                              flex: 2,
                              child: Container(
                                child: Text(
                                  overflow: TextOverflow.ellipsis,
                                  controller.category.toString().replaceAll(',', ''),
+                                 maxLines: 1,
+                                 style: TextStyle(
+                                     fontSize: 12, color: Colors.grey.shade700),
+                               ),
+                             ),
+                           ),*/
+
+                           Expanded(
+                             flex: 2,
+                             child: Container(
+                               child: Text(
+                                 overflow: TextOverflow.ellipsis,
+                                   controller.book_detils[0]['publisher'].toString()!="null"?controller.book_detils[0]['publisher'].toString():'',
                                  maxLines: 1,
                                  style: TextStyle(
                                      fontSize: 12, color: Colors.grey.shade700),

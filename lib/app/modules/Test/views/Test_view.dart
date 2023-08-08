@@ -486,8 +486,8 @@ class _QuizScreenState extends State<Test_view> {
                         child: TimerCountdown(
                           colonsTextStyle: TextStyle(fontSize: 16.0),
                           timeTextStyle:TextStyle(fontSize: 16.0),
-                          onEnd: (){
-                            Submit_exam(questions_one: questions_one,remenning_time: Remenning_time.value);
+                          onEnd: () async {
+                          await  Submit_exam(questions_one: questions_one,remenning_time: Remenning_time.value);
                           },
                           spacerWidth: 1,
                           enableDescriptions: false,
@@ -525,7 +525,7 @@ class _QuizScreenState extends State<Test_view> {
                     ),
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                     onTap: (){
                       var data={
                         'cochingId':cochingId.toString(),
@@ -550,113 +550,19 @@ class _QuizScreenState extends State<Test_view> {
                       Get.toNamed(Routes.QUESTION_DETAILS,parameters: data)!.then((result) async{
                         print('result----${result[0]['backValue']}');
 
-                        currentQuestion_number.value=int.parse(result[0]['backValue'].toString())+1;
-                        currentQuestionIndex.value=int.parse(result[0]['backValue'].toString());
-                       await fetchQuizzes(int.parse(result[0]['backValue'].toString()));
-
-
-                       /* controller.pageController.animateToPage(
-                          int.parse(result[0]['backValue']),
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );*/
+                         currentQuestion_number.value=int.parse(result[0]['backValue'].toString())+1;
+                         currentQuestionIndex.value=int.parse(result[0]['backValue'].toString());
+                         await fetchQuizzes(int.parse(result[0]['backValue'].toString()));
 
                       });
 
-
-                      // Get.toNamed(Routes.QUESTION_DETAILS,parameters: data);
 
 
                     },child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(Icons.menu),
                     )),
-                // PopupMenuButton(
-                //
-                //    icon: InkWell(
-                //      onTap: (){
-                //        Get.bottomSheet(
-                //          MyBottomSheet3(),
-                //          backgroundColor: Colors.transparent,
-                //          isDismissible: false,
-                //        );
-                //      },
-                //      child: Icon(
-                //        Icons.info_outline,
-                //        color: Colors.white,
-                //        size: 24.0,
-                //        semanticLabel: 'Text to announce in accessibility modes',
-                //      ),
-                //    ),
-                //   // add icon, by default "3 dot" icon
-                //   // icon: Icon(Icons.book)
-                //     itemBuilder: (context){
-                //       return [
-                //
-                //       ];
-                //     },
-                //     onSelected:(value){
-                //       if(value == 0){
-                //         print("My account menu is selected.");
-                //       }else if(value == 1){
-                //         print("Settings menu is selected.");
-                //       }else if(value == 2){
-                //         print("Logout menu is selected.");
-                //       }
-                //     }
-                // ),
-                // PopupMenuButton(
-                //   // add icon, by default "3 dot" icon
-                //     icon: InkWell(
-                //         onTap: (){
-                //           var data={
-                //             'cochingId':controller.cochingId.toString(),
-                //             'seriesId':controller.seriesId.toString(),
-                //             'instruction':controller.instruction.toString(),
-                //             'time':controller.time.toString(),
-                //             'passing_value':controller.passing_value.toString(),
-                //             'total_number_of_question':controller.total_number_of_question.toString(),
-                //             'negative_marking_number':controller.negative_marking_number.toString(),
-                //             'negative_marking':controller.negative_marking.toString(),
-                //             'payment_type':controller.payment_type.toString(),
-                //             'subject_name':controller.subject_name.toString(),
-                //             'title':controller.title.toString(),
-                //             'show_result':controller.show_result.toString(),
-                //             'duration':controller.duration.toString(),
-                //             'date':controller.date.toString(),
-                //             'marking_number':controller.marking_number.toString(),
-                //             'payment_amount':controller.payment_amount.toString(),
-                //             'total_mark':controller.total_mark.toString(),
-                //           };
-                //
-                //           Get.toNamed(Routes.QUESTION_DETAILS,parameters: data)!.then((result) {
-                //             print('result----${result[0]['backValue']}');
-                //             controller.pageController.animateToPage(
-                //               int.parse(result[0]['backValue']),
-                //               duration: const Duration(milliseconds: 500),
-                //               curve: Curves.easeInOut,
-                //             );
-                //
-                //           });
-                //
-                //
-                //          // Get.toNamed(Routes.QUESTION_DETAILS,parameters: data);
-                //
-                //       /*Get.bottomSheet(
-                //         MyBottomSheet(),
-                //         backgroundColor: Colors.transparent,
-                //         isDismissible: false,
-                //       );*/
-                //     },child: Icon(Icons.menu)),
-                //     itemBuilder: (context){
-                //       return [
-                //
-                //       ];
-                //     },
-                //     onSelected:(value){
-                //
-                //     }
-                // ),
+
               ],
             ),
             body:
@@ -927,23 +833,6 @@ class _QuizScreenState extends State<Test_view> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
 
-                                                      /* for(int i=0;i<ab.length;i++)
-                                                              options_hindi.toString().isNotEmpty?
-                                                              Padding(
-                                                                padding: const EdgeInsets.only(top: 2.0,bottom: 2.0),
-                                                                child: Text(
-                                                                  "${ab[i].toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}",
-                                                                  overflow: TextOverflow.ellipsis,
-                                                                  maxLines: 2,
-                                                                  style: TextStyle(
-                                                                      color: Colors.black
-                                                                  ),
-                                                                ),
-                                                                //child: HtmlWidget('${ab[i].toString()}'),
-                                                              ):
-                                                              Container(),*/
-
-
                                                       option.toString().isNotEmpty?
                                                       Padding(
                                                         padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -1098,501 +987,7 @@ class _QuizScreenState extends State<Test_view> {
                 )
 
 
-              /* PageView.builder(
-                        key: key,
-                        onPageChanged: (value) {
-                          print('value------------------${value}');
-                          controller.CurruntQ.value= value;
-                        },
-                        controller: controller.pageController,
-                        reverse: false,
-                        itemCount: controller.questions_one.length,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext, index) {
 
-
-                          controller.is_index.value=index;
-                          controller.isLastQuestion1.value = controller.isLastQuestion(int.parse(controller.questions_one[index].id.toString()));
-
-                          print('index-------------------------${controller.is_index.value}');
-                          var ab=[];
-                          var option_image=[];
-                          var options_hindi=[];
-
-                          try{
-
-                            //  option_image.add(json.decode(controller.questions_one[index]['option_image']));
-                            print('csd---------------------${json.decode(controller.questions_one[index].option_image.toString())}');
-
-
-                            ab = json.decode(controller.questions_one[index].options.toString());
-                            option_image = json.decode(controller.questions_one[index].option_image.toString());
-                            options_hindi = json.decode(controller.questions_one[index].options_hindi.toString());
-                            print('${index}--------------------------$ab');
-                            print('option_image--------------------------$option_image');
-                            print("user ans----------------------------${controller.questions_one[index].user_answer.toString()}");
-
-                          }catch(e){
-                            print(e);
-                          }
-
-                          return ListView(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(15),
-                                          bottomLeft: Radius.circular(15))),
-                                  margin: EdgeInsets.only(left: 12, right: 12),
-                                  child:
-
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 05,horizontal: 06),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-
-                                            Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8.0),
-                                              ),
-                                              elevation: 5,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(5.0),
-                                                child: Obx(()=>
-                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Q. ${index+1}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                                        children: [
-                                                          Container(
-                                                            color: Colors.green,
-                                                            height: 20,
-                                                            width: 20,
-                                                            child: Center(child: Text('+${controller.marking_number.value}',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold))),
-                                                          ),
-
-
-
-                                                          Padding(
-                                                            padding: const EdgeInsets.only(left: 20.0),
-                                                            child: InkWell(
-                                                              onTap: (){
-
-                                                                // print('mark------${controller.questions_one[index]['markforreview']}');
-                                                                // controller.MarkForReview(questions: controller.questions_one[index],MarkForReview: '1',userAnwer: controller.questions_one[index]['user_answer'].toString(),);
-                                                                controller.show.value = true;
-
-                                                                if(controller.questions_one[index].markforreview.toString()=='0'&&controller.Mark.value[index]==false){
-                                                                  // controller.questions[index]['markforreview']='1';
-                                                                  print("user_answer == if condition");
-                                                                  controller.Mark.value[index]=true;
-                                                                  controller.checkAns(
-                                                                      questions: controller.questions_one[index],
-                                                                      userAnwer: controller.questions_one[index].user_answer.toString(),
-                                                                      markforreview: '1'
-                                                                  );
-                                                                  print("user answe ========  on eye true  =  ${controller.questions_one[index].user_answer.toString()}");
-
-                                                                }else{
-                                                                  controller.Mark.value[index]=false;
-                                                                  // controller.questions[index]['markforreview']='0';
-                                                                  print("user_answer == else condition");
-                                                                  controller.checkAns(
-                                                                      questions: controller.questions_one[index],
-                                                                      userAnwer: controller.questions_one[index].user_answer.toString(),
-                                                                      markforreview: '0'
-                                                                  );
-                                                                }
-
-
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                  border: Border.all(
-                                                                    color: controller.questions_one[index].markforreview.toString()=="1"||controller.Mark.value[index]==true?Colors.red:Colors.blue,
-                                                                    width: 1,
-                                                                  ),
-                                                                  borderRadius: BorderRadius.circular(00),
-
-                                                                ),
-                                                                //color: Colors.green,
-                                                                height: 20,
-                                                                width: 20,
-                                                                child: Center(child: Icon(
-                                                                  Icons.remove_red_eye,
-                                                                  color: controller.questions_one[index].markforreview.toString()=="1"||controller.Mark.value[index]==true?Colors.red:Colors.blue,
-                                                                  size: 16.0,
-                                                                  semanticLabel: 'Text to announce in accessibility modes',
-                                                                ),),
-                                                              ),
-                                                            ),
-                                                          ),
-
-
-
-
-                                                          Padding(
-                                                            padding: const EdgeInsets.only(left: 10.0,right: 00.0),
-                                                            child: InkWell(
-                                                              onTap: (){
-                                                                // controller.Question_Id.value;
-                                                                Get.bottomSheet(
-                                                                  MyBottomSheet(id: controller.questions_one[index].id),
-                                                                  backgroundColor: Colors.transparent,
-                                                                  isDismissible: false,
-                                                                );
-                                                              },
-                                                              child: Container(
-                                                                height: 20,
-                                                                child: Center(
-                                                                  child:  Icon(
-                                                                    Icons.more_vert_outlined,
-                                                                    color: Colors.black,
-                                                                    size: 20.0,
-                                                                    semanticLabel: 'Text to announce in accessibility modes',
-                                                                  ),),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-
-
-                                                      //Text('Result',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
-
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-
-                                      Padding(
-                                        padding:  EdgeInsets.only(
-                                            left: 15, right: 10),
-                                        child:
-
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            controller.questions_one[index].question.toString().isNotEmpty?
-                                            Text(
-                                              controller.questions_one[index].question.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' '),
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
-                                            ):
-                                            Container(),
-
-                                            controller.questions_one[index].question_hindi.toString().isNotEmpty?
-                                            Text(
-                                              controller.questions_one[index].question_hindi.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' '),
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
-                                            ):
-                                            Container(),
-
-                                            controller.questions_one[index].question_image.toString().isNotEmpty?
-                                            CachedNetworkImage(
-                                                imageUrl:
-                                                controller.questions_one[index].question_image.toString()
-                                            ):
-                                            Container()
-
-
-
-                                          ],
-                                        ),
-                                      ),
-
-                                      if(controller.questions_one[index].is_option_image.toString()=="0")
-                                        ...List.generate(
-                                            ab.length,
-                                                (i) => GetBuilder<TestController>(
-                                                init: TestController(),
-                                                builder: (qnController) {
-                                                  Color getTheRightColor() {
-
-
-                                                    print('i--------------${i.toString()}');
-                                                    print('user_answer--------------${qnController.questions_one[index].user_answer.toString()}');
-
-                                                    if(i.toString() == qnController.questions_one[index].user_answer.toString()){
-                                                      print('cooloreeeeeee------------$index');
-                                                      return  ColorValues.kGreenColor;
-                                                    }
-
-
-                                                    return ColorValues.kGrayColor;
-                                                  }
-
-                                                  IconData getTheRightIcon() {
-                                                    return *//*getTheRightColor() == ColorValues.kRedColor ? Icons.close :*//* Icons.done;
-                                                  }
-
-                                                  return InkWell(
-                                                    onTap: ()  async {
-                                                      controller.show.value = false;
-                                                      if(controller.questions_one[index].user_answer.toString().isEmpty){
-                                                        HapticFeedback.selectionClick();
-
-                                                        controller.checkAns(questions: controller.questions_one[index],
-                                                            selectedIndex:  i ,
-                                                            userAnwer: '',
-                                                            markforreview: controller.questions_one[index].markforreview.toString()
-                                                        );
-
-                                                      }else{
-                                                        HapticFeedback.selectionClick();
-                                                        controller.checkAns(questions: controller.questions_one[index],
-                                                            selectedIndex:  i ,
-                                                            userAnwer: '',
-                                                            markforreview: controller.questions_one[index].markforreview.toString()
-                                                        );
-                                                      }
-
-                                                    },
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(5.0),
-                                                      child: Container(
-                                                        width: double.infinity,
-                                                        margin: const EdgeInsets.only(top: ColorValues.kDefaultPadding),
-                                                        padding: const EdgeInsets.only(left: 10.0),
-                                                        decoration: BoxDecoration(
-                                                          border: Border.all(color: getTheRightColor()),
-                                                          borderRadius: BorderRadius.circular(15),
-                                                        ),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Container(
-                                                              height: 20,
-                                                              width: 20,
-                                                              decoration: BoxDecoration(
-                                                                color: getTheRightColor() == ColorValues.kGrayColor
-                                                                    ? Colors.transparent
-                                                                    : getTheRightColor(),
-                                                                borderRadius: BorderRadius.circular(50),
-                                                                border: Border.all(color: getTheRightColor()),
-                                                              ),
-                                                              child: getTheRightColor() == ColorValues.kGrayColor
-                                                                  ? null
-                                                                  : Icon(getTheRightIcon(), size: 16),
-                                                            ),
-
-
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.only(left: 10.0),
-                                                                child: Column(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    ab[i].toString().isNotEmpty?
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                                                      child: Text(
-                                                                        "${ab[i].toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}",
-                                                                        overflow: TextOverflow.ellipsis,
-                                                                        maxLines: 2,
-                                                                        style: TextStyle(
-                                                                            color: Colors.black
-                                                                        ),
-                                                                      ),
-                                                                      //child: HtmlWidget('${ab[i].toString()}'),
-                                                                    ):
-                                                                    Container(),
-
-                                                                    options_hindi[i].toString().isNotEmpty?
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.only(top: 2.0,bottom: 2.0),
-                                                                      child: Text(
-                                                                        "${options_hindi[i].toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}",
-                                                                        overflow: TextOverflow.ellipsis,
-                                                                        maxLines: 2,
-                                                                        style: TextStyle(
-                                                                            color: Colors.black
-                                                                        ),
-                                                                      ),
-                                                                      //child: HtmlWidget('${ab[i].toString()}'),
-                                                                    ):
-                                                                    Container()
-
-
-
-                                                                  ],),
-                                                              ),
-                                                            )
-
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                })
-                                        ),
-
-
-                                      if(controller.questions_one[index].is_option_image.toString()=="1")
-                                        ...List.generate(
-                                            option_image.length,
-                                                (i) => GetBuilder<TestController>(
-                                                init: TestController(),
-                                                builder: (qnController) {
-                                                  Color getTheRightColor() {
-
-
-                                                    print('i--------------${i.toString()}');
-                                                    print('user_answer--------------${qnController.questions_one[index].user_answer.toString()}');
-
-                                                    if(i.toString() == qnController.questions_one[index].user_answer.toString()){
-                                                      print('cooloreeeeeee------------$index');
-                                                      return  ColorValues.kGreenColor;
-                                                    }
-
-
-                                                    return ColorValues.kGrayColor;
-                                                  }
-
-                                                  IconData getTheRightIcon() {
-                                                    return *//*getTheRightColor() == ColorValues.kRedColor ? Icons.close :*//* Icons.done;
-                                                  }
-
-                                                  return InkWell(
-                                                    onTap: ()  async {
-                                                      controller.show.value= false;
-                                                      if(controller.questions_one[index].user_answer.toString().isEmpty){
-                                                        HapticFeedback.selectionClick();
-                                                        controller.checkAns(
-                                                            questions: controller.questions_one[index],
-                                                            selectedIndex:  i ,
-                                                            userAnwer: '',
-                                                            markforreview: controller.questions_one[index].markforreview.toString()
-                                                        );
-
-                                                      }else{
-                                                        HapticFeedback.selectionClick();
-                                                        controller.checkAns(
-                                                            questions: controller.questions_one[index],
-                                                            selectedIndex:  i ,
-                                                            userAnwer: '',
-                                                            markforreview: controller.questions_one[index].markforreview.toString()
-                                                        );
-                                                      }
-
-                                                    },
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(5.0),
-                                                      child: Container(
-                                                        width: double.infinity,
-                                                        margin: const EdgeInsets.only(top: ColorValues.kDefaultPadding),
-                                                        padding: const EdgeInsets.only(left: 10.0),
-                                                        decoration: BoxDecoration(
-                                                          border: Border.all(color: getTheRightColor()),
-                                                          borderRadius: BorderRadius.circular(15),
-                                                        ),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Container(
-                                                              height: 20,
-                                                              width: 20,
-                                                              decoration: BoxDecoration(
-                                                                color: getTheRightColor() == ColorValues.kGrayColor
-                                                                    ? Colors.transparent
-                                                                    : getTheRightColor(),
-                                                                borderRadius: BorderRadius.circular(50),
-                                                                border: Border.all(color: getTheRightColor()),
-                                                              ),
-                                                              child: getTheRightColor() == ColorValues.kGrayColor
-                                                                  ? null
-                                                                  : Icon(getTheRightIcon(), size: 16),
-                                                            ),
-
-
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.only(left: 10.0),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                                  children: [
-
-                                                                    option_image[i].toString().isNotEmpty?
-                                                                    Padding(
-                                                                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                                                        child:
-                                                                        Image.network(option_image[i],height: 50,width: 50,)
-                                                                      *//*  Text(
-                                                                            "${ab[i].toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}",
-                                                                            overflow: TextOverflow.ellipsis,
-                                                                            maxLines: 2,
-                                                                            style: TextStyle(
-                                                                                color: Colors.black
-                                                                            ),
-                                                                          ),*//*
-                                                                      //child: HtmlWidget('${ab[i].toString()}'),
-                                                                    ):
-                                                                    Container(),
-
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.only(right: 10.0),
-                                                                      child: GestureDetector(
-                                                                        onTap: (){
-                                                                          showImageDialog(context,option_image[i]);
-                                                                        },
-                                                                        child: Icon(
-                                                                          Icons.remove_red_eye,
-                                                                          color: Colors.black26,
-                                                                          size: 20.0,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-
-
-
-                                                                  ],),
-                                                              ),
-                                                            )
-
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                })
-                                        ),
-
-
-                                    ],
-                                  ),
-
-
-                                ),
-                              )
-                            ],
-                          );
-                        }),*/
             ),
             Expanded(
               flex: 1,
@@ -1601,6 +996,8 @@ class _QuizScreenState extends State<Test_view> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
+                  currentQuestion_number.value==1?
+                      Container():
                   InkWell(
                     onTap: (){
                       print('-------------------------------nnagative');
@@ -1644,7 +1041,7 @@ class _QuizScreenState extends State<Test_view> {
                           'total_mark':total_mark.toString(),
                         };
                         Get.toNamed(Routes.QUESTION_DETAILS,parameters: data)!.then((result) async{
-                          print('result----${result[0]['backValue']}');
+                        //  print('result----${result[0]['backValue']}');
 
                           currentQuestion_number.value=int.parse(result[0]['backValue'].toString())+1;
                           currentQuestionIndex.value=int.parse(result[0]['backValue'].toString());

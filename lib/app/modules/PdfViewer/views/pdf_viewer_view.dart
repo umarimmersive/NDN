@@ -16,36 +16,24 @@ class PdfViewerView extends GetView<PdfViewer1Controller> {
     return Obx((){
       if(controller.isLoading.isFalse){
         return Scaffold(
-          bottomNavigationBar: Column(
+          bottomNavigationBar:
+          controller.is_main_audio.value=='1'?
+              SizedBox():
+          Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Display play/pause button and volume/speed sliders.
               ControlButtons(controller.player),
-              // Display seek bar. Using StreamBuilder, this widget rebuilds
-              // each time the position, buffered position or duration changes.
-              /* StreamBuilder<PositionData>(
 
-              //stream: audioController.positionDataStream,
-              builder: (context, snapshot) {
-                final positionData = snapshot.data;
-                return SeekBar(
-                  duration: positionData?.duration ?? Duration.zero,
-                  position: positionData?.position ?? Duration.zero,
-                  bufferedPosition:
-                  positionData?.bufferedPosition ?? Duration.zero,
-                  onChangeEnd: controller.player.seek,
-                );
-              },
-            ),*/
             ],
           ),
           appBar: AppBar(
             title:  Text(controller.title.value),
             centerTitle: false,
             actions: [
-
+              controller.is_main_audio.value=='1'?
+              SizedBox():
               InkWell(
                   onTap: (){
                     Get.bottomSheet<AudioBottomSheet>(

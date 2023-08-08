@@ -109,13 +109,12 @@ class _SuccessStoryState extends State<SuccessStory> {
           ),
           Center(
             child: CarouselSlider(
-              options: CarouselOptions(height: 420.0),
+              options: CarouselOptions(height: 500.0),
               items: SucessStory.map((i) {
                 print("index==========${i}");
                 return Builder(
                   builder: (BuildContext context) {
-                    return Container
-                      (
+                    return Container(
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
@@ -138,63 +137,36 @@ class _SuccessStoryState extends State<SuccessStory> {
                                 width: double.infinity,
                                 child: Image.network('https://ndn.manageprojects.in/'+i['image']),
                               ),*/
-                              Card(
-                                semanticContainer: true,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                  ApiService.IMAGE_URL+i['image'],
-                                  fit: BoxFit.fill,
+                              Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.height/3,
+                                child: Card(
+                                  semanticContainer: true,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                    ApiService.IMAGE_URL+i['image'],
+                                    fit: BoxFit.fill,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  elevation: 5,
+                                  margin: EdgeInsets.all(02),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                elevation: 5,
-                                margin: EdgeInsets.all(02),
                               ),
 
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
                                   '"${i['story']}"',
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                 ),
                               ),
-                           /*   SizedBox(
-                                width: 200,
-                                height: 50,
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    Row(
-                                      children: const [
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.orange,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),*/
+
                               Flexible(
                                 child: Container(
                                   child: RatingBar.builder(

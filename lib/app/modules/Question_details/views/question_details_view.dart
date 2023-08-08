@@ -9,7 +9,7 @@ import '../../Pre_onlineTest_instruction/views/BottomBarWithButton.dart';
 import '../controllers/question_details_controller.dart';
 
 class QuestionDetailsView extends GetView<QuestionDetailsController> {
-  const QuestionDetailsView({Key? key}) : super(key: key);
+  //const QuestionDetailsView({Key? key}) : super(key: key);
   @override
 
   Widget build(BuildContext context) {
@@ -18,18 +18,39 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
     return Scaffold(
         bottomNavigationBar: BottomBarWithButton(
           buttonText: "Submit Test",
-          onPressed: () {
-            Get.bottomSheet(
-              MyBottomSheet(),
-              backgroundColor: Colors.transparent,
-              isDismissible: false,
-            );
+          onPressed: () async {
+
+
+            await controller.Submit_exam(remenning_time: '',questions_one: controller.questions_one);
+
+           /* controller.markReview.value=0;
+            controller.answer.value=0;
+            controller.Notanswer.value=0;
+            controller.MarkAndAnswer.value=0;
+            controller.questions_one.clear();*/
+
+           /* showModalBottomSheet(
+              context: context,
+              builder: (context) => MyBottomSheet(),
+              enableDrag: false,
+            );*/
+
+            ///prevvvvvvv
+           /* Get.bottomSheet(
+                  MyBottomSheet(),
+                  backgroundColor: Colors.transparent,
+                  isDismissible: false,
+                  useRootNavigator: true,
+                  enableDrag: false,
+                );*/
+
+
 
             // Do something when button is pressed
           },
         ),
       appBar: AppBar(
-        title: const Text('Questions Summary'),
+        title:  Text('${controller.title_appbaar.value}'),
         centerTitle: false,
       ),
       body: Obx(()=>
@@ -262,8 +283,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
                                return
                                  GestureDetector(
                                      onTap: (){
-                                       Get.back(result: [
-                                         {"backValue": index.toString()}]);
+                                       Get.back(result: [{"backValue": index.toString()}]);
                                      },
                                      child:    Padding(
                                          padding: const EdgeInsets.all(16.0),
@@ -296,7 +316,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
                             },
                           ),
                         ):
-                            CupertinoActivityIndicator()
+                            Center(child: CupertinoActivityIndicator())
                        /* Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: CircleAvatar(

@@ -14,6 +14,7 @@ class ApiService {
 
   static final String FAQ = "faq";
   static final String LOGIN = "login";
+  static final String phoneUpdate = "phoneUpdate";
   static final String signup = "register";
   static final String forgotpassword = "forgotpassword";
   static final String about_us = "about_us";
@@ -80,6 +81,20 @@ class ApiService {
                'login_type':'app',
               'email':email,
               'password': password,
+          })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+
+  }
+
+  Future Add_phone_number(user_id,phone) async {
+    final response = await http.post(
+          Uri.parse(BASE_URL + phoneUpdate),
+          headers: {HttpHeaders.acceptHeader: "application/json"},
+          body: ({
+              'user_id': user_id,
+               'phone':phone.toString(),
           })
       );
       var ConvertDataToJson = jsonDecode(response.body);

@@ -13,7 +13,7 @@ class TestResultView extends GetView<TestResultController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()async{
-        Get.offAndToNamed(Routes.DESHBOARD);
+        Get.toNamed(Routes.DESHBOARD);
          return true;
       },
       child: Obx(()=>

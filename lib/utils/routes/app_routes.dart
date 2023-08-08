@@ -22,6 +22,8 @@ abstract class Routes {
   static const TEST_RESULT_LIST = _Paths.TEST_RESULT_LIST;
   static const PDF_VIEW = _Paths.PDF_VIEW;
   static const PDF_VIEWER = _Paths.PDF_VIEWER;
+  static const QUIZ_SCREEN = _Paths.QUIZ_SCREEN;
+  static const ADD_MOBILE_NUMBER = _Paths.ADD_MOBILE_NUMBER;
 }
 
 abstract class _Paths {
@@ -46,4 +48,7 @@ abstract class _Paths {
   static const TEST_RESULT_LIST = '/test-result-list';
   static const PDF_VIEW = '/pdf-view';
   static const PDF_VIEWER = '/pdf-viewer';
+
+  static const QUIZ_SCREEN = '/quiz-screen';
+  static const ADD_MOBILE_NUMBER = '/add-mobile-number';
 }

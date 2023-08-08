@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 
+import '../../app/modules/Add_mobile_number/bindings/add_mobile_number_binding.dart';
+import '../../app/modules/Add_mobile_number/views/add_mobile_number_view.dart';
 import '../../app/modules/PdfViewer/bindings/pdf_viewer_binding.dart';
 import '../../app/modules/PdfViewer/views/pdf_viewer_view.dart';
-
 import '../../app/modules/Pre_onlineTest_instruction/bindings/Pre_onlineTest_instruction_binding.dart';
 import '../../app/modules/Pre_onlineTest_instruction/views/Pre_onlineTest_instruction_view.dart';
 import '../../app/modules/Pre_onlineTest_instruction2/bindings/Pre_onlineTest_instruction2_binding.dart';
@@ -19,6 +20,9 @@ import '../../app/modules/Test_result_list/bindings/test_result_list_binding.dar
 import '../../app/modules/Test_result_list/views/test_result_list_view.dart';
 import '../../app/modules/onlineTestSeries/bindings/online_test_series_binding.dart';
 import '../../app/modules/onlineTestSeries/views/online_test_series_view.dart';
+import '../../app/modules/quiz_screen/bindings/quiz_screen_binding.dart';
+import '../../app/modules/quiz_screen/views/quiz_screen_view.dart';
+import '../../screens/quiz/quiz_screen.dart';
 import '../../views/about_screen/about_us_binding.dart';
 import '../../views/about_screen/about_us_view.dart';
 import '../../views/dashboard/bindings/dashboard_binding.dart';
@@ -111,7 +115,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.QUESTION_DETAILS,
-      page: () => const QuestionDetailsView(),
+      page: () => QuestionDetailsView(),
       binding: QuestionDetailsBinding(),
     ),
     GetPage(
@@ -124,11 +128,20 @@ class AppPages {
       page: () => const TestResultListView(),
       binding: TestResultListBinding(),
     ),
-
     GetPage(
       name: _Paths.PDF_VIEWER,
-      page: () =>  PdfViewerView(),
+      page: () => PdfViewerView(),
       binding: PdfViewerBinding(),
+    ),
+    GetPage(
+      name: _Paths.QUIZ_SCREEN,
+      page: () => const QuizScreenView(),
+      binding: QuizScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_MOBILE_NUMBER,
+      page: () =>  AddMobileNumberView(),
+      binding: AddMobileNumberBinding(),
     ),
   ];
 }

@@ -65,7 +65,6 @@ class MainActivity : FlutterActivity(), IPaymentSuccessCallBack<TransactionRespo
 
     override fun onPaymentSuccess(response: TransactionResponsesModel?) {
         Log.d("SABPAISA", "Payment Success${response?.statusCode}")
-
         val arrayList = ArrayList<String>()
         arrayList.add(response?.status.toString())
         arrayList.add(response?.clientTxnId.toString())

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
+import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart';
 import '../../../../utils/routes/app_pages.dart';
 import '../controllers/TestList_controller.dart';
 import 'ExamCard.dart';
@@ -70,7 +69,15 @@ class TestListView extends GetView<TestList_Controller> {
                                    //Text('Test Series 1',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                                    InkWell(
                                      onTap: (){
-                                       controller.incrementCounter(price: controller.total_amount.value.toString());
+                                       if(userData!.phoneNumber.isEmpty){
+                                         String popupText = "Kindly updated your profile becuase there are some details are missing.  ";
+                                         showTextPopup(context, popupText);
+
+                                       }else{
+                                         controller.incrementCounter(price: controller.total_amount.value.toString());
+                                       }
+
+
 
                                      },
                                      child: Container(
@@ -100,18 +107,11 @@ class TestListView extends GetView<TestList_Controller> {
                        itemBuilder: (context, index) {
                          return InkWell(
                              onTap: (){
-
                                if(controller.Test_list[index].payment_amount!='0') {
-
-                                 print('total amount--------------${controller
-                                     .Test_list[index].payment_amount}');
 
                                  String popupText = "Now all the Online Test Exams is unpaid, if you want to purchase this so click on Buy All Course button.";
                                  showTextPopup(context, popupText);
-                                 //ceate popup
-                               }
-
-                               else{
+                               } else{
 
                                  if(controller.Test_list[index].test_type.toString().toLowerCase()=='one' || controller.Test_list[index].test_type.toString().toLowerCase()=='multiple'){
                                    var data={
@@ -142,10 +142,6 @@ class TestListView extends GetView<TestList_Controller> {
                                    showTextPopup(context, popupText);
 
                                  }
-
-
-
-
 
                                }
 

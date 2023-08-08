@@ -157,44 +157,7 @@ class _InShortState extends State<InShort> {
 
   void setupLastIndex() async {}
 
- /* static final List<Animal> _animals = [
-    Animal(id: 1, name: "Lion"),
-    Animal(id: 2, name: "Flamingo"),
-    Animal(id: 3, name: "Hippo"),
-    Animal(id: 4, name: "Horse"),
-    Animal(id: 5, name: "Tiger"),
-    Animal(id: 6, name: "Penguin"),
-    Animal(id: 7, name: "Spider"),
-    Animal(id: 8, name: "Snake"),
-    Animal(id: 9, name: "Bear"),
-    Animal(id: 10, name: "Beaver"),
-    Animal(id: 11, name: "Cat"),
-    Animal(id: 12, name: "Fish"),
-    Animal(id: 13, name: "Rabbit"),
-    Animal(id: 14, name: "Mouse"),
-    Animal(id: 15, name: "Dog"),
-    Animal(id: 16, name: "Zebra"),
-    Animal(id: 17, name: "Cow"),
-    Animal(id: 18, name: "Frog"),
-    Animal(id: 19, name: "Blue Jay"),
-    Animal(id: 20, name: "Moose"),
-    Animal(id: 21, name: "Gecko"),
-    Animal(id: 22, name: "Kangaroo"),
-    Animal(id: 23, name: "Shark"),
-    Animal(id: 24, name: "Crocodile"),
-    Animal(id: 25, name: "Owl"),
-    Animal(id: 26, name: "Dragonfly"),
-    Animal(id: 27, name: "Dolphin"),
-  ];
-  final _items = _animals
-      .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
-      .toList();
-  List<Animal> _selectedAnimals2 = [];
-  List<Animal> _selectedAnimals3 = [];
 
-  //List<Animal> _selectedAnimals4 = [];
-  List<Animal> _selectedAnimals5 = [];
-  final _multiSelectKey = GlobalKey<FormFieldState>();*/
 
   void updateContent(direction) {
     if (index <= 0 && direction == DismissDirection.down) {
@@ -349,26 +312,7 @@ class _InShortState extends State<InShort> {
                 }, onSelected: (value) async {
               if (value == 0) {
                 await show_Dialog();
-                // PopupMenuButton(
-                //   onSelected: (value) => setState(() => _selectedView = value),
-                //   itemBuilder: (_) => [
-                //     new CheckedPopupMenuItem(
-                //       checked: _selectedView == 'Card',
-                //       value: 'Card',
-                //       child: new Text('Card'),
-                //     ),
-                //     new CheckedPopupMenuItem(
-                //       checked: _selectedView == 'Swipe',
-                //       value: 'Swipe',
-                //       child: new Text('Swipe'),
-                //     ),
-                //     new CheckedPopupMenuItem(
-                //       checked: _selectedView == 'List',
-                //       value: 'List',
-                //       child: new Text('List'),
-                //     ),
-                //   ],
-                // );//
+
 
                 if (kDebugMode) {
                   print("My account menu is selected.");
@@ -417,11 +361,7 @@ class _InShortState extends State<InShort> {
                                 onChange: (allSelectedItems, selectedItem) async{
                                   category.clear();
                                   category.addAll(allSelectedItems);
-                                  print("category=================$category");
                                   await get_news();
-                                  print("selectedItem=================$selectedItem");
-                                  print("selectedItem=================$allSelectedItems");
-                                  print("category=================$category");
                                 }),
                           )),
                     );
@@ -471,21 +411,24 @@ class _InShortState extends State<InShort> {
                 if (index == news_list.length - 1)
                   Container(
                     alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(AnimatedTimer());
-                      },
-                      child: const SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: Center(
-                            child: Text(
-                              "Start Quiz",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  letterSpacing: 1.2),
-                            )),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0,right: 10.0,bottom: 25.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.to(AnimatedTimer());
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: Center(
+                              child: Text(
+                                "Start Quiz",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    letterSpacing: 1.2),
+                              )),
+                        ),
                       ),
                     ),
                   ),

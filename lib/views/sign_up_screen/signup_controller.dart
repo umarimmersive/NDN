@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:national_digital_notes_new/utils/constants/api_service.dart';
+import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../utils/constants/my_local_service.dart';
@@ -92,7 +93,8 @@ class SignupController extends GetxController {
 
         //Get.snackbar('Message',response['message'].toString());
 
-        Get.to(DashboardView());
+        //Get.to(DashboardView());
+        Get.offAndToNamed(Routes.ADD_MOBILE_NUMBER);
         isLoading(false);
 
       } else if (response['success'] == false) {
