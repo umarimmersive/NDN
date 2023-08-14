@@ -59,6 +59,8 @@ class _InShortState extends State<InShort> {
   var response;
   List<dynamic> category=[].obs;
 
+  final isQuiz=''.obs;
+
   get_news() async {
     print('category======================${category.join(',')}');
     try {
@@ -87,7 +89,9 @@ class _InShortState extends State<InShort> {
 
       if (response['success'] == true) {
         news_list.addAll(response['data']);
+        isQuiz.value=response['data'][0]['is_quiz'].toString();
         print("news_list==============================$news_list");
+        print("is_quiz0-----------------${response['data'][0]['is_quiz'].toString()}");
         // snackbar(response['message']);
 
 
@@ -409,6 +413,7 @@ class _InShortState extends State<InShort> {
                 ),
 
                 if (index == news_list.length - 1)
+                  if(isQuiz.value=='1')
                   Container(
                     alignment: Alignment.bottomCenter,
                     child: Padding(

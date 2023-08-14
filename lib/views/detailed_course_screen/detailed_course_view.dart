@@ -94,7 +94,7 @@ class TabsSimpleLightRoute extends GetView<detailed_course_controller> {
                  // physics: ScrollPhysics(),
                  controller: controller.tabController,
                  children: [
-                   Coching_details_tab(id:controller.id.toString()),
+                   Coching_details_tab(id:controller.id.toString(),title:controller.title.value.toString()),
 
                    //SubjectWiseView(),
 
@@ -196,7 +196,8 @@ class TabsSimpleLightRoute extends GetView<detailed_course_controller> {
 
 class Coching_details_tab extends StatefulWidget {
     String id;
-    Coching_details_tab({Key? key, required this.id}) : super(key: key);
+    String title;
+    Coching_details_tab({Key? key, required this.id,required this.title}) : super(key: key);
 
   @override
   State<Coching_details_tab> createState() => _Coching_details_tabState();
@@ -210,6 +211,7 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
   void initState() {
      callApi();
      print("idd+++++++=================${widget.id}");
+     print("title+++++++=================${widget.title}");
     // TODO: implement initState
     super.initState();
   }
@@ -343,6 +345,7 @@ class _Coching_details_tabState extends State<Coching_details_tab> {
                            //Get.to(DetailedCoachingView(coursesId: Coching_list[index]['id'].toString(),cochingName:Coching_list[index]['coaching_name']));
 
                             var data= {
+                              "exam_title":widget.title.toString(),
                               "exam_id": widget.id.toString(),
                               "cochingId":"${Coching_list[index]['id'].toString()}",
                               "cochingName":"${Coching_list[index]['coaching_name'].toString()}",

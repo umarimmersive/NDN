@@ -37,12 +37,18 @@ class Pre_onlineTest_instruction_controller extends GetxController {
   final total_mark = ''.obs;
   final cochingId = ''.obs;
   final duration2 = ''.obs;
+  final test_id = ''.obs;
+  final exam_title = ''.obs;
+  final Series_name = ''.obs;
   @override
   void onInit() async{
 
     cochingId.value=Get.parameters['cochingId'].toString();
+    Series_name.value=Get.parameters['Series_name'].toString();
+    exam_title.value=Get.parameters['exam_title'].toString();
     print('cochingId------instruction---------${cochingId.value}');
     seriesId.value=Get.parameters['seriesId'].toString();
+    test_id.value=Get.parameters['test_id'].toString();
     instruction.value=Get.parameters['instruction'].toString();
     time.value=Get.parameters['time'].toString();
     passing_value.value=Get.parameters['passing_value'].toString();

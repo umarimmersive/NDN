@@ -52,9 +52,7 @@ class Home_view extends GetView<controller_home_view> {
     Widget okButton = ElevatedButton(
       child: const Text("Logout"),
       onPressed: () async {
-
         my_local_service.logout();
-
       },
     );
     Widget noButton = ElevatedButton(
@@ -170,62 +168,70 @@ class Home_view extends GetView<controller_home_view> {
                       // Navigator.pop(context);
                       //Get.back();
                     },
-                    child: SizedBox(
-                      height: 190,
+                    child: Container(
                       child: Stack(
-                        children: <Widget>[
+                        children: [
                           Image.asset(
                             'assets/home_screen_images/material_bg_1.png',
+                            fit: BoxFit.fill,
                             width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                          userData!.profileImage!="null"?
-                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 40, horizontal: 14),
-                          child: CircleAvatar(
-                            radius: 36,
-                            backgroundColor: Colors.grey[100],
-                            child:  CircleAvatar(
-                              radius: 33,
-                              backgroundImage: NetworkImage(ApiService.IMAGE_URL+userData!.profileImage),
-                            ),
-                          ),
-                        )
-                        :
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 40, horizontal: 14),
-                            child: CircleAvatar(
-                              radius: 36,
-                              backgroundColor: Colors.grey[100],
-                              child: CircleAvatar(
-                                radius: 33,
-                                backgroundImage: AssetImage('assets/profile.png'),
-                              ),
-                            ),
                           ),
 
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 18),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text("${userData!.name}",
-                                      style: MyText.body2(context)!.copyWith(
-                                          color: Colors.grey[100],
-                                          fontWeight: FontWeight.bold)),
-                                  Container(height: 5),
-                                  Text("${userData!.emailId}",
-                                      style: MyText.body2(context)!
-                                          .copyWith(color: Colors.grey[100]))
-                                ],
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                userData!.profileImage!="null"?
+                                Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 14),
+                                child: CircleAvatar(
+                                  radius: 36,
+                                  backgroundColor: Colors.grey[100],
+                                  child:  CircleAvatar(
+                                    radius: 33,
+                                    backgroundImage: NetworkImage(ApiService.IMAGE_URL+userData!.profileImage),
+                                  ),
+                                ),
+                                  )
+                                 :
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 40, horizontal: 14),
+                                  child: CircleAvatar(
+                                    radius: 36,
+                                    backgroundColor: Colors.grey[100],
+                                    child: CircleAvatar(
+                                      radius: 33,
+                                      backgroundImage: AssetImage('assets/profile.png'),
+                                    ),
+                                  ),
+                                ),
+
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 00),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text("${userData!.name}",
+                                            style: MyText.body2(context)!.copyWith(
+                                                color: Colors.grey[100],
+                                                fontWeight: FontWeight.bold)),
+                                        Container(height: 2),
+                                        Text("${userData!.emailId}",
+                                            style: MyText.body2(context)!
+                                                .copyWith(color: Colors.grey[100]))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -529,13 +535,6 @@ class Home_view extends GetView<controller_home_view> {
                                   home_controller.examCategoriesMap['data'][index]['name'].toString();
 
 
-                              /*  await  Get.to(
-                                TabsSimpleLightRoute(
-                                  title: home_controller.examCategoriesMap['data'][index]['name'].toString(),
-                                  id: home_controller.examCategoriesMap['data'][index]['id'].toString(),
-                                ));*/
-
-
                               var data={
                                 "title":"${home_controller.examCategoriesMap['data'][index]['name'].toString()}",
                                 "id":"${home_controller.examCategoriesMap['data'][index]['id'].toString()}"
@@ -543,9 +542,6 @@ class Home_view extends GetView<controller_home_view> {
 
 
                               Get.toNamed(Routes.COURSE_DETAILS,parameters: data);
-
-
-                              log(home_controller.examCategories.value);
                             },
                             child: Obx(
                                   () => Card(

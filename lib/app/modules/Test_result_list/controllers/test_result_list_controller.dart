@@ -15,8 +15,10 @@ class TestResultListController extends GetxController {
     Result(test: 'Test 3', obtained: '82%', rank: '3rd', solution: 'C'),
   ];
   final count = 0.obs;
+  final seriesID = ''.obs;
   @override
   void onInit() {
+    seriesID.value=Get.parameters['seriesID'].toString();
     Get_test_result_list();
     super.onInit();
   }
@@ -27,7 +29,7 @@ class TestResultListController extends GetxController {
   Future Get_test_result_list() async {
     try {
       isLoading1(true);
-      var response = await ApiService().Test_Result_List(userData!.userId);
+      var response = await ApiService().Test_Result_List(userData!.userId,seriesID.value.toString());
       print({'get test result list----------------------------$response'});
       if (response['success'] == true) {
 

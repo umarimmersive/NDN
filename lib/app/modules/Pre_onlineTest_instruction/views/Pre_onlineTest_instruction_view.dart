@@ -34,6 +34,9 @@ class Pre_onlineTest_instruction_view extends GetView<Pre_onlineTest_instruction
               'payment_amount':controller.payment_amount.toString(),
               'total_mark':controller.total_mark.toString(),
               'duration2':controller.duration2.toString(),
+              'test_id':controller.test_id.toString(),
+              'exam_title':controller.exam_title.value.toString(),
+              'Series_name':controller.Series_name.value.toString(),
             };
             /*var data={
               'seriesId':controller.seriesId.toString()

@@ -37,6 +37,7 @@ class PdfViewer1Controller extends Get.GetxController with WidgetsBindingObserve
     is_main_audio.value=Get.Get.parameters['is_main_audio'].toString();
 
     print('pdf_url-----------$pdf_url');
+    print('is_main_audio-----------${is_main_audio.value}');
 
 
 

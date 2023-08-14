@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
@@ -9,15 +10,24 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:national_digital_notes_new/utils/constants/Globle_data.dart';
 import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'Push.dart';
+int id = 0;
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+const String darwinNotificationCategoryPlain = 'plainCategory';
+
+String? selectedNotificationPayload;
 Future<void> backgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print("Handling a background message: ${message.messageId}");
 }
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+
+
+
 Get_token(){
     messaging = FirebaseMessaging.instance;
     messaging.getToken().then((value) {
@@ -36,10 +46,22 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
+const String darwinNotificationCategoryText = 'textCategory';
+const String navigationActionId = 'id_3';
 
 
+Future downloadFile() async {
+  if (await Permission.storage.request().isGranted) {
+    print("--------------------main permisstion");
+   // await startDownload(book_path);
+  } else {
+    //await startDownload(book_path);
+  }
+}
 void main() async{
+
   WidgetsFlutterBinding.ensureInitialized();
+  await downloadFile();
   await Firebase.initializeApp();
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
@@ -47,17 +69,72 @@ void main() async{
   await Get_token();
 
 
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails = !kIsWeb &&
+      Platform.isLinux
+      ? null
+      : await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  // String initialRoute = HomePage.routeName;
+  if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+    selectedNotificationPayload =
+        notificationAppLaunchDetails!.notificationResponse?.payload;
+    //  initialRoute = SecondPage.routeName;
+  }
+
   const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
-  final InitializationSettings initializationSettings =
-  InitializationSettings(android: initializationSettingsAndroid);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  AndroidInitializationSettings('ndn_logo');
+
+  final List<DarwinNotificationCategory> darwinNotificationCategories =
+  <DarwinNotificationCategory>[
+    DarwinNotificationCategory(
+      darwinNotificationCategoryText,
+      actions: <DarwinNotificationAction>[
+        DarwinNotificationAction.text(
+          'text_1',
+          'Action 1',
+          buttonTitle: 'Send',
+          placeholder: 'Placeholder',
+        ),
+      ],
+    ),
+    DarwinNotificationCategory(
+      darwinNotificationCategoryPlain,
+      actions: <DarwinNotificationAction>[
+        DarwinNotificationAction.plain('id_1', 'Action 1'),
+        DarwinNotificationAction.plain(
+          'id_2',
+          'Action 2 (destructive)',
+          options: <DarwinNotificationActionOption>{
+            DarwinNotificationActionOption.destructive,
+          },
+        ),
+        DarwinNotificationAction.plain(
+          navigationActionId,
+          'Action 3 (foreground)',
+          options: <DarwinNotificationActionOption>{
+            DarwinNotificationActionOption.foreground,
+          },
+        ),
+        DarwinNotificationAction.plain(
+          'id_4',
+          'Action 4 (auth required)',
+          options: <DarwinNotificationActionOption>{
+            DarwinNotificationActionOption.authenticationRequired,
+          },
+        ),
+      ],
+      options: <DarwinNotificationCategoryOption>{
+        DarwinNotificationCategoryOption.hiddenPreviewShowTitle,
+      },
+    )
+  ];
 
 
 
 
 
-  Push().push_noti();
+
+
+  await PushNotificationService().initialize();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   HttpOverrides.global = MyHttpOverrides();
   //Firebase.initializeApp();
@@ -77,7 +154,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       defaultTransition: Transition.fadeIn,
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'NDN',
       theme: ThemeData(
         fontFamily: 'Poppins-Regular',
         primarySwatch: Colors.blue,

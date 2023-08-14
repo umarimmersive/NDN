@@ -36,6 +36,9 @@ class QuestionDetailsController extends GetxController {
   final answer = 0.obs;
   final Notanswer = 0.obs;
   final MarkAndAnswer = 0.obs;
+  final test_id = ''.obs;
+  final exam_title = ''.obs;
+  final Series_name = ''.obs;
 
 
 
@@ -51,6 +54,8 @@ class QuestionDetailsController extends GetxController {
   void onInit() async{
     print('----------------------call on init');
     cochingId.value=Get.parameters['cochingId'].toString();
+    exam_title.value=Get.parameters['exam_title'].toString();
+    test_id.value=Get.parameters['test_id'].toString();
     seriesId.value=Get.parameters['seriesId'].toString();
     instruction.value=Get.parameters['instruction'].toString();
     time.value=Get.parameters['time'].toString();
@@ -68,6 +73,7 @@ class QuestionDetailsController extends GetxController {
     marking_number.value=Get.parameters['marking_number'].toString();
     payment_amount.value=Get.parameters['payment_amount'].toString();
     total_mark.value=Get.parameters['total_mark'].toString();
+    Series_name.value=Get.parameters['Series_name'].toString();
 
 
 
@@ -155,7 +161,7 @@ class QuestionDetailsController extends GetxController {
     isLoading(false);
   }*/
 
-  Future Submit_exam({questions_one,remenning_time}) async {
+  Future Submit_exam({questions_one,remenning_time,test_id,exam_title,Series_name}) async {
     try {
      // await refreshNotes1();
       isLoading(true);
@@ -184,10 +190,12 @@ class QuestionDetailsController extends GetxController {
         print('total_score----------------+$total_score');
         print('test_total_score----------------+$test_total_score');
         print('accuracy-----------------$accuracy');
+        print('exam_title-----------------$exam_title');
 
         var data={
           'tital': title.toString(),
           'test_id':seriesId.toString(),
+          'test_id_start':test_id.toString(),
           'skip_answer':skip_answer.toString(),
           'wrong_answer':wrong_answer.toString(),
           'right_answer':right_answer.toString(),
@@ -197,7 +205,9 @@ class QuestionDetailsController extends GetxController {
           'test_total_score':test_total_score.toString(),
           'accuracy':accuracy.toString(),
           'accuracy2':accuracy2.toString(),
-          'subject_name':subject_name.toString()
+          'subject_name':subject_name.toString(),
+          'exam_title':exam_title.toString(),
+          'Series_name':Series_name.toString()
         };
 
         Get.offAndToNamed(Routes.TEST_RESULT,parameters: data);

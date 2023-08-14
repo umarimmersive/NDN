@@ -19,6 +19,9 @@ class OnlineTestSeriesView extends GetView<OnlineTestSeriesController> {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: (){
+             /* var data={
+                'Series_name':controller.examTestSeriesData[index].
+              };*/
               Get.toNamed(Routes.TEST_LIST);
             },
             child: Padding(

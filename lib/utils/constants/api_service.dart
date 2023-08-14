@@ -27,6 +27,7 @@ class ApiService {
   static final String orderDetails = BASE_URL+"orderDetails";
   static final String checkOutAllOrder = BASE_URL+"checkOutAllOrder";
   static final String get_profile = BASE_URL+"getProfile";
+  static final String reviewSubmit = "reviewSubmit";
   static final String testList = "testList";
   static final String testSeriesList = "testSeriesList";
   static final String questionList = "questionList";
@@ -87,6 +88,21 @@ class ApiService {
       return ConvertDataToJson;
 
   }
+  Future ReviewSubmit({user_id, order_id, rating,rating_text}) async {
+    final response = await http.post(
+          Uri.parse(BASE_URL + reviewSubmit),
+          headers: {HttpHeaders.acceptHeader: "application/json"},
+          body: ({
+              'user_id': user_id.toString(),
+              'order_id':order_id.toString(),
+              'rating':rating.toString(),
+              'rating_text':rating_text.toString(),
+          })
+      );
+      var ConvertDataToJson = jsonDecode(response.body);
+      return ConvertDataToJson;
+
+  }
 
   Future Add_phone_number(user_id,phone) async {
     final response = await http.post(
@@ -115,12 +131,14 @@ class ApiService {
       print('getprofile------------------------------------$ConvertDataToJson');
       return ConvertDataToJson;
   }
-  Future Test_Result_List(id) async {
+  Future Test_Result_List(id,seriesID) async {
+   print('seriesID-----------------------${seriesID}');
     final response = await http.post(
           Uri.parse(BASE_URL + TEST_RESULT_LIST),
           headers: {HttpHeaders.acceptHeader: "application/json"},
           body: ({
               'token': id.toString(),
+              'series_id': seriesID.toString(),
           })
       );
       var ConvertDataToJson = jsonDecode(response.body);

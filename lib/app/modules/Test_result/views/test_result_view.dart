@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:national_digital_notes_new/utils/constants/ColorValues.dart';
 import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:share_whatsapp/share_whatsapp.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Pre_onlineTest_instruction/views/BottomBarWithButton.dart';
 import '../controllers/test_result_controller.dart';
@@ -21,9 +22,11 @@ class TestResultView extends GetView<TestResultController> {
             bottomNavigationBar: BottomBarWithButton(
               buttonText: "View Solution",
               onPressed: () {
+                var data={
+                  'seriesID': controller.test_id_start.value.toString()
+                };
+                Get.offAndToNamed(Routes.TEST_RESULT_LIST,parameters: data);
 
-                Get.toNamed(Routes.TEST_RESULT_LIST);
-                // Do something when button is pressed
               },
             ),
           appBar: AppBar(
@@ -370,16 +373,18 @@ class TestResultView extends GetView<TestResultController> {
                                   padding: const EdgeInsets.only(left: 20.0,right: 20,top: 20),
                                   child: InkWell(
                                     onTap: (){
-                                      print('-------');
-                                      var whatsappUrl = "https://wa.me/?text=Hey buddy, try this super cool new app!";
-                                      // "whatsapp:";
-                                      // "whatsapp://send?phone=8575785855";
-                                      try {
-                                        launch(whatsappUrl);
-                                      } catch (e) {
-                                        //To handle error and display error message
-                                      }
-                                      //shareFile();
+                                      shareWhatsapp.shareText(' 𝐓𝐄𝐒𝐓 𝐒𝐂𝐎𝐑𝐄: \n \n '
+                                          'Test Series Name:- ${controller.Series_name.value.toString()} \n '
+                                          'Exam Name:- ${controller.exam_title.value.toString()} \n '
+                                          'Test Name:- ${controller.tital.value.toString()}  \n '
+                                          'Subject Name:- ${controller.subject_name.value.toString()}  \n '
+                                          'Test Score:- ${controller.test_total_score.value.toString()}  \n '
+                                          'Accuracy:- ${controller.accuracy2.value.toString()}  \n '
+                                          'Total Questions:- ${controller.total_question.value.toString()}   \n '
+                                          'Currect Answers:- ${controller.right_answer.value.toString()}   \n '
+                                          'Incorrect Answers:- ${controller.wrong_answer.value.toString()}   \n '
+                                          'Unattempted Question:- ${controller.skip_answer.value.toString()}   \n '
+                                          '');
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

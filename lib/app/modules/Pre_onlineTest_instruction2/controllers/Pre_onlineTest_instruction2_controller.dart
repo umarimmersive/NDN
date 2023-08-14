@@ -23,11 +23,16 @@ class Pre_onlineTest_instruction2_controller extends GetxController {
   final total_mark = ''.obs;
   final cochingId = ''.obs;
   final duration2 = ''.obs;
+  final test_id = ''.obs;
+  final exam_title = ''.obs;
+  final Series_name = ''.obs;
   @override
   void onInit() {
     cochingId.value=Get.parameters['cochingId'].toString();
     print('cochingId------instruction2--------${cochingId.value}');
     seriesId.value=Get.parameters['seriesId'].toString();
+    exam_title.value=Get.parameters['exam_title'].toString();
+    test_id.value=Get.parameters['test_id'].toString();
     instruction.value=Get.parameters['instruction'].toString();
     time.value=Get.parameters['time'].toString();
     passing_value.value=Get.parameters['passing_value'].toString();
@@ -45,6 +50,7 @@ class Pre_onlineTest_instruction2_controller extends GetxController {
     payment_amount.value=Get.parameters['payment_amount'].toString();
     total_mark.value=Get.parameters['total_mark'].toString();
     duration2.value=Get.parameters['duration2'].toString();
+    Series_name.value=Get.parameters['Series_name'].toString();
 
 
 

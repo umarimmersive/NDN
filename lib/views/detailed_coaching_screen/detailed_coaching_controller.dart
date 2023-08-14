@@ -16,6 +16,7 @@ class detailed_coaching_controller extends GetxController with GetSingleTickerPr
   final cochingName=''.obs;
   final cochingId=''.obs;
   final exam_id=''.obs;
+  final exam_title=''.obs;
 
   late TabController tabController;
   final selectedTabIndex = 0.obs;
@@ -34,6 +35,7 @@ class detailed_coaching_controller extends GetxController with GetSingleTickerPr
     exam_id.value=Get.parameters['exam_id'].toString();
     cochingId.value=Get.parameters['cochingId'].toString();
     cochingName.value=Get.parameters['cochingName'].toString();
+    exam_title.value=Get.parameters['exam_title'].toString();
 
 
   /*  var data= {

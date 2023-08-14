@@ -406,6 +406,7 @@ TextEditingController mobileController = TextEditingController();
         },
         body: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Card(
                 margin: const EdgeInsets.all(0),
@@ -415,6 +416,7 @@ TextEditingController mobileController = TextEditingController();
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 elevation: 1,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
@@ -442,7 +444,9 @@ TextEditingController mobileController = TextEditingController();
                           ],
                         )),
                     Edit_profile_Switch!=true?
-                    Column(children: <Widget>[
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
                       InkWell(
                         highlightColor: Colors.grey.withOpacity(0.1),
                         splashColor: Colors.grey.withOpacity(0.1),
@@ -516,7 +520,9 @@ TextEditingController mobileController = TextEditingController();
                       ),
                       const Divider(height: 0),
                     ],):
-                        Column(children: <Widget>[
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
 
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -690,7 +696,7 @@ TextEditingController mobileController = TextEditingController();
                           )),
                     ),
                     const Divider(height: 0),
-                    InkWell(
+                   /* InkWell(
                       highlightColor: Colors.grey.withOpacity(0.1),
                       splashColor: Colors.grey.withOpacity(0.1),
                       onTap: () => () {},
@@ -715,7 +721,7 @@ TextEditingController mobileController = TextEditingController();
                             ],
                           )),
                     ),
-                    const Divider(height: 0),
+                    const Divider(height: 0),*/
                   ],
                 ),
               ),

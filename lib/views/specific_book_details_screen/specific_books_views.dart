@@ -13,6 +13,12 @@ import '../../utils/routes/app_pages.dart';
 import '../add_to_cart_screen/add_to_cart_view.dart';
 import 'about_this_ebook_view.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class specific_books_views extends GetView<specific_book_details_controller>{
   static const platform = MethodChannel('samples.flutter.dev/battery');
@@ -42,8 +48,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
          body:
          controller.isLoading==false ?
          controller.data['success'] !=true?  Center(child: Text('No data found')):
-         ListView(
-             children: [
+         ListView(children: [
            Column(
              children: [
                const SizedBox(
@@ -168,6 +173,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                            const SizedBox(
                              height: 10,
                            ),
+                           controller.book_detils[0]['is_purchase'].toString()=='0'?
                            SizedBox(
                              height: 35,
                              width: MediaQuery.of(context).size.width * 0.4,
@@ -183,6 +189,27 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                                    Icon(Icons.shopping_cart),
                                    Text(
                                      "BUY NOW",
+                                     style: TextStyle(fontWeight: FontWeight.bold),
+                                   ),
+                                 ],
+                               ),
+                             ),
+                           ):
+                           SizedBox(
+                             height: 35,
+                             width: MediaQuery.of(context).size.width * 0.4,
+                             child: ElevatedButton(
+                               onPressed: () async{
+
+                                 //incrementCounter(price: controller.book_detils[0]['selling_price'].toString());
+                               },
+                               child: Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                 children: const [
+                                   Icon(Icons.shopping_cart),
+                                   Text(
+                                     "ALREADY PURCHASED",
                                      style: TextStyle(fontWeight: FontWeight.bold),
                                    ),
                                  ],
@@ -365,7 +392,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                          style: TextStyle(color: Colors.black, fontSize: 18),
                        ),
                        Text(
-                         "${controller.book_detils[0]['publish_date']} * GENERAL PRESS",
+                         "${controller.book_detils[0]['publish_date']}",
                          style: TextStyle(fontSize: 13),
                        ),
                      ],
@@ -397,6 +424,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                              'pdf_url':controller.book_detils[0]['sample_note'].toString(),
                              'bookId': controller.book_detils[0]['id'].toString(),
                              'title': controller.book_detils[0]['title'].toString(),
+                              'is_main_audio': controller.book_detils[0]['is_sample_audio'].toString(),
                              'notedetails': controller.notedetails.toString(),
                             };
                       Get.toNamed(Routes.PDF_VIEWER,parameters: data);
@@ -408,6 +436,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                         'pdf_url':controller.book_detils[0]['sample_book'].toString(),
                         'bookId': controller.book_detils[0]['id'].toString(),
                         'title': controller.book_detils[0]['book_name'].toString(),
+                        'is_main_audio': controller.book_detils[0]['is_sample_audio'].toString(),
                         'notedetails': controller.notedetails.toString(),
                       };
                       Get.toNamed(Routes.PDF_VIEWER,parameters: data);
@@ -430,7 +459,7 @@ class specific_books_views extends GetView<specific_book_details_controller>{
 
                     VocsyEpub.setConfig(
                       themeColor: Theme.of(context).primaryColor,
-                      identifier: "iosBook",
+                      identifier: "androidBook",
                       scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
                       allowSharing: false,
                       enableTts: true,
@@ -438,12 +467,12 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                     );
 
                     // get current locator
-                    VocsyEpub.locatorStream.listen((locator) {
-                      print('LOCATOR: $locator');
-                    });
+
+                    String androidBookPath = 'data/user/0/com.example.epub_flutter/app_flutter/book.epub';
 
                     VocsyEpub.open(
-                      controller.filePath.value,
+                     // controller.filePath.value,
+                      Platform.isAndroid ? androidBookPath : androidBookPath,
                       lastLocation: EpubLocator.fromJson({
                         "bookId": "2239",
                         "href": "/OEBPS/ch06.xhtml",
@@ -451,6 +480,11 @@ class specific_books_views extends GetView<specific_book_details_controller>{
                         "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
                       }),
                     );
+
+
+                    VocsyEpub.locatorStream.listen((locator) {
+                      print('LOCATOR: $locator');
+                    });
                   }
 
 

@@ -98,8 +98,11 @@ class _QuizScreenState extends State<Test_view> {
   final Remenning_time = ''.obs;
   final backValue = ''.obs;
   final duration2 = ''.obs;
+  final test_id = ''.obs;
   final static_mark_of_review = '0'.obs;
   final is_index = 0.obs;
+  final exam_title = ''.obs;
+  final Series_name = ''.obs;
 
   void toggleCheckbox(String value) {
     selectValue.value = value;
@@ -110,8 +113,10 @@ class _QuizScreenState extends State<Test_view> {
   void initState() {
     Controller.onInit();
     cochingId.value=Get.parameters['cochingId'].toString();
+    exam_title.value=Get.parameters['exam_title'].toString();
     print('test------------cfsdasfasdas--${cochingId.value}');
     seriesId.value=Get.parameters['seriesId'].toString();
+    test_id.value=Get.parameters['test_id'].toString();
     instruction.value=Get.parameters['instruction'].toString();
     time.value=Get.parameters['time'].toString();
     passing_value.value=Get.parameters['passing_value'].toString();
@@ -129,6 +134,7 @@ class _QuizScreenState extends State<Test_view> {
     payment_amount.value=Get.parameters['payment_amount'].toString();
     total_mark.value=Get.parameters['total_mark'].toString();
     duration2.value=Get.parameters['duration2'].toString();
+    Series_name.value=Get.parameters['Series_name'].toString();
 
 
 
@@ -297,7 +303,9 @@ class _QuizScreenState extends State<Test_view> {
           'test_total_score':test_total_score.toString(),
           'accuracy':accuracy.toString(),
           'accuracy2':accuracy2.toString(),
-          'subject_name':subject_name.toString()
+          'exam_title':exam_title.value.toString(),
+          'subject_name':subject_name.toString(),
+          'Series_name':Series_name.value.toString()
         };
 
       /*  Q_details_Controller.markReview.value=0;
@@ -545,6 +553,8 @@ class _QuizScreenState extends State<Test_view> {
                         'marking_number':marking_number.toString(),
                         'payment_amount':payment_amount.toString(),
                         'total_mark':total_mark.toString(),
+                        'exam_title':exam_title.toString(),
+                        'Series_name':Series_name.value.toString(),
                       };
 
                       Get.toNamed(Routes.QUESTION_DETAILS,parameters: data)!.then((result) async{
@@ -736,7 +746,7 @@ class _QuizScreenState extends State<Test_view> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  currentQuestion.question.toString().isNotEmpty?
+                                  currentQuestion.question.toString().isNotEmpty&& currentQuestion.question_hindi.toString()!='null'?
                                   Text(
                                     currentQuestion.question.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' '),
                                     style: TextStyle(
@@ -745,7 +755,7 @@ class _QuizScreenState extends State<Test_view> {
                                   ):
                                   Container(),
 
-                                  currentQuestion.question_hindi.toString().isNotEmpty?
+                                  currentQuestion.question_hindi.toString().isNotEmpty&& currentQuestion.question_hindi.toString()!='null'?
                                   Text(
                                     currentQuestion.question_hindi.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' '),
                                     style: TextStyle(
@@ -837,7 +847,7 @@ class _QuizScreenState extends State<Test_view> {
                                                       Padding(
                                                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                                                         child: Text(
-                                                          "${option.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}",
+                                                          "${option.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ').isEmpty && option.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')=='null'?'':option.toString().replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ')}",
                                                           overflow: TextOverflow.ellipsis,
                                                           maxLines: 5,
                                                           style: TextStyle(
@@ -1024,6 +1034,8 @@ class _QuizScreenState extends State<Test_view> {
                         var data={
                           'cochingId':cochingId.toString(),
                           'seriesId':seriesId.toString(),
+                          'test_id':test_id.toString(),
+                            /*'seriesId':seriesId.toString(),*/
                           'instruction':instruction.toString(),
                           'time':time.toString(),
                           'passing_value':passing_value.toString(),
@@ -1039,8 +1051,10 @@ class _QuizScreenState extends State<Test_view> {
                           'marking_number':marking_number.toString(),
                           'payment_amount':payment_amount.toString(),
                           'total_mark':total_mark.toString(),
+                          'exam_title':exam_title.value.toString(),
+                          'Series_name':Series_name.value.toString(),
                         };
-                        Get.toNamed(Routes.QUESTION_DETAILS,parameters: data)!.then((result) async{
+                        Get.offAndToNamed(Routes.QUESTION_DETAILS,parameters: data)!.then((result) async{
                         //  print('result----${result[0]['backValue']}');
 
                           currentQuestion_number.value=int.parse(result[0]['backValue'].toString())+1;

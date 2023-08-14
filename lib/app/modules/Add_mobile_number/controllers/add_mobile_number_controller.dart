@@ -43,10 +43,7 @@ class AddMobileNumberController extends GetxController {
   getLogin() async {
     try {
       isLoading(true);
-
-
       print('--------------${emailController.text}');
-
       var response = await ApiService()
           .Add_phone_number(userData!.userId,emailController.text);
 
@@ -54,16 +51,12 @@ class AddMobileNumberController extends GetxController {
       if (response['success'] == true) {
         snackbar(response['message']);
 
-
         await my_local_service.updateSharedPreferencesFromServer(userData!.userId.toString());
-
-
 
         isLoading(false);
 
         emailController.clear();
         //passController.clear();
-
 
         Get.to(DashboardView());
 
@@ -91,5 +84,4 @@ class AddMobileNumberController extends GetxController {
     super.onClose();
   }
 
-  //void increment() => count.value++;
 }

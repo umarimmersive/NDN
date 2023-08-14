@@ -21,7 +21,7 @@ class QuestionDetailsView extends GetView<QuestionDetailsController> {
           onPressed: () async {
 
 
-            await controller.Submit_exam(remenning_time: '',questions_one: controller.questions_one);
+            await controller.Submit_exam(remenning_time: '',questions_one: controller.questions_one,test_id: controller.test_id.value,exam_title:controller.exam_title.value,Series_name:controller.Series_name.value.toString());
 
            /* controller.markReview.value=0;
             controller.answer.value=0;

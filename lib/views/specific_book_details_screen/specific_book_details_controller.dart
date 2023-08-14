@@ -93,8 +93,6 @@ class specific_book_details_controller extends GetxController{
 
   download(book_path) async {
     if (Platform.isAndroid || Platform.isIOS) {
-      print("===============downloadFile");
-      print("===============${book_path}");
       await downloadFile(book_path);
     } else {
       loading(false);
@@ -102,9 +100,8 @@ class specific_book_details_controller extends GetxController{
   }
 
   Future downloadFile(book_path) async {
-    if (await Permission.storage.isGranted) {
+    if (await Permission.storage.request().isGranted) {
       print("===============ssss");
-      await Permission.storage.request();
       await startDownload(book_path);
     } else {
       await startDownload(book_path);

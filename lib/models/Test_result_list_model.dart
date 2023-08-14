@@ -5,6 +5,7 @@ class Test_result_list_model {
   String title;
   String accuracy;
   String rank;
+  String create_date;
 
 
 
@@ -15,6 +16,7 @@ class Test_result_list_model {
     required this.title,
     required this.accuracy,
     required this.rank,
+    required this.create_date,
 
 
   });
@@ -27,6 +29,7 @@ class Test_result_list_model {
       title: userMap['title'].toString()??'0',
       accuracy: userMap['accuracy'].toString()??'0',
       rank: userMap['rank'].toString()??'0',
+      create_date: userMap['create_date'].toString()??'0',
 
     );
   }

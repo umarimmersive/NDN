@@ -86,6 +86,9 @@ class TestController extends GetxController {
   final duration2 = ''.obs;
   final static_mark_of_review = '0'.obs;
   final is_index = 0.obs;
+  final test_id = ''.obs;
+  final exam_title = ''.obs;
+  final Series_name = ''.obs;
 
   void toggleCheckbox(String value) {
     selectValue.value = value;
@@ -97,7 +100,10 @@ class TestController extends GetxController {
   void onInit() async{
 
     cochingId.value=Get.parameters['cochingId'].toString();
+    exam_title.value=Get.parameters['exam_title'].toString();
+    test_id.value=Get.parameters['test_id'].toString();
     print('test--------------${cochingId.value}');
+    print('test_id--------------${test_id.value}');
     seriesId.value=Get.parameters['seriesId'].toString();
     instruction.value=Get.parameters['instruction'].toString();
     time.value=Get.parameters['time'].toString();
@@ -116,6 +122,7 @@ class TestController extends GetxController {
     payment_amount.value=Get.parameters['payment_amount'].toString();
     total_mark.value=Get.parameters['total_mark'].toString();
     duration2.value=Get.parameters['duration2'].toString();
+    Series_name.value=Get.parameters['Series_name'].toString();
 
 
 
@@ -209,10 +216,13 @@ class TestController extends GetxController {
         print('total_score----------------+$total_score');
         print('test_total_score----------------+$test_total_score');
         print('accuracy-----------------$accuracy');
+        print('test_id-----------------${test_id.value}');
+
 
         var data={
           'tital': title.toString(),
           'test_id':seriesId.toString(),
+          'test_id_first':test_id.value.toString(),
           'skip_answer':skip_answer.toString(),
           'wrong_answer':wrong_answer.toString(),
           'right_answer':right_answer.toString(),

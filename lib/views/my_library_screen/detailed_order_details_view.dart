@@ -6,18 +6,17 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:national_digital_notes_new/testing_epub.dart';
 import 'package:national_digital_notes_new/utils/global_widgets/globle_var.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rating/rating.dart';
 import 'package:http/http.dart' as http;
 import 'package:vocsy_epub_viewer/epub_viewer.dart';
 import 'package:dio/dio.dart';
 import '../../utils/constants/api_service.dart';
+import '../../utils/global_widgets/snackbar.dart';
 import '../../utils/routes/app_pages.dart';
 // ignore: must_be_immutable
 class DetailedBooksOrder extends StatefulWidget {
@@ -138,6 +137,8 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
         firstPart = allInfo['version']["release"];
       }
       int intValue = int.parse(firstPart!);
+
+      print('intValue-----------------------${intValue}');
       if (intValue >= 13) {
         await startDownload();
       } else {
@@ -156,11 +157,15 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
     print('epub_book---------------------${ApiService.IMAGE_URL+book_detail[0]['epub_book']}');
     final dio = Dio();
     Directory? appDocDir = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
-
+    print('appDocDir-----------------------${appDocDir}');
     String path = appDocDir!.path + '/xyz.epub';
+    print('path-----------------------${path}');
     File file = File(path);
 
+    print('file-----------------------${file}');
+
     if (!File(path).existsSync()) {
+      print('file-----------------------');
       await file.create();
       await dio.download(
         "${ApiService.IMAGE_URL+book_detail[0]['epub_book']}",
@@ -240,35 +245,29 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                           ),
                         ):
                         Container(),
+
+
                         Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
                           child: Container(
-                            height: 40,
-                            child: ListView(
-                              //shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              children:  [
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.orange,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.orange,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.orange,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.orange,
-                                ),
-                                Icon(
-                                  Icons.star_border,
-                                  color: Colors.black,
-                                ),
-                              ],
+                            child: RatingBar.builder(
+                              ignoreGestures: true,
+                              updateOnDrag: true,
+                              glow: false,
+                              itemSize: 20,
+                              initialRating: double.parse(book_detail[0]['review_rating'].toString()),
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (rating) {
+                                print(rating);
+                              },
                             ),
                           ),
                         ),
@@ -286,13 +285,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
 
                               _settingModalBottomSheet(context);
 
-                             /* var data={
-                                'pdf_url':book_detail[0]['read_now_file'].toString(),
-                                'bookId': book_detail[0]['id'].toString(),
-                                'title': book_detail[0]['title'].toString(),
-                                'notedetails': book_detail.toString(),
-                              };
-                              Get.toNamed(Routes.PDF_VIEWER,parameters: data);*/
+
 
 
                             },
@@ -300,99 +293,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                         ),
                       ],
                     ),
-                   /* Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            '${book_detail[0]['title']}',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        book_detail[0]['publisher_name'].toString().isNotEmpty?
-                         Padding(
-                           padding: const EdgeInsets.only(left: 10.0),
-                           child: Text(
-                            '${book_detail[0]['publisher_name']??""}',
-                            style: TextStyle(fontSize: 12, color: Colors.black87),
-                        ),
-                         ):
-                        Container(),
-                         Html(
-                           data: '${book_detail[0]['description']??""}',
-                           extensions: [
-                             TagExtension(
-                               tagsToExtend: {"flutter"},
-                               child: const FlutterLogo(),
-                             ),
-                           ],
 
-                           style: {
-                             "p": Style(
-                               textAlign: TextAlign.start,
-                               padding: HtmlPaddings.all(0),
-                               maxLines: 2,
-                               textOverflow: TextOverflow.ellipsis,
-                               //padding:  EdgeInsets.all(16),
-                               //backgroundColor: Colors.grey,
-                               //margin: Margins(left: Margin(50, Unit.px), right: Margin.auto()),
-                               //width: Width(300, Unit.px),
-                               fontWeight: FontWeight.bold,
-                             ),
-                           },
-                         ),
-
-                           ListView(
-                             shrinkWrap: true,
-                             scrollDirection: Axis.horizontal,
-                             children: const [
-                               Icon(
-                                 Icons.star,
-                                 color: Colors.orange,
-                               ),
-                               Icon(
-                                 Icons.star,
-                                 color: Colors.orange,
-                               ),
-                               Icon(
-                                 Icons.star,
-                                 color: Colors.orange,
-                               ),
-                               Icon(
-                                 Icons.star,
-                                 color: Colors.orange,
-                               ),
-                               Icon(
-                                 Icons.star_border,
-                                 color: Colors.black,
-                               ),
-                             ],
-                           ),
-                           ElevatedButton(
-                          child: const Text(
-                           "Read Now",
-                           style: TextStyle(
-                               fontSize: 14.5, fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {
-
-
-                           _settingModalBottomSheet(context);
-
-                            var data={
-                             'pdf_url':book_detail[0]['read_now_file'].toString(),
-                             'bookId': book_detail[0]['id'].toString(),
-                             'title': book_detail[0]['title'].toString(),
-                             'notedetails': book_detail.toString(),
-                           };
-                           Get.toNamed(Routes.PDF_VIEWER,parameters: data);
-
-
-                          },
-                        ),
-                      ],
-                    ),*/
                   ),
                 ],
               ),
@@ -408,12 +309,36 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10.0, vertical: 8.0),
                     child: InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
+                      onTap: () async{
+                        book_detail[0]['is_rating'].toString()=='0'?
+                        Get.bottomSheet(
+                          ReviewBottomSheet(
+                              data: widget.bookid.toString(),
+                                  Ontap:(){
+                                    book_details();
+                        }
+                          ),
+                          backgroundColor: Colors.transparent,
+                          isDismissible: false,
+                        )
+                            :
+                        snackbar('Review already submitted.');
+
+                        // _showReviewBottomSheet(context);
+                      /*showModalBottomSheet(
                           context: context,
                           builder: (context) => RatingWidget(
-                              controller: PrintRatingController(ratingModel)),
-                        );
+
+                              controller: PrintRatingController(ratingModel)
+
+
+                          ),
+                        );*/
+
+
+
+
+
                       },
                       child: Row(
                         children: const [
@@ -521,7 +446,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children:  [
-                            Text("Order #"),
+                            Text("Order ID"),
                             Text(
                               '${book_detail[0]['order'].toString()}',
                               style: TextStyle(fontWeight: FontWeight.w600),
@@ -553,7 +478,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                           children: const [
                             Text(
                               "Download Invoice",
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(fontSize: 14),
                             ),
                             Icon(Icons.chevron_right)
                           ],
@@ -617,7 +542,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                       children:  [
                         Text(
                           'Payment Method',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,),
                         ),
                         Text('${book_detail[0]['payment_method'].toString()}'??''),
                       ],
@@ -637,7 +562,7 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
                     ),
                   ),
                    Padding(
-                    padding: EdgeInsets.only(left: 4.0),
+                    padding: EdgeInsets.only(left: 6.0),
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                         maxLines: 3,
@@ -726,12 +651,12 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
 
                     VocsyEpub.open(
                       filePath.value,
-                      lastLocation: EpubLocator.fromJson({
+                      /*lastLocation: EpubLocator.fromJson({
                         "bookId":  book_detail[0]['id'].toString(),
                         "href": "/OEBPS/ch06.xhtml",
                         "created": 1539934158390,
-                        "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"}
-                      }),
+                        "locations": {"cfi": ""}
+                      }),*/
                     );
                   }
 
@@ -744,11 +669,12 @@ class _DetailedBooksOrderState extends State<DetailedBooksOrder> {
     );
   }
 
+ 
+
 }
 
-class PrintRatingController extends RatingController {
+/*class PrintRatingController extends RatingController {
   PrintRatingController(RatingModel ratingModel) : super(ratingModel);
-
   @override
   Future<void> ignoreForEverCallback() async {
     if (kDebugMode) {
@@ -758,12 +684,14 @@ class PrintRatingController extends RatingController {
   }
 
   @override
-  Future<void> saveRatingCallback(
-      int rate, List<RatingCriterionModel> selectedCriterions) async {
+  Future<String> saveRatingCallback(int rate, List<RatingCriterionModel> selectedCriterions) async {
     if (kDebugMode) {
       print('Rating saved!\nRate: $rate\nsSelectedItems: $selectedCriterions');
+
     }
     await Future.delayed(const Duration(seconds: 3));
+
+    return rate.toString();
   }
 }
 
@@ -785,4 +713,137 @@ final ratingModel = RatingModel(
       RatingCriterionModel(id: 4, name: 'Good User Interface'),
     ],
   ),
-);
+);*/
+class ReviewBottomSheet extends StatelessWidget {
+  final String data;
+  final Function Ontap;
+
+  ReviewBottomSheet({required this.data,required this.Ontap});
+  final isLoading=false.obs;
+  final Rating='2.0'.obs;
+
+  TextEditingController reviewController = TextEditingController();
+
+  Future<bool?> Review({rating,rating_text,context}) async {
+    try {
+      isLoading(true);
+      var response = await ApiService().ReviewSubmit(order_id: data.toString(),user_id: userData!.userId,rating: rating,rating_text:rating_text);
+      print({'response==================================$response'});
+
+      if (response['success'] == true) {
+        snackbar(response['message']);
+        Ontap();
+        isLoading(false);
+        return true;
+
+
+      } else if (response['success'] == false) {
+        snackbar(response['message']);
+        isLoading(false);
+        return true;
+      }
+
+    } finally {
+      isLoading(false);
+
+
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+       // height: MediaQuery.of(context).size.height/2,
+        padding: EdgeInsets.all(16.0),
+        child: Obx(()=>
+           Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Write a review',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16),
+
+              ///ratting bar implement
+              ///-------------------->
+              Flexible(
+                child: Container(
+                  child: RatingBar.builder(
+
+/*              ignoreGestures: true,
+                    updateOnDrag: true,
+                    glow: true,*/
+                    itemSize: 30,
+                    initialRating: double.parse(2.toString()),
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      Rating.value=rating.toString();
+                      print('Rating-----------------${Rating.value}');
+                      print(rating);
+                    },
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 16),
+              TextField(
+                controller: reviewController,
+                decoration: InputDecoration(
+                  hintText: 'Enter your review here',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+              ),
+              SizedBox(height: 16),
+
+              ElevatedButton(
+                onPressed: () async{
+
+                  if(reviewController.text.isNotEmpty){
+                    bool? istrue= await Review(rating: Rating.value,rating_text: reviewController.text);
+                    if(istrue!){
+                      Navigator.pop(context);
+                    }
+                  }else{
+                    snackbar('Please enter your review here.');
+                  }
+
+
+
+
+
+                  // TODO: Implement submit functionality
+                 // Navigator.pop(context); // Close the bottom sheet
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Submit',textAlign: TextAlign.center,),
+                    isLoading.value==true?
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: CupertinoActivityIndicator(color: Colors.white,),
+                        ):
+                        Container()
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

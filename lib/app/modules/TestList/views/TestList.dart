@@ -45,7 +45,10 @@ class TestListView extends GetView<TestList_Controller> {
                                    Text('${controller.title.value}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                                    InkWell(
                                      onTap: (){
-                                       Get.toNamed(Routes.TEST_RESULT_LIST);
+                                       var data={
+                                         'seriesID': controller.testId.toString()
+                                       };
+                                       Get.toNamed(Routes.TEST_RESULT_LIST,parameters: data);
                                      },
                                      child: Container(
                                          decoration: BoxDecoration(
@@ -116,6 +119,8 @@ class TestListView extends GetView<TestList_Controller> {
                                  if(controller.Test_list[index].test_type.toString().toLowerCase()=='one' || controller.Test_list[index].test_type.toString().toLowerCase()=='multiple'){
                                    var data={
                                      'cochingId':controller.cochingId.value.toString(),
+                                     'exam_title':controller.exam_title.value.toString(),
+                                     'test_id':controller.testId.value.toString(),
                                      'seriesId':controller.Test_list[index].id.toString(),
                                      'instruction':controller.Test_list[index].instruction.toString(),
                                      'time':controller.Test_list[index].time.toString(),
@@ -133,9 +138,10 @@ class TestListView extends GetView<TestList_Controller> {
                                      'marking_number':controller.Test_list[index].marking_number.toString(),
                                      'payment_amount':controller.Test_list[index].payment_amount.toString(),
                                      'total_mark':controller.Test_list[index].total_mark.toString(),
+                                     'Series_name':controller.Series_name.value.toString(),
                                    };
 
-                                   Get.toNamed(Routes.PRE_ONLINETEST_INSTRUCTION,parameters: data);
+                                   Get.offAndToNamed(Routes.PRE_ONLINETEST_INSTRUCTION,parameters: data);
                                  }else{
 
                                    String popupText = "This Online Test Exam was only for one time attempt and you are already submitted this.";

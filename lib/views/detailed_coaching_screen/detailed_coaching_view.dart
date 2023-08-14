@@ -152,6 +152,7 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                               var data = {
                                 "isHome": "true",
                                 "id": controller.cochingId.value,
+                                "exam_title": controller.exam_title.value,
                                 "coachingName": controller.cochingName.value,
                                 "examType":controller.get_subject[index]['exam_type'].toString(),
                                 "subjectName": controller.get_subject[index]['subject_name'].toString(),
@@ -245,7 +246,9 @@ class DetailedCoachingView extends GetView<detailed_coaching_controller> {
                          return InkWell(
                                onTap: (){
                                  var data={
+                                   "Series_name":controller.exam_type_list[index].title.toString(),
                                    "cochingId":controller.cochingId.toString(),
+                                   "exam_title":controller.exam_title.toString(),
                                    "examId":controller.exam_id.toString(),
                                    "testId":controller.exam_type_list[index].id.toString(),
                                    "title":controller.exam_type_list[index].title.toString(),

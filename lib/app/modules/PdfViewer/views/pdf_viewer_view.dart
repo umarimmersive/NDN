@@ -17,7 +17,7 @@ class PdfViewerView extends GetView<PdfViewer1Controller> {
       if(controller.isLoading.isFalse){
         return Scaffold(
           bottomNavigationBar:
-          controller.is_main_audio.value=='1'?
+          controller.is_main_audio.value=='0'?
               SizedBox():
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -32,7 +32,7 @@ class PdfViewerView extends GetView<PdfViewer1Controller> {
             title:  Text(controller.title.value),
             centerTitle: false,
             actions: [
-              controller.is_main_audio.value=='1'?
+              controller.is_main_audio.value=='0'?
               SizedBox():
               InkWell(
                   onTap: (){

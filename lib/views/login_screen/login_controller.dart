@@ -72,8 +72,6 @@ class Login_controller extends GetxController{
           snackbar(response['message']);
 
 
-          //await my_local_service.updateSharedPreferences(jsonResponse['data']);
-
             await my_local_service.updateSharedPreferencesFromServer(response['data']['id'].toString());
 
             await my_local_service.updateSharedPreferences(response['data']);

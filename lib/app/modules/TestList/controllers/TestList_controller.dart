@@ -20,13 +20,18 @@ class TestList_Controller extends GetxController {
   final testId = ''.obs;
   final title = ''.obs;
   final total_amount = ''.obs;
+  final exam_title = ''.obs;
+  final Series_name = ''.obs;
   @override
   void onInit() {
+    print('----------------------------------init test list');
 
     cochingId.value=Get.parameters['cochingId'].toString();
+    Series_name.value=Get.parameters['Series_name'].toString();
     examId.value=Get.parameters['examId'].toString();
     testId.value=Get.parameters['testId'].toString();
     title.value=Get.parameters['title'].toString();
+    exam_title.value=Get.parameters['exam_title'].toString();
     Get_test_list();
    /* "cochingId":controller.cochingId.toString(),
     "examId":controller.exam_id.toString(),*/

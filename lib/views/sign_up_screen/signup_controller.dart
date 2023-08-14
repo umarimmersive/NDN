@@ -11,6 +11,7 @@ import 'package:national_digital_notes_new/utils/routes/app_pages.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../utils/constants/my_local_service.dart';
+import '../../utils/global_widgets/globle_var.dart';
 import '../../utils/global_widgets/google_login/authentication.dart';
 import '../../utils/global_widgets/snackbar.dart';
 import '../dashboard/views/dashboard_view.dart';
@@ -74,13 +75,7 @@ class SignupController extends GetxController {
       if (response['success'] == true) {
 
         snackbar(response['message']);
-      /*  SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("is_login", "true");
-        prefs.setString("user_id", response['data']['id'].toString());
-        prefs.setString("phone", response['data']['phone'].toString());
-        prefs.setString("name", response['data']['name'].toString());
-        prefs.setString("email", response['data']['email'].toString());
-        prefs.setString("profile_img", response['data']['profile_img'].toString());*/
+
         await my_local_service.updateSharedPreferencesFromServer(response['data']['id'].toString());
         await  my_local_service.updateSharedPreferences(response['data']);
         nameController.clear();
@@ -91,16 +86,19 @@ class SignupController extends GetxController {
 
         snackbar(response['message'].toString());
 
-        //Get.snackbar('Message',response['message'].toString());
 
-        //Get.to(DashboardView());
-        Get.offAndToNamed(Routes.ADD_MOBILE_NUMBER);
+
+        if(userData!.phoneNumber.isEmpty&&userData!.phoneNumber=='null'){
+          Get.offAndToNamed(Routes.ADD_MOBILE_NUMBER);
+        }else{
+          Get.offAndToNamed(Routes.DESHBOARD);
+        }
+
         isLoading(false);
 
       } else if (response['success'] == false) {
 
         snackbar(response['message'].toString());
-        //Get.snackbar('Message',response['message'].toString());
 
       }
 
